@@ -1,0 +1,369 @@
+﻿@model ThanhThoaiRestaurant.Models.MonAn
+
+@{
+    ViewBag.Title = "Thực đơn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<style>
+.sale-badge {
+    position: absolute;
+    top: -10px; /* Điều chỉnh khoảng cách từ trên xuống */
+    left: -10px; /* Điều chỉnh khoảng cách từ trái sang phải */
+    background-color: #f5d010;
+    color: black;
+    padding: 5px 10px;
+    border-radius: 50%; /* Tạo hình vòng tròn */
+    font-weight: bold;
+    font-size: 30px;
+}
+
+    .product-info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .price {
+        font-size: 20px;
+        display: inline-block;
+        margin-top: 0;
+        color: yellow;
+        text-decoration: none;
+    }
+
+
+    span.woocommerce-Price-currencySymbol {
+        text-decoration: none; /* Xoá gạch chân cho currencySymbol */
+    }
+
+    .quantity-control {
+        display: flex;
+        align-items: center;
+    }
+
+    .quantity-button {
+        background-color: #f5d010;
+        color: #000;
+        border: none;
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .quantity-input {
+        color: black;
+        width: 50px;
+        height: 30px;
+        text-align: center;
+    }
+
+    .add-to-cart-button {
+        width: 150px;
+        background-color: #f5d010;
+        color: #000;
+        margin-left: 10px;
+
+    }
+
+    .active-tab {
+        display: block !important;
+    }
+
+    .inactive-tab {
+        display: none !important;
+    }
+
+    .tab-wrapper {
+        display: flex;      
+        border-radius: 3px;
+        overflow: hidden;
+    }
+
+    .tab-item {
+        text-align: center;
+        padding: 10px 15px; /* Tăng khoảng cách bên trong khung */
+        background-color: #f5f5f5;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        transition: background-color 0.3s;
+        color: #515151;
+        font-size: 16px; /* Giảm kích thước chữ */
+        margin: 20px 5px; /* Tạo khoảng cách giữa các tab */
+        white-space: nowrap; /* Ngăn các tab quá dài bị tràn xuống hàng mới */
+    }
+
+        .tab-item:hover {
+            background-color: #ddd;
+            color: #000;
+        }
+
+    .rating {
+        display: inline-block;
+    }
+
+        .rating input {
+            display: none;
+        }
+
+        .rating label {
+            cursor: pointer;
+            font-size: 24px;
+            padding: 5px;
+        }
+
+    .rating {
+        display: inline-block;
+    }
+
+    .star {
+        font-size: 24px;
+        cursor: pointer;
+        color: #ccc;
+        transition: color 0.3s;
+    }
+
+        .star:hover,
+        .star.active {
+            color: gold; /* Màu khi hover hoặc đã chọn */
+        }
+
+
+
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLR+raQ9FfF9c+6vBrt2UZgq4x6cF5C5f5Ar5g5B/v8" crossorigin="anonymous">
+
+<div id="page-title" class="page-title">
+    <img class="img-full" alt="page title img" src="/img/bìa2.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="page-title-wrap">
+                <div id="page-title-text" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <h1>@Model.TenMon</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- #page-title -->
+<div id="main">
+    <div id="primary" class="content-area shop-sidebar shop-sidebar-right">
+        <div class="container">
+            <div class="row">
+                <div class="pr-content col-xs-12 col-sm-8 col-md-8 col-lg-9">
+                    <div class="woocommerce-notices-wrapper"></div>
+                    <div id="product-@Model.MaMon" class="product type-product post-@Model.MaMon status-publish first instock product_cat-vegetarian has-post-thumbnail sale shipping-taxable purchasable product-type-simple">
+                        <div class="single-thumbail-summary" style="display: flex;">
+                            <div class="woocommerce-product-gallery woocommerce-product-gallery--with-images woocommerce-product-gallery--columns-4 images" data-columns="4" style="opacity: 1; transition: opacity 0.25s ease-in-out 0s; margin-right: 200px; position: relative;">
+                                <a href="#" class="woocommerce-product-gallery__trigger"><img width="500" height="500" src="~/img/food/@Model.HinhAnh"></a>
+                                @if (300000 > Model.GiaBan)
+                                {
+                                    <div class="sale-badge">Sale!</div>
+                                }
+                            </div>
+
+
+                            <div class="summary entry-summary">
+                                <div class="product-info">
+                                    <h1 class="product_title entry-title" style="margin-bottom: 0; margin-top: 0;">@Model.TenMon</h1>
+                                    <div class="price">
+                                        @if (300000 > Model.GiaBan)
+                                        {
+                                            <del aria-hidden="true"><span class="woocommerce-Price-amount amount" style=" text-decoration: none;"><bdi><span class="woocommerce-Price-currencySymbol" style="font-size: 50px;"></span>300.000 VNĐ</bdi></span></del>
+                                            <br />
+                                            <ins><span class="woocommerce-Price-amount amount" style=" text-decoration: none;"><bdi><span class="woocommerce-Price-currencySymbol"></span>@Model.GiaBan.ToString("N0") VNĐ</bdi></span></ins>
+                                        }
+                                        else
+                                        {
+                                            <span class="woocommerce-Price-amount amount" style=" text-decoration: none;"><bdi><span class="woocommerce-Price-currencySymbol"></span>@Model.GiaBan.ToString("N0") VNĐ</bdi></span>
+                                        }
+                                    </div>
+                                </div>
+
+
+                                <div class="woocommerce-product-details__short-description">
+                                    <p>@Model.MoTaNgan</p>
+                                </div>
+                                @if (Model.SoLuong > 0)
+                                {
+                                    <p class="stock in-stock" style="color: #77a464">Còn hàng: @Model.SoLuong sản phẩm</p>
+                                }
+                                else
+                                {
+                                    <p class="stock out-of-stock" style="color: #ff0000">Hết hàng</p>
+                                }
+                                <div style="display: flex;">
+                                    <form method="post" asp-controller="GioHang" asp-action="ThemVaoGioHang">
+                                        <input type="hidden" name="maMon" value="@Model.MaMon" />
+                                        <label for="soLuongMM">Số lượng: </label>
+                                        <input type="number" name="soLuongMM" value="1" min="1" max="@Model.SoLuong" style="width: 50px; color: black;" />
+
+                                        @if (Model.SoLuong > 0)
+                                        {
+                                            <input type="submit" value="Thêm vào giỏ hàng" style="margin-top: 10px;" />
+                                        }
+                                        else
+                                        {
+                                            <input type="submit" value="Hết hàng" style="margin-top: 10px; background-color: wheat;" disabled="disabled" />
+                                        }
+
+                                        
+                                    </form>
+
+                                </div>
+                                <script>
+                                    $(document).ready(function () {
+                                        $("#themVaoGioHang").click(function () {
+                                            var maMon = @Model.MaMon;
+                                            var tenMon = @Model.TenMon;
+                                            var hinhAnh = @Model.HinhAnh;// Lấy mã món từ biến Model
+                                            var soLuongMM = $("#soLuongMM").val(); // Lấy giá trị số lượng từ trường nhập
+
+                                            // Gửi mã món và số lượng lên hành động "ThemVaoGioHang" trong Controller
+                                            $.ajax({
+                                                url: "/GioHangController/ThemVaoGioHang?maMon=" + maMon + "&soLuongMM=" + soLuongMM + "&tenMon=" + tenMon + "&hinhAnh=" + hinhAnh,
+                                                type: "POST",
+                                                success: function (result) {
+                                                    // Xử lý kết quả nếu cần
+                                                    console.log(result);
+                                                }
+                                            });
+                                        });
+                                    });
+                                </script>
+                            </div>
+                        </div>
+
+                        <div class="woocommerce-tabs wc-tabs-wrapper">
+                            <div style="display: flex;">
+                                <div class="tab-wrapper" style="display: flex;">
+                                    <div class="tab-item description_tab" id="tab-title-description" role="tab" aria-controls="tab-description" onclick="showTab('description')" style="width: 120px;">
+                                        <a href="#tab-description">Mô tả</a>
+                                    </div>
+                                    <div class="tab-item reviews_tab" id="tab-title-reviews" role="tab" aria-controls="tab-reviews" onclick="showTab('reviews')" style="width: 120px;">
+                                        <a href="#tab-reviews">Đánh giá (0)</a>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="woocommerce-Tabs-panel woocommerce-Tabs-panel--description panel entry-content wc-tab" id="tab-description" role="tabpanel" aria-labelledby="tab-title-description">
+                                <h2>Mô tả</h2>
+                                <p>@Model.MoTaDai</p>
+                            </div>
+
+                            <div class="woocommerce-Tabs-panel woocommerce-Tabs-panel--reviews panel entry-content wc-tab" id="tab-reviews" role="tabpanel" aria-labelledby="tab-title-reviews">
+                                <div id="reviews" class="woocommerce-Reviews">
+                                    <div id="comments">
+                                        <h2 class="woocommerce-Reviews-title">Đánh giá</h2>
+                                        <p class="woocommerce-noreviews">Không có đánh giá!</p>
+                                        <div id="review_form_wrapper">
+                                            <div id="review_form">
+                                                <div id="respond" class="comment-respond">
+                                                    <span id="reply-title" class="comment-reply-title">Hãy là người đầu tiên đánh giá &ldquo;@Model.TenMon&rdquo; <small><a rel="nofollow" id="cancel-comment-reply-link" href="/pizzeria/product/mushrrom-lovers/#respond" style="display:none;">Hủy trả lời</a></small></span><form action="https://demo.exptheme.com/pizzeria/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+                                                        <p class="comment-notes"><span id="email-notes">Địa chỉ email của bạn sẽ không được công bố.</span> <span class="required-field-message">Các trường bắt buộc được đánh dấu <span class="required">*</span></span></p><div class="comment-form-rating">
+                                                            <div class="rating">
+                                                                <span class="star" data-rating="1">&#9733;</span>
+                                                                <span class="star" data-rating="2">&#9733;</span>
+                                                                <span class="star" data-rating="3">&#9733;</span>
+                                                                <span class="star" data-rating="4">&#9733;</span>
+                                                                <span class="star" data-rating="5">&#9733;</span>
+                                                            </div>
+
+                                                            <!-- JavaScript code for star rating -->
+                                                            <script>
+                                                                const stars = document.querySelectorAll('.star');
+                                                                let rating = 0;
+
+                                                                stars.forEach((star) => {
+                                                                    star.addEventListener('click', (event) => {
+                                                                        const selectedRating = parseInt(event.target.getAttribute('data-rating'));
+                                                                        if (selectedRating === rating) {
+                                                                            rating = 0;
+                                                                        } else {
+                                                                            rating = selectedRating;
+                                                                        }
+
+                                                                        updateStars();
+                                                                        console.log('Đánh giá của bạn:', rating);
+                                                                    });
+                                                                });
+
+                                                                function updateStars() {
+                                                                    stars.forEach((star) => {
+                                                                        const starRating = parseInt(star.getAttribute('data-rating'));
+                                                                        if (starRating <= rating) {
+                                                                            star.classList.add('active');
+                                                                        } else {
+                                                                            star.classList.remove('active');
+                                                                        }
+                                                                    });
+                                                                }
+                                                            </script>
+                                                        </div><p class="comment-form-comment"><label for="comment">Nhận xét&nbsp;<span class="required">*</span></label><textarea id="comment" name="comment" cols="45" rows="8" required></textarea></p><p class="comment-form-author"><label for="author">Tên&nbsp;<span class="required">*</span></label><input id="author" name="author" type="text" value="" size="30" required /></p>
+                                                        <p class="comment-form-email"><label for="email">Email&nbsp;<span class="required">*</span></label><input id="email" name="email" type="email" value="" size="30" required /></p>
+                                                        <p class="comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes" /> <label for="wp-comment-cookies-consent">Lưu tên, email và trang web của tôi trong trình duyệt này cho lần bình luận tiếp theo.</label></p>
+                                                        <p class="form-submit">
+                                                            <input name="submit" type="submit" id="submit" class="submit" value="Xác nhận" /> <input type='hidden' name='comment_post_ID' value='221' id='comment_post_ID' />
+                                                            <input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+                                                        </p>
+                                                    </form>
+                                                </div><!-- #respond -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <script>
+                            function showTab(tabName) {
+                                var descriptionTab = document.getElementById('tab-description');
+                                var reviewsTab = document.getElementById('tab-reviews');
+
+                                if (tabName === 'description') {
+                                    descriptionTab.style.display = 'block';
+                                    reviewsTab.style.display = 'none';
+                                } else if (tabName === 'reviews') {
+                                    descriptionTab.style.display = 'none';
+                                    reviewsTab.style.display = 'block';
+                                }
+                            }
+
+                            // Ẩn phần đánh giá khi trang được tải
+                            window.onload = function () {
+                                var reviewsTab = document.getElementById('tab-reviews');
+                                reviewsTab.style.display = 'none';
+                            };
+                        </script>                                         
+
+                    </div>
+                </div>
+
+
+
+              
+
+                <div class="sidebar-wrap woo-sidebar col-xs-12 col-sm-4 col-md-4 col-lg-3">
+                    <!-- Sidebar widgets nếu cần -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- #main -->
+
+
+
+
+
+
+
+
+
+     
+
+
+                              
+

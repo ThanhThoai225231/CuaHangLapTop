@@ -1,0 +1,227 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model X.PagedList.IPagedList<MonAn>
+
+
+@{
+    ViewBag.Title = "Thực đơn";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .pagination li.active a {
+        background-color: #007bff;
+        color: #fff;
+    }
+</style>
+
+
+<!-- Main Content -->
+<div class="ms-panel-body">
+    <div class="table-responsive">
+        <div id="data-table-5_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+            <div class="row">
+                
+                <div class="col-sm-12 col-md-6">
+                    <div id="data-table-5_filter" class="dataTables_filter">
+                        <label>
+                            <input type="search" class="form-control form-control-sm" placeholder="Search Data..." aria-controls="data-table-5" id="searchInput">
+                        </label>
+                        <button type="button" class="btn btn-primary" onclick="searchItems()">Search</button>
+                    </div>
+                </div>
+
+               
+
+                <div class="col-sm-12 col-md-6">
+                    <div class="row">
+                        
+                        <div class="col-sm-4">
+                            <select multiple="multiple" id="statusSelect">
+                                <option value="conhang">Còn hàng</option>
+                                <option value="hethang">Hết hàng</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <select multiple="multiple" id="priceSelect">
+                                <option value="0-100000">0-100,000 VNĐ</option>
+                                <option value="100000-200000">100,000-200,000 VNĐ</option>
+                                <option value="200000-300000">200,000-300,000 VNĐ</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    function searchItems() {
+                        var searchKeyword = document.getElementById("searchInput").value;
+
+                        // Lấy các giá trị đã chọn trong multi-select
+                        
+                        var selectedStatus = $('#statusSelect').val();
+                        var selectedPriceRange = $('#priceSelect').val();
+
+                        // Gửi yêu cầu tìm kiếm đến trang Index
+                        var url = '/Admin/AdminMenu/Index?search=' + searchKeyword;
+                        
+                        if (selectedStatus != null) {
+                            url += '&status=' + selectedStatus.join(',');
+                        }
+                        if (selectedPriceRange != null) {
+                            url += '&priceRange=' + selectedPriceRange.join(',');
+                        }
+
+                        window.location.href = url;
+                    }
+
+                    // JavaScript
+                    function updateFilters() {
+                       
+                        var selectedStatus = Array.from(document.querySelectorAll('input[name="status"]:checked')).map(e => e.value);
+                        var selectedPriceRange = Array.from(document.querySelectorAll('input[name="priceRange"]:checked')).map(e => e.value);
+
+                        // Sử dụng URLSearchParams để xây dựng tham số truy vấn
+                        var params = new URLSearchParams();
+                       
+                        params.append("status", selectedStatus.join(","));
+                        params.append("priceRange", selectedPriceRange.join(","));
+
+                        // Cập nhật URL với các tham số truy vấn
+                        var currentUrl = new URL(window.location.href);
+                        currentUrl.search = params.toString();
+
+                        // Chuyển hướng đến URL đã cập nhật
+                        window.location.href = currentUrl.toString();
+                    }
+
+                    // Theo dõi sự kiện khi các giá trị của bộ lọc thay đổi
+                    document.querySelectorAll( input[name="status"], input[name="priceRange"]').forEach(function (el) {
+                        el.addEventListener("change", updateFilters);
+                    });
+
+                </script>
+
+            </div>
+            <div class="row">
+               
+                <div class="col-sm-12">
+                    <table id="data-table-5" class="table w-100 thead-primary dataTable no-footer" role="grid" aria-describedby="data-table-5_info" style="width: 1098px;">
+                        <thead>
+                            <tr role="row" style="font-size: 80px; font-weight: bold;">
+                                
+                                <th class="sorting" tabindex="0" aria-controls="data-table-5" rowspan="1" colspan="1" aria-label="Product Name: activate to sort column ascending" style="width: 100px;">Tên món ăn</th>
+                                <th class="sorting" tabindex="0" aria-controls="data-table-5" rowspan="1" colspan="1" aria-label="Product Name: activate to sort column ascending" style="width: 150px;">Hình ảnh</th>
+                               
+                                <th class="sorting" tabindex="0" aria-controls="data-table-5" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 156px;">Trạng thái</th>
+                                <th class="sorting" tabindex="0" aria-controls="data-table-5" rowspan="1" colspan="1" aria-label="Price: activate to sort column ascending" style="width: 100px;">Giá bán</th>
+                                <th class="sorting" tabindex="0" aria-controls="data-table-5" rowspan="1" colspan="1" aria-label="Price: activate to sort column ascending" style="width: 100px;">
+  
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                           
+                            @foreach (var item in Model)
+                            {
+                                <tr role="row" class="odd" >
+                                    @if (item != null) {}
+                                    <td style="font-size:15px;"> @item.TenMon </td>
+                                    <td> <img src="~/img/food/@item.HinhAnh" style="width:100px; height:60px;"></td>
+  
+                                    <td style="font-size: 15px; color: @(item.SoLuong > 0 ? "green" : "red");">
+                                        @(item.SoLuong > 0 ? "Còn hàng: " + item.SoLuong + " " + item.DonViTinh : "Hết hàng")
+                                    </td>
+                                    <td style="font-size: 15px;"><span class="amount">@item.GiaBan.ToString("N0") VNĐ</span></td>
+                                    <td style="font-size: 15px;">
+                                        <a href="#" onclick="redirectToDetails(@item.MaMon)">
+                                            <i class="fa fa-file-text"></i>
+                                        </a>
+                                        | <a href="#" onclick="redirectToEdit(@item.MaMon)">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                         </a>
+                                        |  <a href="#" onclick="deleteItem(@item.MaMon)">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+
+                                        <script>
+                                            function redirectToDetails(id) {
+                                                // Chuyển hướng đến trang chi tiết với id của món ăn
+                                                window.location.href = "/Admin/AdminMenu/Details/" + id;
+                                            }
+
+                                            function redirectToEdit(id) {
+                                                // Chuyển hướng đến trang chi tiết với id của món ăn
+                                                window.location.href = "/Admin/AdminMenu/Edit/" + id;
+                                            }
+
+                                            function deleteItem(id) {
+                                                if (confirm("Bạn có chắc chắn muốn xóa món ăn này?")) {
+                                                    $.ajax({
+                                                        type: "POST",
+                                                        url: "/Admin/AdminMenu/Delete/" + id,
+                                                        success: function (result) {
+                                                            // Ẩn dòng dữ liệu của món ăn đã bị xóa
+                                                            $("#foodItem-" + id).remove();
+                                                            
+                                                            location.reload();
+                                                        }
+                                                    });
+                                                }
+                                            }
+
+                                        </script>
+
+                                    </td>
+
+                                    }
+
+                                </tr>
+
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="dataTables_info" id="data-table-5_info" role="status" aria-live="polite">
+                    Showing @ViewBag.StartItem to @ViewBag.EndItem of @ViewBag.TotalItems entries
+                </div>
+
+                <div class="col-sm-12 col-md-7">
+                    <div class="dataTables_paginate paging_simple_numbers" id="data-table-5_paginate">
+                        <div class="text-center">
+                            @if (ViewBag.TotalItems > ViewBag.PageSize)
+                            {
+                                <ul class="pagination">
+                                    @if (ViewBag.PageNumber > 1)
+                                    {
+                                        <li class="page-item">
+                                            <a class="page-link" href="@Url.Action("Index", new { page = ViewBag.PageNumber - 1, pageSize = ViewBag.PageSize, search = ViewBag.Search })"><i class="fa-solid fa-circle-chevron-left"></i></a>
+                                        </li>
+                                    }
+                                    @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                                    {
+                                        <li class="page-item @(i == ViewBag.PageNumber ? "active" : "")">
+                                            <a class="page-link" href="@Url.Action("Index", new { page = i, pageSize = ViewBag.PageSize, search = ViewBag.Search })">@i</a>
+                                        </li>
+                                    }
+                                    @if (ViewBag.PageNumber < ViewBag.TotalPages)
+                                    {
+                                        <li class="page-item">
+                                            <a class="page-link" href="@Url.Action("Index", new { page = ViewBag.PageNumber + 1, pageSize = ViewBag.PageSize, search = ViewBag.Search })"><i class="fa-solid fa-circle-chevron-right"></i></a>
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+

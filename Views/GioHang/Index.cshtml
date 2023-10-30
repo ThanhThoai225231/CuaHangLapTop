@@ -1,0 +1,144 @@
+﻿
+@{
+    ViewBag.Title = "Thực đơn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var gioHang = ViewBag.GioHang as List<ChiTietGh>;
+    
+}
+
+
+
+
+
+<!-- main-content-wrap start -->
+<div class="main-content-wrap section-ptb cart-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <form action="#" class="cart-table">
+                    <div class="table-content table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="plantmore-product-thumbnail">Hình ảnh</th>
+                                    <th class="cart-product-name">Tên món ăn</th>
+                                    <th class="plantmore-product-price">Giá bán</th>
+                                    <th class="plantmore-product-quantity">Số lượng</th>
+                                    <th class="plantmore-product-subtotal">Thành tiền</th>
+                                    <th class="plantmore-product-remove">Xoá</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               
+                                @foreach (var item in Model)
+                                {
+
+                                    <tr style="font-size: 20px;">
+                                        <td class="plantmore-product-thumbnail"><img width="300" height="300" src="~/img/food/@item.HinhAnh"></td>
+                                        <td class="plantmore-product-name"><span>@item.TenMon</span></td>
+                                        <td class="plantmore-product-price"><span class="amount">@item.GiaBan.ToString("N0") VNĐ</span></td>
+                                        <td class="plantmore-product-quantity">
+                                            <input value="@item.SoLuongMM" type="number" min="1" max="@item.SoLuong" style="width: 50px; color:black;" class="soLuongMoi" data-ma-mon="@item.MaMon" data-thanh-tien="@item.ThanhTien" />
+                                        </td>
+                                        <td class="product-subtotal"><span class="amount">@item.ThanhTien.ToString("N0") VNĐ</span></td>
+                                        <td class="plantmore-product-remove">
+                                            <a href="#" class="delete-button" data-ma-mon="@item.MaMon"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+                                                                 
+                                }  
+                                
+                             
+                            </tbody>
+
+
+
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="coupon-all">
+
+                                <div class="coupon2">
+                                    <a href="/Product/Index" class=" continue-btn cart-trigger button-clean button-text-small" style="color: red;">TIẾP TỤC CHỌN MÓN</a>
+                                </div>
+
+                                <div class="coupon">
+                                    <h3>Phiếu giảm giá</h3>
+                                    <p>Nhập mã giảm giá nếu bạn có</p>
+                                    <input id="coupon_code" class="input-text" name="coupon_code" value="" placeholder="Mã code" type="text">
+                                    <input class="button" name="apply_coupon" value="Áp dụng mã" type="submit">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 ml-auto">
+                            <div class="cart-page-total">
+                                <h2>Hoá đơn giỏ hàng</h2>
+                                <ul>
+
+                                    <li class="total-amount">Tổng tiền: <span id="total-amount"></span></li>
+
+                                    <li>Mã giảm <span>$170.00</span></li>
+                                    <li>Phí vận chuyển <span>$170.00</span></li>
+                                    <li>Tiền thanh toán <span>$170.00</span></li>
+                                </ul>
+
+
+                                <script>
+
+                                   
+                                   
+                                    
+
+                                    // Hàm cập nhật tổng tiền và thành tiền khi thay đổi số lượng
+                                    function updateItemTotals() {
+                                        var items = document.querySelectorAll('.soLuongMoi');
+                                        items.forEach(function (input) {
+                                            var maMon = input.getAttribute('data-ma-mon');
+                                            var soLuongMM = parseInt(input.value);
+
+                                            var giaBan = parseInt(input.closest('tr').querySelector('.plantmore-product-price span.amount').textContent.replace(' VNĐ', '').replace(',', '')) * 1000;
+                                            var thanhTien = soLuongMM * giaBan;
+
+                                            // Cập nhật thành tiền cho món ăn
+                                            var formattedThanhTien = thanhTien.toLocaleString('vi-VN', { style: 'currency', currency: 'VND'  });
+                                            input.closest('tr').querySelector('.product-subtotal span.amount').textContent = formattedThanhTien;
+                                        });
+
+                                        // Cập nhật tổng tiền
+                                        document.querySelector('#total-amount').textContent = CalculateTotalAmount();
+                                    }
+
+                                    // Gắn sự kiện cho input số lượng để cập nhật tổng tiền khi thay đổi
+                                    var quantityInputs = document.querySelectorAll('.soLuongMoi');
+                                    quantityInputs.forEach(function (input) {
+                                        input.addEventListener('change', updateItemTotals);
+                                    });
+
+                                    // Tính tổng tiền khi trang tải lên
+                                    window.addEventListener('load', function () {
+                                        updateItemTotals();
+                                    });
+                                </script>
+
+
+                               
+                               
+
+
+
+
+                                <a href="#" class="proceed-checkout-btn">THANH TOÁN</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- main-content-wrap end -->
+
+
+
+

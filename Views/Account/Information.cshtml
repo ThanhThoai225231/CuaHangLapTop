@@ -1,0 +1,99 @@
+﻿@model ThanhThoaiRestaurant.Models.KhachHang
+@{
+    ViewBag.Title = "Information";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+
+    /* CSS cho nút "Login" */
+    .register-btn {
+        background-color: #d09d0a;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+        margin-left: 420px;
+    }
+
+    /* Hiệu ứng khi di chuột vào nút "Login" */
+    .login-btn:hover {
+        background-color: #ab8108;
+        color: #fff;
+    }
+
+    .text-danger {
+        color: red; /* Đổi màu chữ mờ sang đỏ */
+        font-style: italic; /* Làm chữ mờ nghiêng */
+        white-space: nowrap; /* Không cho chữ mờ xuống hàng */
+    }
+</style>
+
+<!-- main-content-wrap start -->
+<div class="main-content-wrap section-ptb lagin-and-register-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 col-md-12 m-auto">
+                <div class="login-register-wrapper">
+                    <!-- login-register-tab-list start -->
+                    <div class="login-register-tab-list nav" style="margin: 20px 0 40px 450px; text-align: center;">
+                        <a data-bs-toggle="tab" href="#lg2">
+                            <h4> Thông tin khách hàng </h4>
+                        </a>
+                    </div>
+                    <!-- login-register-tab-list end -->
+                    <div class="tab-content">
+                        <div id="lg2" class="tab-pane">
+                            <div class="login-form-container">
+                                <div class="login-register-form">
+                                   
+                                    <form asp-action="Register">
+                                        
+                                        <div class="login-input-box" style="margin: 20px 0 40px 300px;">
+                                            <div class="form-group">
+                                                <input asp-for="TenKh" class="form-control" style="margin: 20px 0 20px 120px;" placeholder="Họ tên khách hàng" />
+                                                <span asp-validation-for="TenKh" class="text-danger" style="margin: 20px 0 20px 120px;"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <input asp-for="NgaySinhKh" class="form-control" style="margin: 20px 0 20px 120px;" placeholder="Ngày sinh" />
+                                                <span asp-validation-for="NgaySinhKh" class="text-danger" style="margin: 20px 0 20px 120px;"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <input asp-for="GioiTinhKh" class="form-control" style="margin: 20px 0 20px 120px;" placeholder="Giới tính" />
+                                                <span asp-validation-for="GioiTinhKh" class="text-danger" style="margin: 20px 0 20px 120px;"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <input asp-for="EmailKh" class="form-control" style="margin: 20px 0 20px 120px;" placeholder="Email"  />
+                                                <span asp-validation-for="EmailKh" class="text-danger" style="margin: 20px 0 20px 120px;"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <input asp-for="Sdtkh" class="form-control" style="margin: 20px 0 20px 120px;" placeholder="Số điện thoại" />
+                                                <span asp-validation-for="Sdtkh" class="text-danger" style="margin: 20px 0 20px 120px;"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <input asp-for="DiaChiKh" class="form-control" style="margin: 20px 0 20px 120px;" placeholder="Địa chỉ" />
+                                                <span asp-validation-for="DiaChiKh" class="text-danger" style="margin: 20px 0 20px 120px;"></span>
+                                            </div>
+
+                                            <div class="form-group">
+
+                                                <input asp-for="TenDangNhap" class="form-control" style="margin: 20px 0 20px 120px;" placeholder="Tên đăng nhập" />
+                                                <span asp-validation-for="TenDangNhap" class="text-danger" style="margin: 20px 0 20px 120px;"></span>
+                                            </div>
+
+                                        </div>
+                                        <div class="button-box">
+                                            <button class="register-btn btn" type="submit"><span>Xác nhận</span></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- main-content-wrap end -->

@@ -1,0 +1,479 @@
+﻿
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+
+
+@{
+    ViewBag.Title = "Thực đơn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<style>
+    /* CSS cho container */
+    .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* CSS cho woocommerce-ordering và woocommerce_product_search-2 */
+    .woocommerce-ordering,
+    .woocommerce-product-search {
+        flex: 1;
+        margin-right: 10px; /* Khoảng cách giữa hai phần tử */
+    }
+
+        /* CSS cho nút Search */
+        .woocommerce-product-search button {
+            background-color: #0073e6;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+        }
+
+    #woocommerce_price_filter-2 {
+        text-align: center; /* Căn giữa nội dung trong khối */
+        margin-top: 20px; /* Khoảng cách từ khối trước đó */
+    }
+
+    .quantityRed {
+        color: red;
+    }
+
+    .quantityGreen {
+        color: green;
+    }
+
+    /* Hiệu ứng chuyển trang */
+    .pagination {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .page-numbers {
+        display: inline-block;
+        margin: 0 5px;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    }
+
+        .page-numbers.current {
+            background-color: yellow; /* Màu nền vàng cho số trang hiện tại */
+            color: #333; /* Màu chữ mặc định cho số trang hiện tại */
+        }
+
+    #gallery-filter {
+        display: flex;
+        flex-direction: column;
+    }
+
+        #gallery-filter li {
+            margin-bottom: 5px; /* Điều này đảm bảo mỗi mục li nằm trên một hàng */
+        }
+
+
+    .shop-sidebar-wrap {
+        position: sticky;
+        width: 100px;
+        height: 100%;
+        margin-right: 700px;
+       
+    }
+
+    /* CSS cho "outer-container" */
+    .outer-container {
+        border: 2px solid #ccc; /* Đổi màu và kiểu đường viền theo nhu cầu */
+        padding: 20px; /* Đổi kích thước padding theo nhu cầu */
+        text-align: center; /* Để nội dung ở giữa khung */
+        margin-top: 100px;    }
+
+   
+    #main {
+        overflow: hidden; /* Ngăn nội dung tràn ra ngoài */
+    }
+
+    #page-default {
+        overflow: hidden;
+    }
+
+   
+    
+
+    
+
+
+   
+   
+
+   
+   
+
+
+</style>
+
+
+
+<div id="page-title" class="page-title">
+    <img class="img-full" alt="page title img" src="/img/bìa2.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="page-title-wrap">
+                <div id="page-title-text" class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><h1>Menu</h1></div>
+            </div>
+        </div>
+    </div>
+</div><!-- #page-title -->
+<div id="main">
+    <div id="page-default" class="container">
+        <div id="primary">
+            <div id="content">
+
+                <article id="post-79" class="post-79 page type-page status-publish hentry">
+                    <div class="entry-content">
+                        <div class="vc_row wpb_row vc_row-fluid" style="">
+                            <div class="wpb_column vc_column_container vc_col-sm-12">
+                                <div class="vc_column-inner ">
+                                    <div class="wpb_wrapper">
+                                        <div class="cms-grid-wraper template-cms_grid--menu " id="cms-grid">
+                                           
+
+
+                                            <div class="container">
+                                                <form role="search" method="get" class="woocommerce-product-search" action="@Url.Action("Index")">
+                                                    <select name="orderby" class="orderby" aria-label="Sắp xếp cửa hàng">
+                                                        <option value="menu_order" selected='selected'>Sắp xếp</option>
+                                                        <option value="price-asc">Giá từ thấp lên cao</option>
+                                                        <option value="price-desc">Giá từ cao xuống thấp</option>
+                                                    </select>
+                                                    <input type="hidden" name="page" value="1" />
+                                                    <input type="hidden" name="minPrice" value="@ViewBag.MinPrice" />
+                                                    <input type="hidden" name="maxPrice" value="@ViewBag.MaxPrice" />
+                                                </form>
+
+
+
+                                                <div class="sidebar-section widget woocommerce widget_product_search">
+                                                    <form role="search" method="get" class="woocommerce-product-search" action="@Url.Action("Index")">
+                                                        <label class="screen-reader-text" for="search">Tìm kiếm:</label>
+                                                        <input type="search" id="search" class="search-field" placeholder="Tìm món…" value="@ViewBag.SearchTerm" name="search">
+                                                        <button type="submit" value="Search">
+                                                            <i class="fas fa-search"></i><!-- Sử dụng class "fas fa-search" cho biểu tượng kính lúp -->
+                                                        </button>
+                                                        <input type="hidden" name="page" value="1">
+                                                        <input type="hidden" name="selectedGroup" value="@ViewBag.SelectedGroup">
+                                                    </form>
+                                                </div>
+
+
+                                            </div>
+
+                                            <script type="text/javascript">
+                                                $(document).ready(function () {
+                                                    // Bắt sự kiện khi người dùng thay đổi giá trị trong select box "Sắp xếp"
+                                                    $('.orderby').change(function () {
+                                                        var selectedValue = $(this).val();
+                                                        var sortOrder = '';
+
+                                                        // Xác định thứ tự sắp xếp dựa trên giá trị hiện tại của select box
+                                                        if (selectedValue === 'price') {
+                                                            sortOrder = 'asc'; // Sắp xếp từ thấp lên cao
+                                                        } else if (selectedValue === 'price-desc') {
+                                                            sortOrder = 'desc'; // Sắp xếp từ cao xuống thấp
+                                                        }
+
+                                                        // Lấy các tham số hiện tại từ URL
+                                                        var url = window.location.href;
+
+                                                        // Thêm hoặc cập nhật tham số "orderby" và "order" trong URL
+                                                        url = updateQueryStringParameter(url, "orderby", selectedValue);
+                                                        url = updateQueryStringParameter(url, "order", sortOrder);
+
+                                                        // Chuyển hướng đến URL mới để thực hiện sắp xếp
+                                                        window.location.href = url;
+                                                    });
+                                                });
+
+                                                // Hàm cập nhật tham số trong URL
+                                                function updateQueryStringParameter(uri, key, value) {
+                                                    var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+                                                    var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+                                                    if (uri.match(re)) {
+                                                        return uri.replace(re, '$1' + key + "=" + value + '$2');
+                                                    } else {
+                                                        return uri + separator + key + "=" + value;
+                                                    }
+                                                }
+                                            </script>
+
+
+
+
+                                    <div class="container">
+                                                @model IPagedList<MonAn>
+                                    <div class="row">
+                                                    <div class="col-md-2">
+                                                        <div class="outer-container">
+                                                        <div class="shop-sidebar-wrap">
+                                                            <div class="shop-box-area">
+
+                                                                <!--sidebar-categores-box start  -->
+                                                                <div class="sidebar-categores-box shop-sidebar mb-30">
+                                                                    <h4 class="title">Nhóm món ăn</h4>
+                                                                    <!-- category-sub-menu start -->
+                                                                    <div class="category-sub-menu">
+                                                                        <ul id="gallery-filter" class="list-filter">
+                                                                            <li><a class="@(ViewBag.SelectedGroup == null ? "active" : "")" href="@Url.Action("Index", new { page = 1 })" data-group="all">Tất cả</a></li>
+                                                                            <li><a class="@(ViewBag.SelectedGroup == 1 ? "active" : "")" href="@Url.Action("Index", new { page = 1, selectedGroup = 1 })" data-group="1">Lẩu</a></li>
+                                                                            <li><a class="@(ViewBag.SelectedGroup == 2 ? "active" : "")" href="@Url.Action("Index", new { page = 1, selectedGroup = 2 })" data-group="2">Nướng</a></li>
+                                                                            <li><a class="@(ViewBag.SelectedGroup == 3 ? "active" : "")" href="@Url.Action("Index", new { page = 1, selectedGroup = 3 })" data-group="3">Gỏi</a></li>
+                                                                            <li><a class="@(ViewBag.SelectedGroup == 4 ? "active" : "")" href="@Url.Action("Index", new { page = 1, selectedGroup = 4 })" data-group="4">Cuốn</a></li>
+                                                                            <li><a class="@(ViewBag.SelectedGroup == 5 ? "active" : "")" href="@Url.Action("Index", new { page = 1, selectedGroup = 5 })" data-group="5">Ăn vặt</a></li>
+                                                                            <!-- Thêm các nhóm khác tương tự -->
+                                                                        </ul>
+                                                                    </div>
+                                                                    <!-- category-sub-menu end -->
+                                                                </div>
+                                                                <!--sidebar-categores-box end  -->
+                                                                <!-- shop-sidebar start -->
+                                                                    <div class="shop-sidebar mb-30">
+                                                                        <h4 class="title">Lọc theo giá</h4>
+                                                                        <div id="price-slider-container">
+                                                                            <form id="filter-form" action="#">
+                                                                                <div id="price-slider" class="price-slider"></div>
+                                                                                <div class="filter-price-wapper">
+                                                                                    <div class="filter-price-cont">
+                                                                                        <span>Giá bán</span>
+                                                                                        <div class="input-type">
+                                                                                            <input type="text" id="min-price" name="minPrice" readonly="" />
+                                                                                        </div>
+                                                                                        <span>—</span>
+                                                                                        <div class="input-type">
+                                                                                            <input type="text" id="max-price" name="maxPrice" readonly="" />
+                                                                                        </div>
+                                                                                        <div id="current-price" class="current-price"></div>
+                                                                                        <button type="submit" class="cart-trigger button-clean button-text-small" style=" margin-top: 10px; background-color: aqua; ">LỌC</button> <!-- Nút xác nhận lọc -->
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                   
+                                                                    <!-- filter-price-content end -->
+                                                                        <!-- shop-sidebar start -->
+                                                                       
+                                                                        <!-- shop-sidebar end -->
+                                                                      
+
+                                                                </div>
+                                                                <!-- shop-sidebar end -->                                                                                                                                                                                             
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                        </div>
+                                                    <script>
+                                                        $(function () {
+                                                            $("#price-slider").slider({
+                                                                step: 100,
+                                                                range: true,
+                                                                min: 0,
+                                                                max: 500000, // Điều chỉnh min và max theo nhu cầu của bạn
+                                                                values: [0, 500000], // Giá trị mặc định cho thanh trượt
+                                                                slide: function (event, ui) {
+                                                                    $("#min-price").val(ui.values[0]);
+                                                                    $("#max-price").val(ui.values[1]);
+                                                                }
+                                                            });
+
+                                                            // Đặt giá trị ban đầu
+                                                            $("#min-price").val($("#price-slider").slider("values", 0));
+                                                            $("#max-price").val($("#price-slider").slider("values", 1));
+
+                                                            // Xử lý khi nút lọc được nhấn
+                                                            $("#filter-form").on("submit", function (event) {
+                                                                event.preventDefault();
+
+                                                                var minPrice = $("#min-price").val();
+                                                                var maxPrice = $("#max-price").val();
+
+                                                                // Cập nhật URL với các giá trị lọc
+                                                                var currentUrl = window.location.href;
+                                                                var newUrl = updateQueryStringParameter(currentUrl, "minPrice", minPrice);
+                                                                newUrl = updateQueryStringParameter(newUrl, "maxPrice", maxPrice);
+
+                                                                // Chuyển hướng đến URL mới
+                                                                window.location.href = newUrl;
+                                                            });
+
+                                                            function updateQueryStringParameter(uri, key, value) {
+                                                                var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+                                                                var separator = uri.indexOf("?") !== -1 ? "&" : "?";
+                                                                if (uri.match(re)) {
+                                                                    return uri.replace(re, "$1" + key + "=" + value + "$2");
+                                                                } else {
+                                                                    return uri + separator + key + "=" + value;
+                                                                }
+                                                            }
+                                                        });
+                                                    </script>
+
+
+
+                                                    <div class="col-md-10">
+                                                        @if (Model.Count() > 0)
+                                                        {
+                                                            @foreach (var menuItem in Model)
+                                                            {
+                                                                <div class="col-md-4">
+                                                                    <!-- Đây là khối món ăn -->
+                                                                    <div class="cms-grid-item" data-groups='["all","category-vegetarian"]'>
+                                                                        <div class="product-preview product-detail-trigger" data-product-detail="#product-@menuItem.MaMon">
+                                                                            <a href="@(Url.Action("Details", "Product", new { id = menuItem.MaMon }))"/>
+                                                                            <div class="product-preview-inner">
+                                                                                <div class="product-photo">
+                                                                                    <div class="product-price" style="font-size: 20px; display: flex; align-items: center; justify-content: center; padding: 20px; border-radius: 5px; height:25px; width: 150px;">
+                                                                                        <span>@string.Format("{0:N0}", menuItem.GiaBan)</span>
+                                                                                        <span style="font-size: 15px; margin-left: 4px;">VNĐ</span>
+                                                                                    </div>
+
+                                                                                    <img width="570" height="520" src="~/img/food/@menuItem.HinhAnh" class="attachment-wp_pizzeria_square-img size-wp_pizzeria_square-img wp-post-image" alt="" decoding="async" />
+                                                                                    @if (menuItem.SoLuong > 0)
+                                                                                    {
+                                                                                        <div class="availability" style="text-align: center; margin-bottom: 10px;">
+                                                                                            <span class="quantityGreen">Còn hàng</span>
+                                                                                        </div>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <div class="availability" style="text-align: center; margin-bottom: 10px;">
+                                                                                            <span class="quantityRed">Hết hàng</span>
+                                                                                        </div>
+                                                                                    }
+                                                                                </div>
+                                                                                <h3 class="product-title">@menuItem.TenMon</h3>
+                                                                                <p>@menuItem.MoTaNgan</p>
+                                                                                <a href="#" class="cart-trigger button-clean button-text-small"
+                                                                                onclick="redirectToDetails(@menuItem.MaMon)">Đặt món ngay</a>
+                                                                            </div>
+                                                                        </div><!-- .product-preview -->
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <script>
+                                                                    function redirectToDetails(id) {
+                                                                    // Chuyển hướng đến trang chi tiết với id của món ăn
+                                                                    window.location.href = "/Product/Details/" + id;
+                                                                    }
+                                                                </script>
+                                                                @if ((Array.IndexOf(Model.ToArray(), menuItem) + 1) % 3 == 0)
+                                                                {
+                                                                    <div class="clearfix"></div>
+                                                                }
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="col-md-12">
+                                                                <div class="alert alert-info">
+                                                                    Không có món ăn phù hợp với tìm kiếm của bạn.
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                    </div>
+                                </div>
+
+                                            <nav class="navigation paging-navigation clearfix">
+                                                @if (Model.TotalItemCount > 0)
+                                                {
+                                                    <!-- Hiển thị thông tin phân trang -->
+                                                    <div class="paging-info" style="font-size: 20px; color: red;">
+                                                        @Html.Raw(ViewBag.PagingInfo)
+                                                    </div>
+                                                }
+                                                <div class="pagination loop-pagination">
+                                                    @{
+                                                        var prevPage = Model.HasPreviousPage ? Model.PageNumber - 1 : 1;
+                                                        var nextPage = Model.HasNextPage ? Model.PageNumber + 1 : Model.PageCount;
+                                                    }
+
+                                                    @if (Model.PageNumber > 1)
+                                                    {
+                                                        <a class="page-numbers prev" href="@Url.Action("Index", new { page = prevPage, selectedGroup = ViewBag.SelectedGroup })">
+                                                            <i class="fa fa-angle-left"></i>
+                                                        </a>
+                                                    }
+
+                                                    @for (var i = 1; i <= Model.PageCount; i++)
+                                                    {
+                                                        <a class="page-numbers @(i == Model.PageNumber ? "current" : "other")"
+                                                           href="@Url.Action("Index", new
+                                                       {
+                                                           page = i,
+                                                           selectedGroup = ViewBag.SelectedGroup,
+                                                           search = ViewBag.SearchTerm,
+                                                           orderby = ViewBag.OrderBy,
+                                                           minPrice = ViewBag.MinPrice,
+                                                           maxPrice = ViewBag.MaxPrice
+                                                       })">@i</a>
+                                                    }
+
+
+
+
+                                                    @if (Model.PageNumber < Model.PageCount)
+                                                    {
+                                                        <a class="page-numbers next" href="@Url.Action("Index", new { page = nextPage, selectedGroup = ViewBag.SelectedGroup })">
+                                                            <i class="fa fa-angle-right"></i>
+                                                        </a>
+                                                    }
+                                                </div><!-- .pagination -->
+                                            </nav><!-- .navigation -->
+
+
+
+
+
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- .entry-content -->
+                </article><!-- #post -->
+
+                <div id="comments" class="comments-area">
+                </div><!-- #comments -->
+
+            </div><!-- #content -->
+        </div><!-- #primary -->
+    </div>
+    <section id="cms-mini-cart" class="cms-mini-cart ">
+        <div class="container">
+            <div class="cart-content">
+                <div class="cart-content-inner">
+                    <div class="cart-close cart-trigger"><i class="fa fa-close"></i></div>
+                    <div class="border-lines-container">
+                        <h1 class="no-top-margin border-lines">Cart</h1>
+                    </div>
+                    <div class="shopping_cart_dropdown woocommerce-mini-cart cart_list">
+                        No products in the cart.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div><!-- #main -->
+
+
+
+
+
+

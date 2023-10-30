@@ -1,0 +1,60 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>   
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.16" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.16">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.16" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.16">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="6.0.16" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
+    <PackageReference Include="X.PagedList" Version="8.1.0" />
+    <PackageReference Include="X.PagedList.Mvc.Core" Version="8.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="wwwroot\img\progress\" />
+    <Folder Include="wwwroot\vendors\datatable\images\" />
+    <Folder Include="wwwroot\vendors\fonts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\site.js" />
+    <None Include="wwwroot\sweetalert2-11.7.32\.github\CODE_OF_CONDUCT.md" />
+    <None Include="wwwroot\sweetalert2-11.7.32\.github\FUNDING.yml" />
+    <None Include="wwwroot\sweetalert2-11.7.32\.github\ISSUE_TEMPLATE\01_bug_report.yml" />
+    <None Include="wwwroot\sweetalert2-11.7.32\.github\ISSUE_TEMPLATE\02_feature_request.yml" />
+    <None Include="wwwroot\sweetalert2-11.7.32\.github\ISSUE_TEMPLATE\03_question.md" />
+    <None Include="wwwroot\sweetalert2-11.7.32\.github\workflows\chrome.yml" />
+    <None Include="wwwroot\sweetalert2-11.7.32\.github\workflows\firefox.yml" />
+    <None Include="wwwroot\sweetalert2-11.7.32\.github\workflows\webkit.yml" />
+    <None Include="wwwroot\sweetalert2-main\sweetalert2-main\.github\CODE_OF_CONDUCT.md" />
+    <None Include="wwwroot\sweetalert2-main\sweetalert2-main\.github\FUNDING.yml" />
+    <None Include="wwwroot\sweetalert2-main\sweetalert2-main\.github\ISSUE_TEMPLATE\01_bug_report.yml" />
+    <None Include="wwwroot\sweetalert2-main\sweetalert2-main\.github\ISSUE_TEMPLATE\02_feature_request.yml" />
+    <None Include="wwwroot\sweetalert2-main\sweetalert2-main\.github\ISSUE_TEMPLATE\03_question.md" />
+    <None Include="wwwroot\sweetalert2-main\sweetalert2-main\.github\workflows\chrome.yml" />
+    <None Include="wwwroot\sweetalert2-main\sweetalert2-main\.github\workflows\firefox.yml" />
+    <None Include="wwwroot\sweetalert2-main\sweetalert2-main\.github\workflows\webkit.yml" />
+    <None Include="wwwroot\v11.7.32\sweetalert2-sweetalert2-6bfd0b6\.github\CODE_OF_CONDUCT.md" />
+    <None Include="wwwroot\v11.7.32\sweetalert2-sweetalert2-6bfd0b6\.github\FUNDING.yml" />
+    <None Include="wwwroot\v11.7.32\sweetalert2-sweetalert2-6bfd0b6\.github\ISSUE_TEMPLATE\01_bug_report.yml" />
+    <None Include="wwwroot\v11.7.32\sweetalert2-sweetalert2-6bfd0b6\.github\ISSUE_TEMPLATE\02_feature_request.yml" />
+    <None Include="wwwroot\v11.7.32\sweetalert2-sweetalert2-6bfd0b6\.github\ISSUE_TEMPLATE\03_question.md" />
+    <None Include="wwwroot\v11.7.32\sweetalert2-sweetalert2-6bfd0b6\.github\workflows\chrome.yml" />
+    <None Include="wwwroot\v11.7.32\sweetalert2-sweetalert2-6bfd0b6\.github\workflows\firefox.yml" />
+    <None Include="wwwroot\v11.7.32\sweetalert2-sweetalert2-6bfd0b6\.github\workflows\webkit.yml" />
+  </ItemGroup>
+
+</Project>
