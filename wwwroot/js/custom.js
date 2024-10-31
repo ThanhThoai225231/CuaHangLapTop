@@ -1,4 +1,7 @@
-﻿// isotope js
+﻿
+
+
+// isotope js
 $(window).on('load', function () {
     $('.filters_menu li').click(function () {
         $('.filters_menu li').removeClass('active');
@@ -20,9 +23,10 @@ $(window).on('load', function () {
 });
 
 // nice select
-$(document).ready(function () {
+$(document).ready(function() {
     $('select').niceSelect();
-});
+  });
+
 
 // client section owl carousel
 $(".client_owl-carousel").owlCarousel({
@@ -48,14 +52,4 @@ $(".client_owl-carousel").owlCarousel({
             items: 2
         }
     }
-});
-
-// Lỗi bảo mật tiềm ẩn: không kiểm tra đầu vào từ người dùng
-$(document).ready(function () {
-    $('#addComment').click(function () {
-        var userComment = $('#userComment').val(); // Người dùng nhập bình luận
-
-        // Nguy hiểm: thêm bình luận mà không mã hóa
-        $('#commentsSection').append('<div>' + userComment + '</div>');
-    });
 });
