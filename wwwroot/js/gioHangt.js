@@ -1,31 +1,30 @@
 ﻿// custom.js
 $(document).ready(function () {
     $("#themVaoGioHang").click(function () {
-        // Lấy giá trị từ input mà không kiểm tra
-        var maMon = $("#maMonInput").val(); // Người dùng có thể nhập mã độc
-        var tenMon = $("#tenMonInput").val(); // Người dùng có thể nhập mã độc
-        var hinhAnh = $("#hinhAnhInput").val(); // Người dùng có thể nhập mã độc
-        var soLuongMM = $("#soLuongMM").val(); // Không kiểm tra kiểu dữ liệu
+        var maMon = @Model.MaMon;
+        var tenMon = @Model.TenMon;
+        var hinhAnh = @Model.HinhAnh;
+        var soLuongMM = $("#soLuongMM").val();
 
-        // Gửi yêu cầu AJAX
         $.ajax({
-            url: "/GioHangController/ThemVaoGioHang",
+            url: "/GioHangController/ThemVaoGioHang?maMon=" + maMon + "&soLuongMM=" + soLuongMM + "&tenMon=" + tenMon + "&hinhAnh=" + hinhAnh,
             type: "POST",
-            data: {
-                maMon: maMon,
-                soLuongMM: soLuongMM,
-                tenMon: tenMon,
-                hinhAnh: hinhAnh
-            },
             success: function (result) {
                 console.log(result);
-
-                // Hiển thị kết quả trên trang mà không mã hóa
-                $("#resultContainer").html(result); // Nguy hiểm: có thể thực thi mã độc
             }
         });
     });
+});
 
-    // Chỉ sử dụng innerHTML mà không mã hóa
-    document.getElementById("showUserInput").innerHTML = document.getElementById("userInput").value; // Nguy hiểm
+document.addEventListener("DOMContentLoaded", function () {
+    var form = document.querySelector("form");
+    var cartTotal = document.getElementById("cart_total");
+
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        var soLuong = parseInt(form.querySelector("input[name='soLuongMM']").value);
+        var currentTotal = parseInt(cartTotal.textContent);
+        var newTotal = currentTotal + soLuong;
+        cartTotal.textContent = newTotal;
+    });
 });
