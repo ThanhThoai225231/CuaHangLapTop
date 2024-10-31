@@ -1,20 +1,30 @@
 ﻿// custom.js
 $(document).ready(function () {
     $("#themVaoGioHang").click(function () {
-        var maMon = @Model.MaMon;
-        var tenMon = @Model.TenMon;
-        var hinhAnh = @Model.HinhAnh;
+        var maMon = $(this).data("mamon");
+        var tenMon = $(this).data("tenmon");
+        var hinhAnh = $(this).data("hinhanh");
         var soLuongMM = $("#soLuongMM").val();
 
         $.ajax({
-            url: "/GioHangController/ThemVaoGioHang?maMon=" + maMon + "&soLuongMM=" + soLuongMM + "&tenMon=" + tenMon + "&hinhAnh=" + hinhAnh,
+            url: "/GioHangController/ThemVaoGioHang",
             type: "POST",
+            data: {
+                maMon: maMon,
+                soLuongMM: soLuongMM,
+                tenMon: tenMon,
+                hinhAnh: hinhAnh
+            },
             success: function (result) {
                 console.log(result);
+            },
+            error: function (xhr, status, error) {
+                console.error("Có lỗi xảy ra:", error);
             }
         });
     });
 });
+
 
 document.addEventListener("DOMContentLoaded", function () {
     var form = document.querySelector("form");
