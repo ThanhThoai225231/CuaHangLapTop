@@ -1,20 +1,27 @@
 ﻿// custom.js
 $(document).ready(function () {
     $("#themVaoGioHang").click(function () {
-        var maMon = @Model.MaMon; // Lấy trực tiếp giá trị từ Model
-        var tenMon = @Model.TenMon; // Lấy trực tiếp giá trị từ Model
-        var hinhAnh = @Model.HinhAnh; // Lấy trực tiếp giá trị từ Model
-        var soLuongMM = $("#soLuongMM").val(); // Lấy giá trị từ input mà không kiểm tra
+        // Lấy giá trị từ input mà không kiểm tra
+        var maMon = $("#maMonInput").val(); // Người dùng có thể nhập mã độc
+        var tenMon = $("#tenMonInput").val(); // Người dùng có thể nhập mã độc
+        var hinhAnh = $("#hinhAnhInput").val(); // Người dùng có thể nhập mã độc
+        var soLuongMM = $("#soLuongMM").val(); // Không kiểm tra kiểu dữ liệu
 
-        // Không mã hóa hoặc kiểm tra giá trị trước khi gửi
+        // Gửi yêu cầu AJAX
         $.ajax({
-            url: "/GioHangController/ThemVaoGioHang?maMon=" + maMon + "&soLuongMM=" + soLuongMM + "&tenMon=" + tenMon + "&hinhAnh=" + hinhAnh,
+            url: "/GioHangController/ThemVaoGioHang",
             type: "POST",
+            data: {
+                maMon: maMon,
+                soLuongMM: soLuongMM,
+                tenMon: tenMon,
+                hinhAnh: hinhAnh
+            },
             success: function (result) {
                 console.log(result);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.error("Có lỗi xảy ra: ", textStatus, errorThrown);
+
+                // Hiển thị kết quả trên trang mà không mã hóa
+                $("#resultContainer").html(result); // Nguy hiểm: có thể thực thi mã độc
             }
         });
     });
