@@ -1,9 +1,9 @@
 ﻿// custom.js
 $(document).ready(function () {
     $("#themVaoGioHang").click(function () {
-        var maMon = $(this).data("mamon");
-        var tenMon = $(this).data("tenmon");
-        var hinhAnh = $(this).data("hinhanh");
+        var maMon = @Model.MaMon;
+        var tenMon = @Model.TenMon;
+        var hinhAnh = @Model.HinhAnh;
         var soLuongMM = $("#soLuongMM").val();
 
         $.ajax({
