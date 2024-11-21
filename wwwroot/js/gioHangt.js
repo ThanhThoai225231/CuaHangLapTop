@@ -1,9 +1,9 @@
 ﻿// custom.js
 $(document).ready(function () {
     $("#themVaoGioHang").click(function () {
-        var maMon = @Model.MaMon;
-        var tenMon = @Model.TenMon;
-        var hinhAnh = @Model.HinhAnh;
+        var maMon = "@Model.MaMon"; // Đặt trong dấu ngoặc kép nếu là chuỗi
+        var tenMon = "@Model.TenMon"; // Đặt trong dấu ngoặc kép nếu là chuỗi
+        var hinhAnh = "@Model.HinhAnh"; // Đặt trong dấu ngoặc kép nếu là chuỗi
         var soLuongMM = $("#soLuongMM").val();
 
         $.ajax({
