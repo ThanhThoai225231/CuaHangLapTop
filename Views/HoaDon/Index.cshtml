@@ -1,0 +1,418 @@
+﻿
+@model ThanhThoaiRestaurant.Models.HoaDonViewModel
+
+@{
+    ViewBag.Title = "Hoá đơn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+
+}
+
+<style>
+    
+
+    .single-method {
+        flex: 1;
+        margin-right: 10px; /* Để tạo khoảng cách giữa các ô */
+        margin-bottom: 10px;
+    }
+        .single-method input[type="radio"] {
+            display: none;
+        }
+
+        .single-method label {
+            display: inline-block;
+            padding: 8px 16px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+           
+        }
+
+        .single-method input[type="radio"]:checked + label {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .single-method label:hover {
+            background-color: #f0f0f0;
+        }
+    .btn.btn-primary {
+        background: #82ae46;
+        border: 1px solid #82ae46;
+        color: #fff;
+        height: 35px;
+        margin: 2px 30px;
+    }
+    /* Đặt màu nền cho toàn bộ trang */
+    body {
+        background-color: #f3f3f3; /* Màu nền xám nhạt */
+    }
+
+    /* Đặt màu nền và viền cho form */
+    .checkout-form {
+        background-color: #fff; /* Màu nền trắng cho form */
+        border: 1px solid #ccc; /* Viền xung quanh form */
+        padding: 20px; /* Khoảng cách giữa nội dung và viền form */
+    }
+
+        /* Đặt màu nền cho các input */
+        .checkout-form input[type="text"],
+        .checkout-form input[type="email"] {
+            background-color: #f0f0f0; /* Màu nền xám nhạt cho input */
+            border: 1px solid #ccc; /* Viền xung quanh input */
+            padding: 10px; /* Khoảng cách giữa nội dung và viền input */
+            margin-bottom: 10px; /* Khoảng cách giữa các input */
+            width: 250px;
+        }
+
+    /* Đặt màu nền cho nút Xác nhận thanh toán */
+    .place-order {
+        background-color: #fb6e2e;
+        color: #fff;
+        border: solid 3px #ccc;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        font-weight: bold;
+        margin-left: 150px;
+        height: 40px;
+    }
+
+        .place-order:hover {
+            background-color: #fff; 
+            color: #fb6e2e;
+            border: 2px solid #fb6e2e;
+        }
+
+    /* Đổi kiểu chữ và màu sắc cho tiêu đề "Địa chỉ giao hàng" */
+    #billing-form h4.checkout-title {
+        color: #0077b6; /* Màu xanh dương cho tiêu đề */
+        font-size: 24px; /* Kích thước font 24px (đổi theo ý muốn) */
+        font-weight: bold; /* Đậy chữ (bold) */
+        text-transform: uppercase; /* Chuyển đổi thành chữ in hoa */
+    }
+
+    /* Đổi kiểu chữ và màu sắc cho các tiêu đề h4 khác */
+    h4 {
+        color: #333; /* Màu chữ xám đậm (đổi theo ý muốn) */
+        font-size: 20px; /* Kích thước font 20px (đổi theo ý muốn) */
+        font-weight: normal; /* Loại bỏ đậy chữ */
+    }
+
+</style>
+
+<div class="page-section section mb-50">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <!-- Checkout Form s-->
+                <form method="post" action="/HoaDon/XacNhanThanhToan" class="checkout-form">
+                    <div style="display: flex;">
+                        <div class="col-lg-7 mb-20" style="margin-top: 50px;">
+                            <!-- Billing Address -->
+                            <div id="billing-form" class="mb-40">
+                                <h4 class="checkout-title" style="color: #27c4d1; font-size: 25px; font-weight: bold; text-align: center;">
+                                    Địa chỉ giao hàng
+                                </h4>
+                                <div class="row">
+                                    <div class="col-md-6 col-12 mb-20">
+                                        <label asp-for="NguoiNhan">Họ tên người nhận*</label>
+                                        <input asp-for="NguoiNhan" class="form-control" value="@Model.TenKh" id="NguoiNhanInput">
+                                        <span asp-validation-for="NguoiNhan" class="text-danger"></span>
+                                    </div>
+
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function () {
+                                            // Lấy tham chiếu đến trường input và span validation
+                                            var nguoiNhanInput = document.getElementById('NguoiNhanInput');
+                                            var nguoiNhanValidation = document.querySelector('[data-valmsg-for="NguoiNhan"]');
+
+                                            // Thêm sự kiện blur (mất focus) cho trường input
+                                            nguoiNhanInput.addEventListener('blur', function () {
+                                                // Kiểm tra nếu tên người nhận trống
+                                                if (!nguoiNhanInput.value.trim()) {
+                                                    nguoiNhanValidation.innerText = 'Họ tên không được để trống.';
+                                                } else if (nguoiNhanInput.value.length > 50) {
+                                                    nguoiNhanValidation.innerText = 'Họ tên không được quá 50 kí tự.';
+                                                } else {
+                                                    nguoiNhanValidation.innerText = ''; // Xóa thông báo lỗi nếu hợp lệ
+                                                }
+                                            });
+                                        });
+                                    </script>
+
+                                    <div class="col-md-6 col-12 mb-20">
+                                        <label asp-for="SDTNN">Số điện thoại*</label>
+                                        <input asp-for="SDTNN" class="form-control" value="@Model.Sdtkh" id="SDTNNInput">
+                                        <span asp-validation-for="SDTNN" class="text-danger"></span>
+                                    </div>
+
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function () {
+                                            // Lấy tham chiếu đến trường input và span validation
+                                            var sdtNNInput = document.getElementById('SDTNNInput');
+                                            var sdtNNValidation = document.querySelector('[data-valmsg-for="SDTNN"]');
+
+                                            // Thêm sự kiện blur (mất focus) cho trường input
+                                            sdtNNInput.addEventListener('blur', function () {
+                                                var sdtValue = sdtNNInput.value.trim();
+
+                                                // Kiểm tra nếu số điện thoại trống
+                                                if (!sdtValue) {
+                                                    sdtNNValidation.innerText = 'Số điện thoại không được để trống.';
+                                                } else if (!/^[0-9]+$/.test(sdtValue)) {
+                                                    sdtNNValidation.innerText = 'Số điện thoại chỉ được nhập số.';
+                                                } else if (sdtValue.length !== 10) {
+                                                    sdtNNValidation.innerText = 'Số điện thoại phải có độ dài là 10 kí tự.';
+                                                } else if (sdtValue[0] !== '0') {
+                                                    sdtNNValidation.innerText = 'Số điện thoại phải bắt đầu bằng số 0.';
+                                                } else {
+                                                    sdtNNValidation.innerText = ''; // Xóa thông báo lỗi nếu hợp lệ
+                                                }
+                                            });
+                                        });
+                                    </script>
+
+
+                                    <div class="col-12 mb-20">
+                                        <label asp-for="DiaChiNhan">Địa chỉ*</label>
+                                        <input asp-for="DiaChiNhan" class="form-control" rows="6" style="width: 560px;" id="DiaChiNhanInput" value="@Model.DiaChiKh">
+                                        <span asp-validation-for="DiaChiNhan" class="text-danger"></span>
+                                    </div>
+
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function () {
+                                            // Lấy tham chiếu đến trường textarea và span validation
+                                            var diaChiNhanInput = document.getElementById('DiaChiNhanInput');
+                                            var diaChiNhanValidation = document.querySelector('[data-valmsg-for="DiaChiNhan"]');
+
+                                            // Thêm sự kiện blur (mất focus) cho trường textarea
+                                            diaChiNhanInput.addEventListener('blur', function () {
+                                                var diaChiNhanValue = diaChiNhanInput.value.trim();
+
+                                                // Kiểm tra nếu địa chỉ trống
+                                                if (!diaChiNhanValue) {
+                                                    diaChiNhanValidation.innerText = 'Địa chỉ không được để trống.';
+                                                } else if (diaChiNhanValue.length > 100) {
+                                                    diaChiNhanValidation.innerText = 'Địa chỉ không được quá 100 kí tự.';
+                                                } else {
+                                                    diaChiNhanValidation.innerText = ''; // Xóa thông báo lỗi nếu hợp lệ
+                                                }
+                                            });
+                                        });
+                                    </script>
+
+
+
+                                    <div class="col-12 mb-20">
+                                        <label asp-for="GhiChu">Ghi chú*</label>
+                                        <textarea asp-for="GhiChu" class="form-control" rows="6" style="width: 560px;" id="GhiChuInput">@Model.GhiChu</textarea>
+                                        <span asp-validation-for="GhiChu" class="text-danger"></span>
+                                    </div>
+
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function () {
+                                            // Lấy tham chiếu đến trường textarea và span validation
+                                            var ghiChuInput = document.getElementById('GhiChuInput');
+                                            var ghiChuValidation = document.querySelector('[data-valmsg-for="GhiChu"]');
+
+                                            // Thêm sự kiện blur (mất focus) cho trường textarea
+                                            ghiChuInput.addEventListener('blur', function () {
+                                                var ghiChuValue = ghiChuInput.value.trim();
+
+                                                // Kiểm tra xem ghi chú có quá 100 kí tự không
+                                                if (ghiChuValue.length > 100) {
+                                                    ghiChuValidation.innerText = 'Ghi chú không được quá 100 kí tự.';
+                                                } else {
+                                                    ghiChuValidation.innerText = ''; // Xóa thông báo lỗi nếu hợp lệ
+                                                }
+                                            });
+                                        });
+                                    </script>
+
+                                </div>
+
+                            </div>
+
+                            
+                            <script>
+                                const checkbox = document.getElementById("shiping_address");
+                                const shippingAddressBlock = document.getElementById("shipping-address-block");
+
+                                checkbox.addEventListener("change", function () {
+                                    if (checkbox.checked) {
+                                        shippingAddressBlock.style.display = "block"; // Hiển thị khối thứ hai
+                                    } else {
+                                        shippingAddressBlock.style.display = "none"; // Ẩn khối thứ hai
+                                    }
+                                });
+                            </script>
+                            <!-- Payment Method -->
+                            <div class="col-12">
+                                <h4 class="checkout-title" style="color: #D10024; font-size: 17px; font-weight: bold; text-align: center; margin-top: 50px;">PHƯƠNG THỨC THANH TOÁN</h4>
+                                <div class="checkout-payment-method" style=" display: flex; margin-top: 40px;">
+
+                                    <div class="single-method">
+                                        <input type="radio" id="payment_cash" name="payment-method" value="cash">
+                                        <label for="payment_cash">Thanh toán khi nhận hàng</label>
+                                    </div>
+                                    <div class="single-method" style="width: 256px; text-align: center;">
+                                        <input type="radio" id="payment_Vnpay" name="payment-method" value="paypal" style="margin-top: 20px;">
+                                        <label style="width: 256px; VBGN.';/" for="payment_Vnpay">Thanh toán bằng VNPAY</label>
+
+                                    </div>
+
+                                    <input type="hidden" id="hinhThucTT" name="HinhThucTT" value="cash">
+                                    <script>
+                                        // Lắng nghe sự kiện click trên các phương thức thanh toán
+                                        const paymentCash = document.getElementById("payment_cash");
+                                        const paymentPaypal = document.getElementById("payment_Vnpay");
+                                        const paymentPaypal1 = document.getElementById("payment_Paypal");
+                                        const hinhThucTT = document.getElementById("hinhThucTT");
+
+                                        paymentCash.addEventListener("click", function () {
+                                            hinhThucTT.value = "Tiền mặt";
+                                        });
+
+                                        paymentPaypal.addEventListener("click", function () {
+                                            hinhThucTT.value = "Chuyển khoản";
+                                        });
+                                        paymentPaypal1.addEventListener("click", function () {
+                                            hinhThucTT.value = "Chuyển khoản PayPal";
+                                        });
+                                    </script>
+
+                                </div>
+                                
+
+                            </div>
+                        </div>
+                        <div class="col-lg-5" style="margin-left: 20px; margin-top: 50px; margin-bottom: 50px;">
+                            <div class="row">
+                                <!-- Cart Total -->
+                                <div class="col-12 mb-60">
+                                    <h4 class="checkout-title" style="color: #27c4d1; font-size: 25px; font-weight: bold; text-align: center;">HOÁ ĐƠN GIỎ HÀNG</h4>
+                                    <div class="col-md-12 d-flex mb-5">
+                                        <div class="cart-detail cart-total p-3 p-md-4">
+                                            <p class="d-flex">
+                                                <span>Ngày hoá đơn</span>
+                                                <span>@DateTime.Now</span>
+                                            </p>
+                                            <hr>
+                                            <p class="d-flex">
+                                                <span class="cart-detail " style="font-weight: bold; text-align: center;">Sản phẩm </span>
+                                                <span class="cart-detail " style="font-weight: bold; text-align: center;">Thành tiền</span>
+                                            </p>
+
+                                            @foreach (var chiTiet in Model.ChiTietHoaDon)
+                                            {
+                                                <p class="d-flex">
+                                                    <span>@chiTiet.SoLuongCt x @chiTiet.TenMon </span>
+                                                    <span style="margin-left: 50px;">@chiTiet.ThanhTien.ToString("N0") VNĐ</span>
+                                                </p>
+                                            }
+                                            <hr>
+                                            <p class="d-flex">
+                                                <span>Tổng tiền</span>
+                                                <span style="margin-left: 50px;">@Model.TongTien.ToString("N0") VNĐ</span>
+                                            </p>
+                                            <p class="d-flex">
+                                                <span>Phí vận chuyển</span>
+                                                <span style="margin-left: 50px;">0 VNĐ</span>
+                                            </p>
+                                            <p class="d-flex">
+                                                <span>Giảm giá</span>
+                                                <span style="margin-left: 50px;">@Model.TienGiam.ToString("N0") VNĐ</span>
+                                            </p>
+                                            <hr>
+                                            <p class="d-flex total-price">
+                                                <span style="font-weight: bold; color: black;">Tiền thanh toán</span>
+                                                <span style="margin-left: 50px;">@Model.TienTt.ToString("N0") VNĐ</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+                               
+                            </div>
+                            <button id="btnXacNhanThanhToan" class="place-order" style="height: 40px;">Đặt hàng</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 mb-60" style="margin-left: 15px; display: flex;">
+
+                            <form id="voucherForm" method="post" action="/HoaDon/Index" >
+                                <div class="form-group">
+                                    <label style="color: #D10024; font-size: 17px; font-weight: bold; text-align: center; margin-top: 10px; margin-left: 230px;" for="MaKM">KHUYẾN MÃI:</label>
+                                    <div style="display:flex;">
+                                        <button style="height: 35px; margin-right: 20px; margin-top: 1px;" type="button" id="selectVoucherButton">
+                                            Chọn voucher
+                                        </button>
+                                    <input style="width: 350px; margin-top: 2px;" type="text" class="form-control" id="MaKM" name="MaKM" value="@ViewBag.MaKM">
+                                    <button type="submit" class="btn btn-primary">Áp dụng</button>
+                                    </div>
+                                </div>
+                                
+                            </form>
+                            
+                           <script>
+                                document.getElementById("selectVoucherButton").addEventListener("click", function() {
+                                // Chuyển hướng đến trang hiển thị danh sách voucher
+                                window.location.href = "/KhuyenMai";
+                                });
+                           </script>
+                        </div>
+                    </div>
+                </div>
+
+                @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+                {
+                    <div class="alert alert-danger" role="alert">
+                        @ViewBag.ErrorMessage
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+    
+</div>
+<script>
+
+    
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var btnXacNhanThanhToan = document.getElementById('btnXacNhanThanhToan');
+        var nguoiNhanInput = document.getElementById('NguoiNhanInput');
+        var sdtNNInput = document.getElementById('SDTNNInput');
+        var diaChiNhanInput = document.getElementById('DiaChiNhanInput');
+
+        btnXacNhanThanhToan.addEventListener('click', function (event) {
+            // Kiểm tra nếu một trong các trường không hợp lệ
+            if (!isNguoiNhanValid() || !isSdtNNValid() || !isDiaChiNhanValid()) {
+                event.preventDefault(); // Ngăn chặn sự kiện submit nếu dữ liệu không hợp lệ
+                alert('Vui lòng nhập đủ thông tin người nhận, số điện thoại và địa chỉ.');
+            }
+        });
+
+        function isNguoiNhanValid() {
+            var value = nguoiNhanInput.value.trim();
+            return value && value.length <= 50;
+        }
+
+        function isSdtNNValid() {
+            var value = sdtNNInput.value.trim();
+            return value && /^[0-9]+$/.test(value) && value.length === 10 && value[0] === '0';
+        }
+
+        function isDiaChiNhanValid() {
+            var value = diaChiNhanInput.value.trim();
+            return value && value.length <= 100;
+        }
+    });
+</script>

@@ -16,8 +16,12 @@ namespace ThanhThoaiRestaurant.Models
 
         public float GiaBan { get; set; }
 
-        public float ThanhTien { get; set; }
+		public float GiaKhuyenMai { get; set; }
+
+		public float ThanhTien { get; set; }
         public virtual GioHang MaGioHangNavigation { get; set; } = null!;
         public virtual MonAn MaMonNavigation { get; set; } = null!;
+
+
     }
 }

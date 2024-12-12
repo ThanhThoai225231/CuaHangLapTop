@@ -1,0 +1,684 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<DonHang>
+
+@{
+    ViewBag.Title = "Đơn hàng đã huỷ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .pagination {
+        --bs-pagination-padding-x: 0.75rem;
+        --bs-pagination-padding-y: 0.375rem;
+        --bs-pagination-font-size: 1rem;
+        --bs-pagination-color: var(--bs-link-color);
+        --bs-pagination-bg: var(--bs-body-bg);
+        --bs-pagination-border-width: var(--bs-border-width);
+        --bs-pagination-border-color: var(--bs-border-color);
+        --bs-pagination-border-radius: var(--bs-border-radius);
+        --bs-pagination-hover-color: var(--bs-link-hover-color);
+        --bs-pagination-hover-bg: var(--bs-tertiary-bg);
+        --bs-pagination-hover-border-color: var(--bs-border-color);
+        --bs-pagination-focus-color: var(--bs-link-hover-color);
+        --bs-pagination-focus-bg: var(--bs-secondary-bg);
+        --bs-pagination-focus-box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        --bs-pagination-active-color: #fff;
+        --bs-pagination-active-bg: #0d6efd;
+        --bs-pagination-active-border-color: #0d6efd;
+        --bs-pagination-disabled-color: var(--bs-secondary-color);
+        --bs-pagination-disabled-bg: var(--bs-secondary-bg);
+        --bs-pagination-disabled-border-color: var(--bs-border-color);
+        display: flex;
+        padding-left: 0;
+        list-style: none;
+    }
+
+    .form-control2 {
+        height: 28px;
+        width: 150px;
+        font-size: 18px;
+        border-radius: 0px;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        background-color: #f9ffd7;
+        border: 2px solid #222323;
+    }
+
+    .form-control1 {
+        height: 28px;
+        font-size: 18px;
+        border-radius: 0px;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        background-color: #f9ffd7;
+        border: 2px solid #222323;
+    }
+
+    .order-history {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .order-item {
+        width: 80%;
+        border: 2px solid #ccc; /* Màu viền */
+        background-color: #ecf0f1; /* Màu nền */
+        margin: 10px 0;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        transition: background-color 0.3s ease; /* Hiệu ứng chuyển đổi màu nền */
+    }
+
+        .order-item:hover {
+            background-color: #c3c6c7; /* Màu nền khi di chuột qua */
+        }
+
+    .order-info {
+        flex-grow: 1;
+        margin-left: 10px;
+    }
+
+    .order-label {
+        font-weight: bold;
+        margin-right: 5px;
+        color: #2c3e50; /* Màu chữ */
+        font-size: 18px;
+    }
+
+    .order-value {
+        color: #e74c3c; /* Màu chữ cho giá trị */
+        font-weight: bold;
+    }
+
+    .order-action {
+        text-align: center;
+        font-weight: bold;
+        border: solid 3px #fff;
+        height: 32px;
+        width: 90px;
+        background-color: #2f9393;
+    }
+
+    .order-action1 {
+        text-align: center;
+        font-weight: bold;
+        border: solid 3px #fff;
+        height: 32px;
+        width: 90px;
+        background-color: #d08c00;
+        margin-top: 30px;
+    }
+
+    .customer-image {
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+        border-radius: 50%;
+    }
+
+    .separator-line {
+        height: 100%;
+        border-right: 2px solid #3498db; /* Màu đường phân cách */
+        margin-right: 10px;
+    }
+
+
+
+
+    .pagination li.active a {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        border: 1px solid #ccc;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+        .dropdown-content label {
+            display: block;
+            padding: 10px;
+        }
+
+    .quantity {
+        display: none;
+    }
+
+    #data-table-5 {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Độ bóng */
+        border: 1px solid #ddd; /* Viền */
+        border-collapse: collapse; /* Gộp viền của các ô */
+    }
+
+        #data-table-5 tbody tr:nth-child(even) {
+            background-color: #aadaaa; /* Màu nền cho hàng chẵn */
+            text-align: center;
+        }
+
+        #data-table-5 tbody tr:nth-child(odd) {
+            background-color: #d9eeb8; /* Màu nền cho hàng lẻ */
+            text-align: center;
+        }
+
+        #data-table-5 td {
+            padding: 10px; /* Khoảng cách trong ô */
+            border: 1px solid #ddd; /* Viền cho ô */
+        }
+
+        #data-table-5 td {
+            font-size: 15px; /* Kích thước chữ */
+            color: #333; /* Màu chữ */
+        }
+
+        #data-table-5 tbody tr:hover {
+            background-color: #ffc107; /* Màu nền khi di chuột vào */
+            color: #333; /* Màu chữ khi di chuột vào */
+            transform: scale(1.02); /* Thu nhỏ dòng khi di chuột vào */
+            transition: background-color 0.3s, color 0.3s, transform 0.3s; /* Hiệu ứng màu và thu nhỏ trong 0.3 giây */
+            cursor: pointer; /* Con trỏ biến thành bàn tay khi di chuột vào */
+        }
+
+        #data-table-5 th {
+            background-color: #7dca42;
+            color: #fff;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            border: 2px solid #f7f0f0;
+        }
+
+    .btn-secondary {
+        color: #fff;
+        background-color: #df0a0a;
+        border-color: #252728;
+    }
+
+    .status-block > div {
+        flex-grow: 1;
+        text-align: center;
+        padding: 10px;
+    }
+
+    .status-block::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+    }
+
+
+    .search-button {
+        margin: 0 20px 0 50px;
+        width: 100px;
+        background-color: #4CAF50; /* Màu nền */
+        color: white; /* Màu chữ */
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s; /* Hiệu ứng chuyển đổi màu nền */
+    }
+
+        .search-button:hover {
+            background-color: #45a049; /* Màu nền khi di chuột qua */
+        }
+
+    /* Ô tìm đơn */
+    .search-input {
+        margin: 0 20px;
+    }
+
+    /* Ô chọn ngày */
+    .date-picker {
+        margin: 0 20px 0 50px;
+        width: 200px;
+    }
+
+        .date-picker label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .date-picker input {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc; /* Viền */
+            border-radius: 3px;
+            transition: border-color 0.3s; /* Hiệu ứng chuyển đổi màu viền */
+        }
+
+            .date-picker input:focus {
+                border-color: #4CAF50; /* Màu viền khi ô được focus */
+            }
+
+    .custom-row {
+        margin: 100px -50px 0 0;
+        background-color: #f5f5f5; /* Màu nền */
+        padding: 20px; /* Khoảng cách nội dung và viền */
+        border-radius: 10px; /* Góc bo tròn */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+        transition: background-color 0.3s; /* Hiệu ứng chuyển đổi màu nền */
+    }
+
+        .custom-row:hover {
+            background-color: #e0e0e0; /* Màu nền khi di chuột qua */
+        }
+
+    /* Nút tìm */
+    .search-button {
+        margin: 0 20px 0 50px;
+        width: 100px;
+        background-color: #4CAF50; /* Màu nền */
+        color: white; /* Màu chữ */
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s; /* Hiệu ứng chuyển đổi màu nền */
+    }
+
+        .search-button:hover {
+            background-color: #45a049; /* Màu nền khi di chuột qua */
+        }
+
+    /* Ô tìm đơn */
+    .search-input {
+        margin: 0 20px;
+    }
+
+    /* Ô chọn ngày */
+    .date-picker {
+        margin: 0 20px 0 50px;
+        width: 200px;
+    }
+
+        .date-picker label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .date-picker input {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc; /* Viền */
+            border-radius: 3px;
+            transition: border-color 0.3s; /* Hiệu ứng chuyển đổi màu viền */
+        }
+
+            .date-picker input:focus {
+                border-color: #4CAF50; /* Màu viền khi ô được focus */
+            }
+
+    .form-control {
+        height: 35px !important;
+        font-size: 18px;
+        border-radius: 0px;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        background-color: #f9ffd7;
+        border: 2px solid #222323;
+    }
+
+    .status-block {
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .status-block a {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+            .status-block a.active {
+                background: #D10024;
+                color: white;
+                font-weight: bold;
+            }
+</style>
+
+
+<!-- Main Content -->
+<div class="ms-panel-body">
+    <div class="table">
+        <div id="data-table-5_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+
+            <div class="row" style="margin: 0 auto 50px; ">
+                <div class="col-sm-12 ">
+                    <!-- Khối trạng thái -->
+                    <div class="status-block">
+                        <a href="/DonHang/Index">TẤT CẢ</a>
+                        <a href="/DonHang/ChoXacNhan">CHỜ XÁC NHẬN</a>
+                        <a href="/DonHang/DangGiao">ĐANG VẬN CHUYỂN</a>
+                        <a href="/DonHang/DaGiao">ĐÃ VẬN CHUYỂN</a>
+                        <a class="active" href="/DonHang/Huy">HUỶ</a>
+                    </div>
+                </div>
+                <!-- Các khối khác -->
+            </div>
+
+            <div class="row " style="margin:50px -50px 0 250px;">
+
+
+                <!--Nút tìm-->
+
+
+
+
+                <div class="col-sm-12 col-md-2" style="margin: 0 20px; ">
+                    <div id="data-table-5_filter" class="dataTables_filter">
+
+                        <input style="margin-top: 25px;" type="search" class="form-control2 form-control-sm" placeholder="Tìm đơn..." aria-controls="data-table-5" id="searchInput">
+
+
+                    </div>
+                </div>
+
+
+                <script>
+                    // Get the search input element
+                    var searchInput = document.getElementById('searchInput');
+
+                    // Check if there is a saved search value in Local Storage
+                    var savedSearch = localStorage.getItem('savedSearch');
+                    if (savedSearch) {
+                        // If there is a saved search value, set it as the value of the search input
+                        searchInput.value = savedSearch;
+                    }
+
+                    // Add an event listener to the search input to save its value in Local Storage
+                    searchInput.addEventListener('input', function () {
+                        // Save the current value of the search input in Local Storage
+                        localStorage.setItem('savedSearch', searchInput.value);
+                    });
+                </script>
+
+                <div class="col-sm-12 col-md-4" style="margin: 0 20px 0 50px; width: 200px">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label style="font-weight: bold;" for="startDate">Từ ngày:</label>
+                            <input type="date" class="form-control1 form-control-sm" id="startDate">
+                        </div>
+                        <div class="col-md-6">
+                            <label style="font-weight: bold;" for="endDate">Đến ngày:</label>
+                            <input type="date" class="form-control1 form-control-sm" id="endDate">
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    // Get the date input elements
+                    var startDateInput = document.getElementById('startDate');
+                    var endDateInput = document.getElementById('endDate');
+
+                    // Check if there are saved date values in Local Storage
+                    var savedStartDate = localStorage.getItem('savedStartDate');
+                    var savedEndDate = localStorage.getItem('savedEndDate');
+
+                    if (savedStartDate) {
+                        // If there is a saved start date value, set it as the value of the start date input
+                        startDateInput.value = savedStartDate;
+                    }
+
+                    if (savedEndDate) {
+                        // If there is a saved end date value, set it as the value of the end date input
+                        endDateInput.value = savedEndDate;
+                    }
+
+                    // Add event listeners to the date inputs to save their values in Local Storage
+                    startDateInput.addEventListener('input', function () {
+                        // Save the current value of the start date input in Local Storage
+                        localStorage.setItem('savedStartDate', startDateInput.value);
+                    });
+
+                    endDateInput.addEventListener('input', function () {
+                        // Save the current value of the end date input in Local Storage
+                        localStorage.setItem('savedEndDate', endDateInput.value);
+                    });
+                </script>
+
+                <div class="col-sm-12 col-md-1" style="margin: 24px 0 0 20px; white-space: nowrap; font-weight: bold; color: #aec619;">
+                    <button onclick="resetFilters()" style="background: none; border: none; cursor: pointer;  font-weight: bold; color: red; border: solid 2px #000000;">
+                        <i class="fa fa-trash-o" style="font-size:24px"></i> Xoá bộ lọc
+                    </button>
+                </div>
+
+                <script>
+                    // Get the search input element
+                    var searchInput = document.getElementById('searchInput');
+                    var startDateInput = document.getElementById('startDate');
+                    var endDateInput = document.getElementById('endDate');
+
+                    function resetFilters() {
+                        // Reset the values of search input, start date, and end date
+                        searchInput.value = '';
+                        startDateInput.value = '';
+                        endDateInput.value = '';
+
+                        // Clear the saved values from Local Storage
+                        localStorage.removeItem('savedSearch');
+                        localStorage.removeItem('savedStartDate');
+                        localStorage.removeItem('savedEndDate');
+                    }
+
+                    // Rest of your existing script...
+
+                </script>
+
+                <div class="col-sm-12 col-md-2" style="margin: 0 20px 0 0; width: 100px ">
+                    <button style="border-radius: 15px;   background-color:#eda200; margin-top: 22px; font-weight:bold;" type="button" class="btn btn-primary" onclick="searchItems()">Tìm</button>
+                </div>
+
+
+                <script>
+                    function searchItems() {
+                        var searchInput = document.getElementById("searchInput").value;
+                        var startDateInput = document.getElementById("startDate").value;
+                        var endDateInput = document.getElementById("endDate").value;
+
+                        // Tạo URL với các tham số tìm kiếm và trang
+                        var url = "@Url.Action("Index")";
+                        var params = [];
+
+                        if (searchInput) {
+                            params.push("search=" + searchInput);
+                        }
+
+                        if (startDateInput) {
+                            params.push("startDate=" + startDateInput);
+                        }
+
+                        if (endDateInput) {
+                            params.push("endDate=" + endDateInput);
+                        }
+
+                        if (params.length > 0) {
+                            url += "?" + params.join("&");
+                        }
+
+                        window.location.href = url;
+                    }
+
+                    // Gọi hàm tìm kiếm khi nhấn Enter trong các ô input
+                    document.getElementById("searchInput").addEventListener("keyup", function (event) {
+                        if (event.key === "Enter") {
+                            searchItems();
+                        }
+                    });
+
+                    // Gọi hàm tìm kiếm khi bấm nút "Tìm"
+                    document.getElementById("searchButton").addEventListener("click", searchItems);
+                </script>
+
+
+
+
+
+            </div>
+            <div class="row" style="margin: 100px auto;">
+                <div class="col-sm-12">
+                    <div class="order-history">
+                        @foreach (var donHang in Model)
+                        {
+                            <div class="order-item">
+                                <img src="~/img/customers/1.png" alt="Ảnh khách hàng" class="customer-image">
+                                <div class="separator-line"></div>
+                                <div class="order-info">
+                                    <div class="order-info">
+                                        <span class="order-label">Mã đơn hàng:</span>
+                                        <span class="order-value">@donHang.MaDonHang</span>
+                                    </div>
+                                    <div class="order-info">
+                                        <span class="order-label">Ngày đặt hàng:</span>
+                                        <span class="order-value">@donHang.NgayDatHang</span>
+                                    </div>
+                                    <div class="order-info">
+                                        <span class="order-label">Trạng thái đơn hàng:</span>
+                                        <span class="order-value">
+                                            @if (donHang.TrangThaiDh == 1)
+                                            {
+                                                <span style="font-size: 15px;" class="badge bg-primary">Chờ xác nhận</span>
+                                            }
+                                            else if (donHang.TrangThaiDh == 2)
+                                            {
+                                                <span style="font-size: 15px;" class="badge bg-warning">Đang vận chuyển</span>
+                                            }
+                                            else if (donHang.TrangThaiDh == 3)
+                                            {
+                                                <span style="font-size: 15px;" class="badge bg-success">Đã vận chuyển</span>
+                                            }
+                                            else if (donHang.TrangThaiDh == 4)
+                                            {
+                                                <span style="font-size: 15px;" class="badge bg-danger">Đã huỷ</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="amount">Không xác định</span>
+                                            }
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="order-action">
+                                    <a style="color: white;" href="#" onclick="redirectToDetails(@donHang.MaDonHang)">
+                                        Chi tiết
+                                    </a>
+
+                                    
+                                    <script>
+                                        function redirectToDetails(id) {
+                                            window.location.href = "/DonHang/Details/" + id;
+                                        }
+                                    </script>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+@if (ViewBag.TotalItems > 0)
+{
+    <!-- Hiển thị thông tin phân trang -->
+    <div class="paging-info" style="font-size: 13px; color: red; text-align: center;">
+        Hiển thị từ đơn hàng thứ @ViewBag.StartItem đến @ViewBag.EndItem trên tổng số @ViewBag.TotalItems đơn hàng
+    </div>
+}
+<nav class="navigation paging-navigation clearfix d-flex justify-content-center" style=" white-space: nowrap;">
+
+    <div class="col-sm-12 col-md-7 d-flex justify-content-center">
+        <div class="dataTables_paginate paging_simple_numbers" id="data-table-5_paginate">
+            <div class="text-center">
+                @if (ViewBag.TotalItems > ViewBag.PageSize)
+                {
+                    <ul class="pagination">
+                        @if (ViewBag.PageNumber > 1)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="@Url.Action("Huy", new { page=1, pageSize=ViewBag.PageSize, search=ViewBag.Search, startDate = ViewBag.StartDate, endDate = ViewBag.EndDate })"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                            </li>
+                        }
+
+                        @if (ViewBag.PageNumber > 3)
+                        {
+                            <li class="page-item">
+                                <input type="number" id="customPageInput" min="1" max="@ViewBag.TotalPages" class="page-link" style="width: 45px; padding: 8px;" onkeydown="if (event.key === 'Enter') { goToCustomPage(); }">
+                            </li>
+
+                        }
+
+                        @for (int i = Math.Max(1, ViewBag.PageNumber - 2); i <= Math.Min(ViewBag.TotalPages, ViewBag.PageNumber + 2); i++)
+                        {
+                            <li class="page-item @(i == ViewBag.PageNumber ? " active" : "" )">
+                                <a class="page-link" href="@Url.Action("Huy", new { page=i, pageSize=ViewBag.PageSize, search=ViewBag.Search, startDate = ViewBag.StartDate, endDate = ViewBag.EndDate })">@i</a>
+                            </li>
+                        }
+
+                        @if (ViewBag.PageNumber < ViewBag.TotalPages - 2)
+                        {
+                            <li class="page-item">
+                                <input type="number" id="customPageInput" min="1" max="@ViewBag.TotalPages" class="page-link" style="width: 45px; padding: 8px;" onkeydown="if (event.key === 'Enter') { goToCustomPage(); }">
+                            </li>
+
+                        }
+
+                        @if (ViewBag.PageNumber < ViewBag.TotalPages)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="@Url.Action("Huy", new { page=ViewBag.TotalPages, pageSize=ViewBag.PageSize, search=ViewBag.Search, startDate = ViewBag.StartDate, endDate = ViewBag.EndDate })"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                            </li>
+                        }
+                    </ul>
+                }
+                <script>
+                    function goToCustomPage() {
+                        var customPageInput = document.getElementById("customPageInput");
+                        var customPage = customPageInput.value;
+                        if (customPage >= 1 && customPage <= @ViewBag.TotalPages) {
+                            var url = "@Url.Action("Huy", new { page = "__page__", pageSize=ViewBag.PageSize, search=ViewBag.Search, startDate = ViewBag.StartDate, endDate = ViewBag.EndDate })";
+                            url = url.replace("__page__", customPage);
+                            window.location.href = url;
+                        }
+                    }
+
+                    document.getElementById("customPageInput").addEventListener("keyup", function (event) {
+                        if (event.key === "Enter") {
+                            goToCustomPage();
+                        }
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+</nav><!-- .navigation -->
+{
+    <!-- Hiển thị thông tin phân trang -->
+    <div class="paging-info" style="font-size: 13px; color: red; text-align: center;">
+        Trang @ViewBag.PageNumber/@ViewBag.TotalPages
+    </div>
+}
+
+

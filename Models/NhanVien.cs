@@ -16,6 +16,7 @@ namespace ThanhThoaiRestaurant.Models
         public DateTime NgaySinhNv { get; set; }
         public string Cccdnv { get; set; } = null!;
         public string TenDangNhap { get; set; } = null!;
+        public string HinhAnh { get; set; } = null!;
 
         public virtual NguoiDung TenDangNhapNavigation { get; set; } = null!;
     }

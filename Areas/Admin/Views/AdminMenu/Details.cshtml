@@ -6,24 +6,37 @@
 
 }
 
+<style>
+    .center-container {
+        margin: auto;
+        width: 90%;
+        margin-right: 50px;
+    }
+}
+</style>
+
+
+<main id="main" class="main">
 <div class="ms-content-wrapper">
     <div class="row">
-        <div class="col-md-12">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb pl-0">
-                    <li class="breadcrumb-item"><a href="#"><i class="material-icons">home</i> Admin</a></li>
-                    <li class="breadcrumb-item"><a href="#">Món ăn</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Chi tiết món ăn</li>
-                </ol>
-            </nav>
-        </div>
+            <div class="pagetitle">
+                <h1>Sản phẩm</h1>
+                <nav>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/Admin/AdminMenu">Quản lý sản phẩm</a></li>
+                        <li class="breadcrumb-item active">Chi tiết sản phẩm</li>
+                    </ol>
+                </nav>
+            </div><!-- End Page Title -->
         <div class="col-md-12">
             <div class="ms-panel">
                 <div class="ms-panel-header">
-                    <div class="ms-panel-header text-center">
-                        <h6>Chi tiết món ăn</h6>
-                        <img src="~/img/food/@Model.HinhAnh" alt="First slide" class="img-fluid" style="max-width: 1000px; max-height: 400px;">
-                        <h3 style="color:red;">@Model.TenMon</h3>
+                    <div class="ms-panel-header">
+                            <h3 class="text-center" style="color:red;">@Model.TenMon</h3>
+                            <img src="~/new1/img/@Model.HinhAnh" alt="First slide" style="max-width: 200px; max-height: 200px; margin: 50px 20px;">
+                            <img src="~/new1/img/@Model.HinhAnh1" alt="First slide" style="max-width: 200px; max-height: 200px; margin: 50px 25px;">
+                            <img src="~/new1/img/@Model.HinhAnh2" alt="First slide" style="max-width: 200px; max-height: 200px; margin: 50px 25px;">
+                            <img src="~/new1/img/@Model.HinhAnh3" alt="First slide" style="max-width: 200px; max-height: 200px; margin: 50px 20px;">
                     </div>
 
                 </div>
@@ -33,36 +46,33 @@
         <div class=" col-md-6">
             <div class="ms-panel ms-panel-fh">
                 <div class="ms-panel-body">
-                    <h4 class="section-title bold">Thông tin</h4>
+                                <h4 class="section-title bold" style="color: #1019d0; font-size: 30px; font-weight: bold;">
+                                    Thông tin
+                                </h4>
                     <table class="table ms-profile-information">
                         <tbody>
-                            <tr>
-                                <th scope="row">Giá bán</th>
-                                        <td> @Model.GiaBan.ToString("N0") VNĐ </td>
-                            </tr>
                                     <tr>
-                                        <th scope="row">Mô tả ngắn</th>
-                                        <td> @Model.MoTaNgan </td>
+                                        <th scope="row">Hãng sản xuất</th>
+                                        <td> @Model.TenNhom </td>
                                     </tr>
-                            <tr>
-                                <th scope="row">Nhóm món ăn</th>
-                                <td>@Model.MaNhom</td>
-                            </tr>
+                                    <tr>
+                                        <th scope="row">Tên món ăn</th>
+                                        <td> @Model.TenMon</td>
+                                    </tr>                                  
+                                    <tr>
+                                        <th scope="row">Giá bán</th>
+                                        <td> @Model.GiaBan.ToString("N0") VNĐ </td>
+                                    </tr>
+                                        
+                                     
                             <tr>
                                 <th scope="row">Trạng thái</th>
-                                <td class="badge badge-pill badge-primary" style="font-size: 15px; color: @(Model.SoLuong > 0 ? "green" : "red");">
+                                <td  style="font-size: 15px; color: @(Model.SoLuong > 0 ? "green" : "red");">
                                     @(Model.SoLuong > 0 ? "Còn hàng: " + Model.SoLuong + " " + Model.DonViTinh : "Hết hàng")
                                 </td>
                                
                             </tr>
-                            <tr>
-                                <th scope="row">Phí vận chuyển</th>
-                                <td>Miễn phí</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Mã món ăn</th>
-                                <td>@Model.MaMon</td>
-                            </tr>
+                                                    
                         </tbody>
                     </table>
                    
@@ -71,48 +81,69 @@
         </div>
         <div class=" col-md-6" style="margin-left: 50px;">
             <div class="ms-panel ms-panel-fh">
-                <div class="ms-panel-body">
-                    <h4 class="section-title bold">Mô tả chi tiết </h4>
-                    <p class="description">@Model.MoTaDai</p>
-                </div>
-                <div class="ms-quick-stats" style="display:flex; margin-top: 50px;">
-                    <div class="ms-stats-grid">
-                        <i class="fa fa-bullhorn"></i>
-                        <p class="ms-text-dark">1,033</p>
-                        <span>Today Order</span>
-                    </div>
-                    <div class="ms-stats-grid" style="margin-left: 100px;">
-                        <i class="fa fa-heart"></i>
-                        <p class="ms-text-dark">3,039</p>
-                        <span>Favourite</span>
-                    </div>
-                </div>
+                            <div class="ms-panel-body">
+                                <h4 class="section-title bold" style="color: #1019d0; font-size: 30px; font-weight: bold;">Mô tả chi tiết </h4>
+                                <table class="table ms-profile-information">
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Ổ cứng</th>
+                                            <td> @Model.OCung.DungLuong </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Màn hình</th>
+                                            <td> @Model.ManHinh.KichThuoc</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Ram</th>
+                                            <td> @Model.RAM.DungLuongRam </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">CPU</th>
+                                            <td> @Model.CPU.TenLoaiCPU </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Đã bán</th>
+                                            <td> @Model.SoLuongDaBan sản phẩm </td>
+                                        </tr>
+                                        
+
+                                    </tbody>
+                                </table>
+                            </div>
+
             </div>
         </div>             
         </div>
      
     </div>
+        @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+        @if (HttpContextAccessor.HttpContext.Session.GetString("IsLoggedIn") == "true" && HttpContextAccessor.HttpContext.Session.GetString("VaiTro") == "Admin")
+        {
+            <div class="text-right mt-3" style="display: flex;">
+                <a href="@Url.Action("Edit", new { id = Model.MaMon })" class="btn btn-primary">Sửa</a>
 
-        <div class="text-right mt-3">
-            <a href="#" class="btn btn-primary">Edit</a>
-            <form asp-controller="AdminMenu" asp-action="Delete" asp-route-id="@Model.MaMon" method="post">
-                <button type="button" class="btn btn-secondary ml-2" onclick="confirmDelete()">Delete</button>
-                <input type="submit" id="deleteButton" style="display: none;" />
-            </form>
-        </div>
+                <form asp-controller="AdminMenu" asp-action="Delete" asp-route-id="@Model.MaMon" method="post">
+                    <button type="button" class="btn btn-secondary ml-2" onclick="confirmDelete()" style="margin-left: 20px;">Xoá</button>
+                    <input type="submit" id="deleteButton" style="display: none;" />
+                </form>
 
-        <script>
-            function confirmDelete() {
-                if (confirm("Bạn có chắc chắn muốn xóa món ăn này?")) {
-                    document.getElementById("deleteButton").click();
+                <a href="@Url.Action("Index")" class="btn btn-secondary" style="background-color: #FF5733; color: white; margin-left: 20px;">Trở về</a>
+            </div>
+
+            <script>
+                function confirmDelete() {
+                if (confirm("Bạn có chắc chắn muốn xóa sản phẩm này?")) {
+                document.getElementById("deleteButton").click();
                 }
-            }
-        </script>
-
-        <div class="mt-3">
-            <a href="@Url.Action("Index")" class="btn btn-secondary" style="background-color: #FF5733; color: white;">Trở về</a>
-        </div>
+                }
+            </script>
+        }
+        else
+        {
+                <a href="@Url.Action("Index")" class="btn btn-secondary" style="background-color: #FF5733; color: white; margin-left: 20px; width: 100px;">Trở về</a>
+            
+        }
     </div>
 </div>
-
+</main>
 

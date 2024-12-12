@@ -1,0 +1,404 @@
+﻿@model ThanhThoaiRestaurant.Models.NhanVienViewModel
+
+@{
+    ViewBag.Title = "Chi tiết nhân viên";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+
+}
+
+
+<style>
+    label {
+        display: inline-block;
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    .centered-image {
+        display: block;
+        margin: 0 300px 40px 349px;
+        height: 250px;
+    }
+
+</style>
+
+<main id="main" class="main">
+    <div class="row">
+        <div class="pagetitle">
+            <h1>Nhân viên</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/Admin/AdminNhanVien">Quản lý nhân viên</a></li>
+                    <li class="breadcrumb-item active">Thêm nhân viên</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+        <div class="col-xl-6 col-md-12">
+            <div class="ms-panel ms-panel-fh">
+                <div class="ms-panel-header">
+                    <h4 style="font-weight: bold; color: #df1d1b; font-weight: bold;">
+                        Thêm nhân viên
+                    </h4>
+
+                    <img style="height: 150px; margin-left: 500px;" src="~/img/food/1.png" alt="Ảnh khách hàng" class="customer-image">
+
+                </div>
+
+
+
+
+
+                <div class="ms-panel-body">
+
+
+                    <form asp-controller="AdminNhanVien" asp-action="Create" method="post" enctype="multipart/form-data">
+                        <div class="form-row" style="display:flex; justify-content: space-between;">
+                            <div class="col-md-8" style="margin-left: 100px;">
+                                <!--Mã nhân viên-->
+
+                                <div class="mb-3">
+                                    <label for="MaNv">Mã nhân viên</label>
+                                    <div class="input-group">
+                                        <input asp-for="MaNv" class="form-control" id="MaNv" placeholder="Mã nhân viên" required maxlength="50">
+                                    </div>
+                                    <div class="text-danger" id="MaNvError"></div>
+                                    @if (TempData["TenDangNhapError"] != null)
+                                    {
+                                        <div class="text-danger">@TempData["TenDangNhapError"]</div>
+                                    }
+                                </div>
+
+                                <script>
+                                    document.getElementById("MaNv").addEventListener("input", function () {
+                                        var maNvInput = this.value;
+                                        var errorElement = document.getElementById("MaNvError");
+
+                                        // Kiểm tra lỗi không được để trống
+                                        if (maNvInput.trim() === "") {
+                                            // Đặt thông báo lỗi cụ thể
+                                            errorElement.textContent = "Mã nhân viên không được để trống.";
+                                        } else {
+                                            // Kiểm tra lỗi định dạng (NV + 3 số bất kỳ)
+                                            var regex = /^NV\d{3}$/;
+                                            if (!regex.test(maNvInput)) {
+                                                // Đặt thông báo lỗi cụ thể
+                                                errorElement.textContent = "Mã nhân viên phải có dạng NV + 3 số bất kỳ.";
+                                            } else {
+                                                // Xóa thông báo lỗi nếu không có lỗi
+                                                errorElement.textContent = "";
+                                            }
+                                        }
+                                    });
+                                </script>
+
+
+                                <!--Tên nhân viên-->
+                                <div class="mb-3">
+                                    <label for="TenNv">Tên nhân viên</label>
+                                    <div class="input-group">
+                                        <input asp-for="TenNv" class="form-control" id="TenNv" placeholder="Tên nhân viên" required maxlength="50">
+                                    </div>
+                                    <div class="text-danger" id="TenNvError"></div>
+                                </div>
+
+                                <script>
+                                    document.getElementById("TenNv").addEventListener("input", function () {
+                                        var tenNhanVienInput = this.value;
+                                        var errorElement = document.getElementById("TenNvError");
+
+                                        // Kiểm tra lỗi không được để trống
+                                        if (tenNhanVienInput.trim() === "") {
+                                            // Đặt thông báo lỗi cụ thể
+                                            errorElement.textContent = "Tên nhân viên không được để trống.";
+                                        } else {
+                                            // Kiểm tra lỗi vượt quá 50 kí tự
+                                            if (tenNhanVienInput.length > 50) {
+                                                // Đặt thông báo lỗi cụ thể
+                                                errorElement.textContent = "Tên nhân viên không được quá 50 kí tự.";
+                                            } else {
+                                                // Xóa thông báo lỗi nếu không có lỗi
+                                                errorElement.textContent = "";
+                                            }
+                                        }
+                                    });
+                                </script>
+
+
+
+                                <!--Giới tính-->
+                                <div class="mb-3">
+                                    <label > Giới tính</label>
+                                    <div class="input-group">
+                                        <select asp-for="GioiTinhNv" class="form-control" required>
+                                            <option value="Nam">Nam</option>
+                                            <option value="Nữ">Nữ</option>
+                                        </select>
+                                        <span asp-validation-for="GioiTinhNv" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+
+
+                                <!--Ngày sinh-->
+                                <div class="mb-3">
+                                    <label for="NgaySinhNv">Ngày sinh</label>
+                                    <div class="input-group">
+                                        <input asp-for="NgaySinhNv" type="date" class="form-control" id="NgaySinhNv" placeholder="Ngày sinh" required>
+                                    </div>
+                                    <div class="text-danger" id="NgaySinhNvError"></div>
+                                </div>
+
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", function () {
+                                        // Lấy thẻ input ngày sinh và thẻ hiển thị lỗi
+                                        var ngaySinhInput = document.getElementById("NgaySinhNv");
+                                        var ngaySinhError = document.getElementById("NgaySinhNvError");
+
+                                        // Gán sự kiện blur cho input ngày sinh
+                                        ngaySinhInput.addEventListener("blur", function () {
+                                            // Kiểm tra nếu giá trị của input là rỗng
+                                            if (!ngaySinhInput.value.trim()) {
+                                                // Hiển thị thông báo lỗi
+                                                ngaySinhError.textContent = "Ngày sinh không được để trống";
+                                            } else {
+                                                // Nếu đã điền thông tin, kiểm tra ngày hợp lệ
+                                                var ngaySinh = new Date(ngaySinhInput.value);
+                                                var minDate = new Date("1980-01-01");
+                                                var maxDate = new Date("2000-01-01");
+
+                                                if (ngaySinh < minDate || ngaySinh >= maxDate) {
+                                                    // Hiển thị thông báo lỗi nếu ngày không hợp lệ
+                                                    ngaySinhError.textContent = "Ngày sinh phải lớn hơn 01/01/1980 và bé hơn 01/01/2000";
+                                                } else {
+                                                    // Ngày hợp lệ, ẩn thông báo lỗi
+                                                    ngaySinhError.textContent = "";
+                                                }
+                                            }
+                                        });
+                                    });
+                                </script>
+
+                             
+                                <!--Chức vụ-->
+
+                                <div class="mb-3">
+                                    <label>Chức vụ</label>
+                                    <div class="input-group">
+                                        <select asp-for="ChucVu" class="form-control" required>
+                                            <option value="Admin">Admin</option>
+                                            <option value="LeTan">Lễ tân</option>
+                                            <option value="ThuNgan">Thu ngân</option>
+                                        </select>
+                                        <span asp-validation-for="ChucVu" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+
+                                <!--Hình ảnh-->
+                                <div class= "mb-3">
+                                    <label for="HinhAnh">Hình ảnh</label>
+                                    <input type="file" class="form-control" id="hinhAnhInput" name="HinhAnhFile" accept="image/*" style="background-color: white;">
+
+                                </div>
+                               
+
+                            </div>
+                            <div class="col-md-8" style="margin-left: 200px;">
+
+
+
+                                <!--Ngày vào làm-->
+                                <div class="mb-3">
+                                    <label for="NgayVl">Ngày vào làm</label>
+                                    <div class="input-group">
+                                        <input asp-for="NgayVl" type="date" class="form-control" id="NgayVl" placeholder="Ngày vào làm" required>
+                                    </div>
+                                    <div class="text-danger" id="NgayVlError"></div>
+                                </div>
+
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", function () {
+                                        // Lấy thẻ input ngày vào làm và thẻ hiển thị lỗi
+                                        var ngayVlInput = document.getElementById("NgayVl");
+                                        var ngayVlError = document.getElementById("NgayVlError");
+
+                                        // Gán sự kiện blur cho input ngày vào làm
+                                        ngayVlInput.addEventListener("blur", function () {
+                                            // Kiểm tra nếu giá trị của input là rỗng hoặc chỉ chứa khoảng trắng
+                                            if (!ngayVlInput.value.trim()) {
+                                                // Hiển thị thông báo lỗi
+                                                ngayVlError.textContent = "Ngày vào làm không được để trống";
+                                            } else {
+                                                // Nếu đã điền thông tin, kiểm tra ngày hợp lệ
+                                                var ngayVl = new Date(ngayVlInput.value);
+                                                var currentDate = new Date();
+                                                var minDate = new Date("2023-01-01");
+
+                                                if (ngayVl > currentDate || ngayVl <= minDate) {
+                                                    // Hiển thị thông báo lỗi nếu ngày không hợp lệ
+                                                    ngayVlError.textContent = "Ngày vào làm phải lớn hơn 01/01/2023 và nhỏ hơn hoặc bằng ngày hiện tại";
+                                                } else {
+                                                    // Ngày hợp lệ, ẩn thông báo lỗi
+                                                    ngayVlError.textContent = "";
+                                                }
+                                            }
+                                        });
+                                    });
+                                </script>
+
+
+                                
+                                <!--Dịa chỉ-->
+                                <div class="mb-3">
+                                    <label for="DiaChiNv">Địa chỉ</label>
+                                    <div class="input-group">
+                                        <input asp-for="DiaChiNv" class="form-control" id="DiaChiNv" placeholder="Địa chỉ" required maxlength="200">
+                                    </div>
+                                    <div class="text-danger" id="DiaChiNvError"></div>
+                                </div>
+
+                                <script>
+                                    document.getElementById("DiaChiNv").addEventListener("input", function () {
+                                        var diaChiInput = this.value;
+                                        var errorElement = document.getElementById("DiaChiNvError");
+
+                                        // Kiểm tra lỗi không được để trống
+                                        if (diaChiInput.trim() === "") {
+                                            // Đặt thông báo lỗi cụ thể
+                                            errorElement.textContent = "Địa chỉ không được để trống.";
+                                        } else {
+                                            // Kiểm tra lỗi vượt quá 200 kí tự
+                                            if (diaChiInput.length > 200) {
+                                                // Đặt thông báo lỗi cụ thể
+                                                errorElement.textContent = "Địa chỉ không được quá 200 kí tự.";
+                                            } else {
+                                                // Xóa thông báo lỗi nếu không có lỗi
+                                                errorElement.textContent = "";
+                                            }
+                                        }
+                                    });
+                                </script>
+
+                                
+
+                                <!--CCCD-->
+                                <div class="mb-3">
+                                    <label for="Cccdnv">CCCD</label>
+                                    <div class="input-group">
+                                        <input asp-for="Cccdnv" class="form-control" id="Cccdnv" placeholder="CCCD" required maxlength="12">
+                                    </div>
+                                    <span asp-validation-for="Cccdnv" class="text-danger" id="Cccdnv-error"></span>
+                                </div>
+
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", function () {
+                                        // Lấy thẻ input CCCD và thẻ hiển thị lỗi
+                                        var cccdInput = document.getElementById("Cccdnv");
+                                        var cccdError = document.getElementById("Cccdnv-error");
+
+                                        // Gán sự kiện blur cho input CCCD
+                                        cccdInput.addEventListener("blur", function () {
+                                            // Kiểm tra nếu giá trị của input là rỗng hoặc chỉ chứa khoảng trắng
+                                            if (!cccdInput.value.trim()) {
+                                                // Hiển thị thông báo lỗi
+                                                cccdError.textContent = "CCCD không được để trống";
+                                            } else if (!/^\d{12}$/.test(cccdInput.value)) {
+                                                // Kiểm tra nếu không phải là chuỗi 12 số
+                                                cccdError.textContent = "CCCD phải là chuỗi 12 số";
+                                            } else {
+                                                // Nếu điều kiện đều đúng, ẩn thông báo lỗi
+                                                cccdError.textContent = "";
+                                            }
+                                        });
+                                    });
+                                </script>
+
+
+
+                                
+
+
+                                <!--SDT-->
+
+                                <div class="mb-3">
+                                    <label for="Sdtnv">Số điện thoại</label>
+                                    <div class="input-group">
+                                        <input asp-for="Sdtnv" class="form-control" id="Sdtnv" placeholder="Số điện thoại" required maxlength="10">
+                                    </div>
+                                    <span asp-validation-for="Sdtnv" class="text-danger" id="Sdtnv-error"></span>
+                                </div>
+
+                                <script>
+                                    document.getElementById("Sdtnv").addEventListener("input", function () {
+                                        var sdtInput = this.value;
+                                        var errorElement = document.getElementById("Sdtnv-error");
+
+                                        // Kiểm tra lỗi không được để trống
+                                        if (sdtInput.trim() === "") {
+                                            // Đặt thông báo lỗi cụ thể
+                                            errorElement.textContent = "Số điện thoại không được để trống.";
+                                        } else {
+                                            // Kiểm tra lỗi chỉ được nhập số
+                                            if (!/^\d+$/.test(sdtInput)) {
+                                                errorElement.textContent = "Số điện thoại chỉ được nhập số.";
+                                            } else {
+                                                // Kiểm tra lỗi đúng 10 kí tự
+                                                if (sdtInput.length !== 10) {
+                                                    errorElement.textContent = "Số điện thoại phải có đúng 10 kí tự.";
+                                                } else {
+                                                    // Xóa thông báo lỗi nếu không có lỗi
+                                                    errorElement.textContent = "";
+                                                }
+                                            }
+                                        }
+                                    });
+                                </script>
+
+
+
+
+                                <!--Email-->
+                                <div class="mb-3">
+                                    <label for="EmailNv">Email</label>
+                                    <div class="input-group">
+                                        <input asp-for="EmailNv" class="form-control" id="EmailNv" placeholder="Email" required maxlength="50">
+                                    </div>
+                                    <span asp-validation-for="EmailNv" class="text-danger"></span>
+                                    @if (ViewBag.EmailNvError != null)
+                                    {
+                                        <div class="text-danger">@ViewBag.EmailNvError</div>
+                                    }
+                                </div>
+
+
+                           
+
+
+
+                            </div>
+                        </div>
+                        <div class="text-right mt-3" style="display:flex;">
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+                           
+                            <a href="@Url.Action("Index")" class="btn btn-secondary" style="background-color: #FF5733; color: white; margin-left: 20px;">Trở về</a>
+                        </div>
+
+                        <script>
+                            function confirmDelete() {
+                                if (confirm("Bạn có chắc chắn muốn xóa món ăn này?")) {
+                                    document.getElementById("deleteButton").click();
+                                }
+                            }
+                        </script>
+
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</main>
+

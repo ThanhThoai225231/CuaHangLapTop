@@ -1,0 +1,106 @@
+﻿@model ThanhThoaiRestaurant.Models.RAM
+
+@{
+    ViewBag.Title = "Chi tiết";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+
+}
+
+<style>
+    .center-container {
+        margin: auto;
+        width: 90%;
+        margin-right: 50px;
+    }
+
+    }
+</style>
+
+
+<main id="main" class="main">
+    <div class="ms-content-wrapper">
+        <div class="row">
+            <div class="pagetitle">
+                <h1>ram sản phẩm</h1>
+                <nav>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/Admin/AdminRam">Quản lý ram sản phẩm</a></li>
+                        <li class="breadcrumb-item active">Chi tiết ram sản phẩm</li>
+                    </ol>
+                </nav>
+            </div><!-- End Page Title -->
+            <div class="col-md-12">
+
+                <div style="display: flex;">
+                    <div class=" col-md-6">
+                        <div class="ms-panel ms-panel-fh">
+                            <div class="ms-panel-body">
+                                <h4 class="section-title bold" style="color: #1019d0; font-size: 30px; font-weight: bold;">
+                                </h4>
+                                <table class="table ms-profile-information">
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Mã ram</th>
+                                            <td> @Model.MaRam </td>
+                                        </tr>
+
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" col-md-6" style="margin-left: 50px;">
+                        <div class="ms-panel ms-panel-fh">
+                            <div class="ms-panel-body">
+                                <h4>
+                                </h4>
+                                <table class="table ms-profile-information">
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Dung lượng ram</th>
+                                            <td> @Model.DungLuongRam </td>
+                                        </tr>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+            @if (HttpContextAccessor.HttpContext.Session.GetString("IsLoggedIn") == "true" && HttpContextAccessor.HttpContext.Session.GetString("VaiTro") == "Admin")
+            {
+                <div class="text-right mt-3" style="display: flex;">
+                    <a href="@Url.Action("Edit", new { id = Model.MaRam })" class="btn btn-primary">Sửa</a>
+
+                    <form asp-controller="AdminMenu" asp-action="Delete" asp-route-id="@Model.MaRam" method="post">
+                        <button type="button" class="btn btn-secondary ml-2" onclick="confirmDelete()" style="margin-left: 20px;">Xoá</button>
+                        <input type="submit" id="deleteButton" style="display: none;" />
+                    </form>
+
+                    <a href="@Url.Action("Index")" class="btn btn-secondary" style="background-color: #FF5733; color: white; margin-left: 20px;">Trở về</a>
+                </div>
+
+                <script>
+                    function confirmDelete() {
+                        if (confirm("Bạn có chắc chắn muốn xóa sản phẩm này?")) {
+                            document.getElementById("deleteButton").click();
+                        }
+                    }
+                </script>
+            }
+            else
+            {
+                <a href="@Url.Action("Index")" class="btn btn-secondary" style="background-color: #FF5733; color: white; margin-left: 20px; width: 100px;">Trở về</a>
+
+            }
+        </div>
+    </div>
+</main>
+

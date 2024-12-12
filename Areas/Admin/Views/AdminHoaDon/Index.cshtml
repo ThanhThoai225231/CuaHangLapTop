@@ -1,0 +1,488 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<HoaDon>
+
+@{
+    ViewBag.Title = "Hoá đơn";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .pagination li.active a {
+        background-color: #007bff;
+        color: black;
+    }
+
+
+
+    .page-item.active .page-link {
+    z-index: 3;
+    color: black;
+    }
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        border: 1px solid #ccc;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+
+    }
+
+        .dropdown-content label {
+            display: block;
+            padding: 10px;
+        }
+
+    .quantity {
+        display: none;
+    }
+
+    #data-table-5 {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Độ bóng */
+        border: 1px solid #ddd; /* Viền */
+        border-collapse: collapse; /* Gộp viền của các ô */
+    }
+
+        #data-table-5 tbody tr:nth-child(even) {
+            background-color: #aadaaa; /* Màu nền cho hàng chẵn */
+            text-align: center;
+        }
+
+        #data-table-5 tbody tr:nth-child(odd) {
+            background-color: #d9eeb8; /* Màu nền cho hàng lẻ */
+            text-align: center;
+        }
+
+        #data-table-5 td {
+            padding: 10px; /* Khoảng cách trong ô */
+            border: 1px solid #ddd; /* Viền cho ô */
+        }
+
+        #data-table-5 td {
+            font-size: 15px; /* Kích thước chữ */
+            color: #333; /* Màu chữ */
+        }
+
+        #data-table-5 tbody tr:hover {
+            background-color: #ffc107; /* Màu nền khi di chuột vào */
+            color: #333; /* Màu chữ khi di chuột vào */
+            transform: scale(1.02); /* Thu nhỏ dòng khi di chuột vào */
+            transition: background-color 0.3s, color 0.3s, transform 0.3s; /* Hiệu ứng màu và thu nhỏ trong 0.3 giây */
+            cursor: pointer; /* Con trỏ biến thành bàn tay khi di chuột vào */
+        }
+
+        #data-table-5 th {
+            background-color: #333; /* Màu nền tiêu đề */
+            color: #fff; /* Màu chữ tiêu đề */
+            font-weight: bold; /* Độ đậm của chữ tiêu đề */
+            text-align: center; /* Căn giữa tiêu đề */
+            padding: 10px; /* Khoảng cách trong tiêu đề */
+            border: 1px solid black; /* Viền cho tiêu đề */
+        }
+
+    .btn-secondary {
+        color: #fff;
+        background-color: #df0a0a;
+        border-color: #252728;
+    }
+
+    .status-block > div {
+        flex-grow: 1;
+        text-align: center;
+        border-right: 2px solid #000; /* Đường kẻ phân cách giữa các div con */
+        padding: 10px;
+    }
+
+    .status-block::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%; /* Để đường kẻ ngang kéo dài cả chiều rộng màn hình */
+        border-top: 2px solid #000; /* Đường kẻ ngang ở dưới khối */
+    }
+
+    .status-block > div:last-child {
+        border-right: none; /* Loại bỏ đường kẻ phân cách bên phải của div cuối cùng */
+    }
+
+    .search-button {
+        margin: 0 20px 0 50px;
+        width: 100px;
+        background-color: #4CAF50; /* Màu nền */
+        color: white; /* Màu chữ */
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s; /* Hiệu ứng chuyển đổi màu nền */
+    }
+
+        .search-button:hover {
+            background-color: #45a049; /* Màu nền khi di chuột qua */
+        }
+
+    /* Ô tìm đơn */
+    .search-input {
+        margin: 0 20px;
+    }
+
+    /* Ô chọn ngày */
+    .date-picker {
+        margin: 0 20px 0 50px;
+        width: 200px;
+    }
+
+        .date-picker label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .date-picker input {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc; /* Viền */
+            border-radius: 3px;
+            transition: border-color 0.3s; /* Hiệu ứng chuyển đổi màu viền */
+        }
+
+            .date-picker input:focus {
+                border-color: #4CAF50; /* Màu viền khi ô được focus */
+            }
+
+    .custom-row {
+        margin: 100px -50px 0 0;
+        background-color: #f5f5f5; /* Màu nền */
+        padding: 20px; /* Khoảng cách nội dung và viền */
+        border-radius: 10px; /* Góc bo tròn */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+        transition: background-color 0.3s; /* Hiệu ứng chuyển đổi màu nền */
+    }
+
+        .custom-row:hover {
+            background-color: #e0e0e0; /* Màu nền khi di chuột qua */
+        }
+
+    /* Nút tìm */
+    .search-button {
+        margin: 0 20px 0 50px;
+        width: 100px;
+        background-color: #4CAF50; /* Màu nền */
+        color: white; /* Màu chữ */
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s; /* Hiệu ứng chuyển đổi màu nền */
+    }
+
+        .search-button:hover {
+            background-color: #45a049; /* Màu nền khi di chuột qua */
+        }
+
+    /* Ô tìm đơn */
+    .search-input {
+        margin: 0 20px;
+    }
+
+    /* Ô chọn ngày */
+    .date-picker {
+        margin: 0 20px 0 50px;
+        width: 200px;
+    }
+
+        .date-picker label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .date-picker input {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc; /* Viền */
+            border-radius: 3px;
+            transition: border-color 0.3s; /* Hiệu ứng chuyển đổi màu viền */
+        }
+
+            .date-picker input:focus {
+                border-color: #4CAF50; /* Màu viền khi ô được focus */
+            }
+
+    .form-control {
+        background-color: #ddff2a;
+        border: 2px solid #222323;
+    }
+
+    .fa, .fa-brands, .fa-classic, .fa-regular, .fa-sharp, .fa-solid, .fab, .far, .fas {
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased;
+        display: var(--fa-display,inline-block);
+        font-style: normal;
+        font-variant: normal;
+        line-height: 1;
+        text-rendering: auto;
+       
+    }
+</style>
+
+
+<!-- Main Content -->
+<div class="ms-panel-body">
+    <div class="table-responsive">
+        <div id="data-table-5_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+
+            <div class="row" style="margin: 0 auto 50px; ">
+                <div class="col-sm-12 ">
+                    <!-- Khối trạng thái -->
+                    <div class="status-block" style=" display: flex; font-weight: bold;">
+                        <div class="col-sm-12 col-md-3">
+                            <a style="color: #e9de04;" href="">Tất cả</a>
+                        </div>
+                        <div class="col-sm-12 col-md-3">
+                            <a href="">Chờ xác nhận</a>
+                        </div>
+                        <div class="col-sm-12 col-md-3">
+                            <a href="">Đã thanh toán</a>
+                        </div>
+                         <div class="col-sm-12 col-md-3">
+                            <a href="">Đã huỷ</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Các khối khác -->
+            </div>
+
+            <div class="row custom-row" style="margin:50px -50px 0 100px;">
+
+
+                <!--Nút tìm-->
+
+
+
+
+                <div class="col-sm-12 col-md-2" style="margin: 0 20px; ">
+                    <div id="data-table-5_filter" class="dataTables_filter">
+                        <label>
+                            <input type="search" class="form-control form-control-sm" placeholder="Tìm hoá đơn..." aria-controls="data-table-5" id="searchInput">
+                        </label>
+
+                    </div>
+                </div>
+
+
+
+
+                <div class="col-sm-12 col-md-4" style="margin: 0 20px 0 50px; width: 350px">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label style="font-weight: bold;" for="startDate">Từ ngày:</label>
+                            <input type="date" class="form-control form-control-sm" id="startDate">
+                        </div>
+                        <div class="col-md-6">
+                            <label style="font-weight: bold;" for="endDate">Đến ngày:</label>
+                            <input type="date" class="form-control form-control-sm" id="endDate">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-2" style="margin: 0 20px 0 50px; width: 100px ">
+                    <button style="border: 2px solid #222323;   background-color: #0cdfdf"" type="button" class="btn btn-primary" onclick="searchItems()">Tìm</button>
+                </div>
+
+
+                <script>
+                    function searchItems() {
+                        var searchInput = document.getElementById("searchInput").value;
+                        var startDateInput = document.getElementById("startDate").value;
+                        var endDateInput = document.getElementById("endDate").value;
+
+                        // Tạo URL với các tham số tìm kiếm và trang
+                        var url = "@Url.Action("Index")";
+                        var params = [];
+
+                        if (searchInput) {
+                            params.push("search=" + searchInput);
+                        }
+
+                        if (startDateInput) {
+                            params.push("startDate=" + startDateInput);
+                        }
+
+                        if (endDateInput) {
+                            params.push("endDate=" + endDateInput);
+                        }
+
+                        if (params.length > 0) {
+                            url += "?" + params.join("&");
+                        }
+
+                        window.location.href = url;
+                    }
+
+                    // Gọi hàm tìm kiếm khi nhấn Enter trong các ô input
+                    document.getElementById("searchInput").addEventListener("keyup", function (event) {
+                        if (event.key === "Enter") {
+                            searchItems();
+                        }
+                    });
+
+                    // Gọi hàm tìm kiếm khi bấm nút "Tìm"
+                    document.getElementById("searchButton").addEventListener("click", searchItems);
+                </script>
+
+
+
+
+
+            </div>
+            <div class="row" style="margin: 100px auto;">
+                <div class="col-sm-12">
+                    <table id="data-table-5" class="table w-100 thead-primary dataTable no-footer" role="grid" aria-describedby="data-table-5_info" style="width: 898px; margin: 0 auto;">
+                        <thead>
+                            <tr role="row">
+                                <th style="width: 300px; font-weight: bold;">Mã hoá đơn</th>
+                                <th style="width: 300px; font-weight: bold;">Ngày hoá đơn</th>
+                                <th style="width: 300px; font-weight: bold;">Hình thức thanh toán</th>
+                                <th style="width: 300px; font-weight: bold;">Tổng tiền</th>
+                                <th style="width: 300px; font-weight: bold;">Tiền giảm</th>
+                                <th style="width: 300px; font-weight: bold;">Tiền thanh toán</th>
+                                <th style="width: 300px; font-weight: bold;">Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var donHang in Model)
+                            {
+                                <tr role="row" class="odd">
+                                    <td style="font-size: 15px;">@donHang.MaHd</td>
+                                    <td style="font-size: 15px;">@donHang.NgayHd</td>
+                                    <td style="font-size: 15px;">@donHang.HinhThucTT</td>
+                                    <td style="font-size: 15px;">@donHang.TongTien VNĐ</td>
+                                    <td style="font-size: 15px;">@donHang.TienGiam VNĐ</td>
+                                    <td style="font-size: 15px;">@donHang.TienTt VNĐ</td>
+                                    <td style="font-size: 15px;">
+                                        @if (donHang.TrangThaiHD == 1)
+                                        {
+                                            <span class="amount">Chờ xác nhận</span>
+                                        }
+                                        else if (donHang.TrangThaiHD == 2)
+                                        {
+                                            <span class="amount">Đã thanh toán</span>
+                                        }
+                                        else if (donHang.TrangThaiHD == 3)
+                                        {
+                                            <span class="amount">Đã huỷ</span>
+                                        }                                       
+                                    </td>
+                                    <td style="font-size: 15px; display: flex; text-align: center;">
+                                        <a href="#" onclick="redirectToDetails(@donHang.MaHd)">
+                                            <i style="text-align: center;  margin: 0 140px;" class="fa fa-file-text"></i>
+                                        </a>
+                                        
+                                        <script>
+                                            function redirectToDetails(id) { // Chuyển hướng đến trang chi tiết với id của món ăn
+                                                window.location.href = "/Admin/AdminHoaDon/Details/" + id;
+                                            }</script>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+                    @if (ViewBag.TotalItems > 0)
+                    {
+    <!-- Hiển thị thông tin phân trang -->
+    <div class="paging-info" style="font-size: 13px; color: red; text-align: center;">
+        Hiển thị từ hoá đơn thứ @ViewBag.StartItem đến @ViewBag.EndItem trên tổng số @ViewBag.TotalItems hoá đơn
+    </div>
+                    }
+<nav class="navigation paging-navigation clearfix d-flex justify-content-center" style=" white-space: nowrap;">
+
+    <div class="col-sm-12 col-md-7 d-flex justify-content-center">
+        <div class="dataTables_paginate paging_simple_numbers" id="data-table-5_paginate">
+            <div class="text-center">
+                    @if (ViewBag.TotalItems > ViewBag.PageSize)
+                    {
+                    <ul class="pagination">
+                            @if (ViewBag.PageNumber > 1)
+                            {
+                            <li class="page-item">
+                                <a class="page-link" href="@Url.Action("Index", new { page=1, pageSize=ViewBag.PageSize, search=ViewBag.Search, startDate = ViewBag.StartDate, endDate = ViewBag.EndDate })"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                            </li>
+                            }
+
+                            @if (ViewBag.PageNumber > 3)
+                            {
+                            <li class="page-item">
+                                <input type="number" id="customPageInput" min="1" max="@ViewBag.TotalPages" class="page-link" style="width: 40px; padding: 3px;" onkeydown="if (event.key === 'Enter') { goToCustomPage(); }">
+                            </li>
+
+                            }
+
+                            @for (int i = Math.Max(1, ViewBag.PageNumber - 2); i <= Math.Min(ViewBag.TotalPages, ViewBag.PageNumber + 2); i++)
+                            {
+                            <li class="page-item @(i == ViewBag.PageNumber ? " active" : "" )">
+                                <a class="page-link" href="@Url.Action("Index", new { page=i, pageSize=ViewBag.PageSize, search=ViewBag.Search, startDate = ViewBag.StartDate, endDate = ViewBag.EndDate })">@i</a>
+                            </li>
+                            }
+
+                            @if (ViewBag.PageNumber < ViewBag.TotalPages - 2)
+                            {
+                            <li class="page-item">
+                                <input type="number" id="customPageInput" min="1" max="@ViewBag.TotalPages" class="page-link" style="width: 40px; padding: 3px;" onkeydown="if (event.key === 'Enter') { goToCustomPage(); }">
+                            </li>
+
+                            }
+
+                            @if (ViewBag.PageNumber < ViewBag.TotalPages)
+                            {
+                            <li class="page-item">
+                                <a class="page-link" href="@Url.Action("Index", new { page=ViewBag.TotalPages, pageSize=ViewBag.PageSize, search=ViewBag.Search, startDate = ViewBag.StartDate, endDate = ViewBag.EndDate })"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                            </li>
+                            }
+                    </ul>
+                    }
+                <script>
+                    function goToCustomPage() {
+                        var customPageInput = document.getElementById("customPageInput");
+                        var customPage = customPageInput.value;
+                        if (customPage >= 1 && customPage <= @ViewBag.TotalPages) {
+                            var url = "@Url.Action("Index", new { page = "__page__", pageSize=ViewBag.PageSize, search=ViewBag.Search, startDate = ViewBag.StartDate, endDate = ViewBag.EndDate })";
+                            url = url.replace("__page__", customPage);
+                            window.location.href = url;
+                        }
+                    }
+
+                    document.getElementById("customPageInput").addEventListener("keyup", function (event) {
+                        if (event.key === "Enter") {
+                            goToCustomPage();
+                        }
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+</nav><!-- .navigation -->
+                    @if (ViewBag.TotalItems > 0)
+                    {
+    <!-- Hiển thị thông tin phân trang -->
+    <div class="paging-info" style="font-size: 13px; color: red; text-align: center;">
+        Trang @ViewBag.PageNumber/@ViewBag.TotalPages
+    </div>
+                    }
+
+

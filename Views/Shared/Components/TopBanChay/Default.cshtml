@@ -1,0 +1,103 @@
+﻿@model List<MonAn>
+
+<!-- product -->
+
+
+<style>
+	.out-of-stock-btn {
+		background-color: orange; /* Đổi màu nền thành màu cam */
+		color: #fff;
+		cursor: not-allowed;
+	}
+</style>
+
+<div class="products-slick" data-nav="#slick-nav-2">
+	<!-- product -->
+	@foreach (var menuItem in Model) {
+		<div class="product" onclick="redirectToDetails(@menuItem.MaMon)">
+		<div class="product-img">
+				<img src="~/new1/img/@menuItem.HinhAnh" alt="">
+
+
+				@{
+					DateTime ngayHienTai = DateTime.Now;
+				}
+
+				<div class="product-label">
+					@if (menuItem.NgayMoBan <= ngayHienTai && (ngayHienTai - menuItem.NgayMoBan).TotalDays <= 7)
+					{
+						<span class="new">NEW</span>
+					}
+					
+						<span class="sale">SALE</span>
+					
+					</div>
+		</div>
+		<div class="product-body">
+			<p class="product-category">@menuItem.TenNhom</p>
+			<h3 class="product-name"><a href="#">@menuItem.TenMon</a></h3>
+				<h4 class="product-price">
+					@menuItem.GiaBan.ToString("N0")VNĐ<del class="product-old-price">@((menuItem.GiaBan + 1000000).ToString("N0")) VNĐ</del>
+				</h4>
+			
+			<div class="product-btns">
+				
+
+					<button class="quick-view" onclick="redirectToDetails(@menuItem.MaMon)">
+						<i class="fa fa-eye"></i><span class="tooltipp">Xem chi tiết</span>
+					</button>
+			</div>
+		</div>
+			@if (menuItem.SoLuong > 0)
+			{
+				<div class="add-to-cart">
+					<button class="add-to-cart-btn" onclick="addToCart(@menuItem.MaMon)">
+						<i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng
+					</button>
+				</div>
+			}
+			else
+			{
+				<div class="add-to-cart">
+					<button class="out-of-stock-btn">
+						Hết hàng
+					</button>
+				</div>
+
+			}
+	</div>
+	}
+	<!-- /product -->
+
+
+</div>
+
+<script>
+	function redirectToDetails(id) {
+		// Chuyển hướng đến trang chi tiết với id của món ăn
+		window.location.href = "/Product/Details/" + id;
+	}
+
+
+	function addToCart(maMon) {
+
+
+		// Gửi yêu cầu thêm món ăn vào giỏ hàng
+		$.ajax({
+			type: "POST",
+			url: "/GioHang/ThemVaoGioHang",
+			data: { maMon: maMon, soLuongMM: 1 },
+			success: function (data) {
+				if (data.success) {
+
+				} else {
+					location.reload()
+				}
+			},
+			error: function () {
+				alert("Đã xảy ra lỗi khi thêm món ăn vào giỏ hàng.");
+			}
+		});
+
+	}
+</script>

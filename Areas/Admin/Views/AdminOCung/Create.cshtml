@@ -1,0 +1,153 @@
+﻿@model ThanhThoaiRestaurant.Models.OCung
+
+@{
+    ViewBag.Title = "Thêm món";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .form-control {
+        display: block;
+        width: 500px;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: var(--bs-body-color);
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background-color: var(--bs-body-bg);
+        background-clip: padding-box;
+        border: var(--bs-border-width) solid var(--bs-border-color);
+        border-radius: var(--bs-border-radius);
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
+
+    label {
+        display: inline-block;
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+</style>
+<main id="main" class="main">
+    <div class="row">
+        <div class="pagetitle">
+            <h1>Sản phẩm</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/Admin/AdminOCung">Quản lý ổ cứng</a></li>
+                    <li class="breadcrumb-item active">Thêm ổ cứng</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+        <div class="col-md-6">
+            <div class="ms-panel ms-panel-fh">
+                <div class="ms-panel-header">
+                    <h4 style="font-weight: bold; color: #df1d1b; font-weight: bold;">
+                        Thêm ổ cứng
+                    </h4>
+                </div>
+
+
+                <div class="ms-panel-body">
+                    <form asp-controller="AdminOCung" asp-action="Create" method="post" enctype="multipart/form-data">
+                        <div class="form-row" style="display:flex; justify-content: space-between;">
+                            <div class="col-md-8" style="margin-left: 10px;">
+
+
+
+
+
+
+
+                                <!--Mã món-->
+
+                                <div class="mb-3">
+                                    <label for="MaOC">Mã ổ cứng</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="MaOC" name="MaOC" placeholder="Mã ổ cứng" required min="1" max="9999">
+                                        <span id="MaOCEmptyError" class="text-danger" style="display: none;">Mã ổ cứng không được để trống.</span>
+                                        <span id="MaOCOutOfRangeError" class="text-danger" style="display: none;">Mã ổ cứng phải là số từ 1 đến 9999.</span>
+                                        <span asp-validation-for="MaOC" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    var MaOCInput = document.getElementById("MaOC");
+                                    var MaOCEmptyError = document.getElementById("MaOCEmptyError");
+                                    var MaOCOutOfRangeError = document.getElementById("MaOCOutOfRangeError");
+
+                                    MaOCInput.addEventListener("input", function () {
+                                        var MaOCValue = MaOCInput.value;
+
+                                        if (MaOCValue.trim() === "") {
+                                            MaOCEmptyError.style.display = "inline";
+                                            MaOCOutOfRangeError.style.display = "none";
+                                        } else if (isNaN(MaOCValue) || MaOCValue < 1 || MaOCValue > 9999) {
+                                            MaOCEmptyError.style.display = "none";
+                                            MaOCOutOfRangeError.style.display = "inline";
+                                        } else {
+                                            MaOCEmptyError.style.display = "none";
+                                            MaOCOutOfRangeError.style.display = "none";
+                                        }
+                                    });
+                                </script>
+
+
+
+
+                            </div>
+                            <div class="col-md-8" style="margin-left: 200px;">
+                                <div class=" mb-3">
+                                    <label for="TenMon">Dung lượng sản phẩm</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="DungLuong" name="DungLuong" placeholder="Dung lượng sản phẩm">
+                                        <span id="TenMonError" class="text-danger" style="display: none;"></span>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    var tenMonInput = document.getElementById("DungLuong");
+                                    var tenMonError = document.getElementById("TenMonError");
+
+                                    tenMonInput.addEventListener("input", function () {
+                                        var tenMonValue = tenMonInput.value;
+
+                                        if (tenMonValue.length > 50 || tenMonValue.trim() === "") {
+                                            tenMonError.innerText = "Dung lượng sản phẩm không được quá 50 ký tự và không được để trống!";
+                                            tenMonError.style.display = "inline";
+                                        } else {
+                                            tenMonError.style.display = "none";
+                                        }
+                                    });
+                                </script>
+                            </div>
+                        </div>
+
+                        <div class="text-right mt-3">
+                            <button id="saveButton" type="submit" class="btn btn-primary">Lưu</button>
+                        </div>
+
+                        <script>
+                            saveButton.addEventListener("click", function (event) {
+                                // Kiểm tra xem có lỗi nào hiển thị không
+                                if (tenMonError.style.display === "inline" || MaOCEmptyError.style.display === "inline" || MaOCOutOfRangeError.style.display === "inline") {
+                                    // Nếu có lỗi, ngăn chặn hành động mặc định của nút "Lưu" (không submit form)
+                                    event.preventDefault();
+                                    // Thông báo cho người dùng biết về lỗi
+                                    alert("Vui lòng sửa các lỗi trước khi lưu.");
+                                }
+                            });
+                        </script>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-6">
+            <!-- Hình ảnh -->
+        </div>
+    </div>
+</main>

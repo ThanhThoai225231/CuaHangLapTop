@@ -1,978 +1,429 @@
 ﻿@using System.Text.Json;
 
+
+
 <!DOCTYPE html>
 <html lang="en-US">
+
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="initial-scale=1, width=device-width" />
-    <link rel="profile" href="http://gmpg.org/xfn/11" />
-    <link rel="pingback" href="https://demo.exptheme.com/pizzeria/xmlrpc.php" />
-    <title>ThanhThoaiRestaurant</title>
-    <meta name='robots' content='max-image-preview:large' />
-    <link rel='dns-prefetch' href='//fonts.googleapis.com' />
-    <link rel="alternate" type="application/rss+xml" title="Food &amp; Pizzeria - Ultimate Delivery WordPress Theme  &raquo; Feed" href="https://demo.exptheme.com/pizzeria/feed/" />
-    <link rel="alternate" type="application/rss+xml" title="Food &amp; Pizzeria - Ultimate Delivery WordPress Theme  &raquo; Comments Feed" href="https://demo.exptheme.com/pizzeria/comments/feed/" />
-    <link rel="stylesheet" href="~/fontawesome-free-5.15.4-web/css/all.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css" />
-    <scripts src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></scripts>  
-   
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
-
-
-    <script type="text/javascript">
-
-        window._wpemojiSettings = { "baseUrl": "https:\/\/s.w.org\/images\/core\/emoji\/14.0.0\/72x72\/", "ext": ".png", "svgUrl": "https:\/\/s.w.org\/images\/core\/emoji\/14.0.0\/svg\/", "svgExt": ".svg", "source": { "concatemoji": "https:\/\/demo.exptheme.com\/pizzeria\/wp-includes\/js\/wp-emoji-release.min.js?ver=6.3.1" } };
-        /*! This file is auto-generated */
-        !function (i, n) { var o, s, e; function c(e) { try { var t = { supportTests: e, timestamp: (new Date).valueOf() }; sessionStorage.setItem(o, JSON.stringify(t)) } catch (e) { } } function p(e, t, n) { e.clearRect(0, 0, e.canvas.width, e.canvas.height), e.fillText(t, 0, 0); var t = new Uint32Array(e.getImageData(0, 0, e.canvas.width, e.canvas.height).data), r = (e.clearRect(0, 0, e.canvas.width, e.canvas.height), e.fillText(n, 0, 0), new Uint32Array(e.getImageData(0, 0, e.canvas.width, e.canvas.height).data)); return t.every(function (e, t) { return e === r[t] }) } function u(e, t, n) { switch (t) { case "flag": return n(e, "\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f", "\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f") ? !1 : !n(e, "\ud83c\uddfa\ud83c\uddf3", "\ud83c\uddfa\u200b\ud83c\uddf3") && !n(e, "\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f", "\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f"); case "emoji": return !n(e, "\ud83e\udef1\ud83c\udffb\u200d\ud83e\udef2\ud83c\udfff", "\ud83e\udef1\ud83c\udffb\u200b\ud83e\udef2\ud83c\udfff") }return !1 } function f(e, t, n) { var r = "undefined" != typeof WorkerGlobalScope && self instanceof WorkerGlobalScope ? new OffscreenCanvas(300, 150) : i.createElement("canvas"), a = r.getContext("2d", { willReadFrequently: !0 }), o = (a.textBaseline = "top", a.font = "600 32px Arial", {}); return e.forEach(function (e) { o[e] = t(a, e, n) }), o } function t(e) { var t = i.createElement("script"); t.src = e, t.defer = !0, i.head.appendChild(t) } "undefined" != typeof Promise && (o = "wpEmojiSettingsSupports", s = ["flag", "emoji"], n.supports = { everything: !0, everythingExceptFlag: !0 }, e = new Promise(function (e) { i.addEventListener("DOMContentLoaded", e, { once: !0 }) }), new Promise(function (t) { var n = function () { try { var e = JSON.parse(sessionStorage.getItem(o)); if ("object" == typeof e && "number" == typeof e.timestamp && (new Date).valueOf() < e.timestamp + 604800 && "object" == typeof e.supportTests) return e.supportTests } catch (e) { } return null }(); if (!n) { if ("undefined" != typeof Worker && "undefined" != typeof OffscreenCanvas && "undefined" != typeof URL && URL.createObjectURL && "undefined" != typeof Blob) try { var e = "postMessage(" + f.toString() + "(" + [JSON.stringify(s), u.toString(), p.toString()].join(",") + "));", r = new Blob([e], { type: "text/javascript" }), a = new Worker(URL.createObjectURL(r), { name: "wpTestEmojiSupports" }); return void (a.onmessage = function (e) { c(n = e.data), a.terminate(), t(n) }) } catch (e) { } c(n = f(s, u, p)) } t(n) }).then(function (e) { for (var t in e) n.supports[t] = e[t], n.supports.everything = n.supports.everything && n.supports[t], "flag" !== t && (n.supports.everythingExceptFlag = n.supports.everythingExceptFlag && n.supports[t]); n.supports.everythingExceptFlag = n.supports.everythingExceptFlag && !n.supports.flag, n.DOMReady = !1, n.readyCallback = function () { n.DOMReady = !0 } }).then(function () { return e }).then(function () { var e; n.supports.everything || (n.readyCallback(), (e = n.source || {}).concatemoji ? t(e.concatemoji) : e.wpemoji && e.twemoji && (t(e.twemoji), t(e.wpemoji))) })) }((window, document), window._wpemojiSettings);
-    </script>
-    <style type="text/css">
-        img.wp-smiley,
-        img.emoji {
-            display: inline !important;
-            border: none !important;
-            box-shadow: none !important;
-            height: 1em !important;
-            width: 1em !important;
-            margin: 0 0.07em !important;
-            vertical-align: -0.1em !important;
-            background: none !important;
-            padding: 0 !important;
-        }
-    </style>
-    <link rel='stylesheet' id='wc-blocks-vendors-style-css' href='https://demo.exptheme.com/pizzeria/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/wc-blocks-vendors-style.css?ver=7.6.0' media='all' />
-    <link rel='stylesheet' id='wc-blocks-style-css' href='https://demo.exptheme.com/pizzeria/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/wc-blocks-style.css?ver=7.6.0' media='all' />
-    <style id='classic-theme-styles-inline-css' type='text/css'>
-        /*! This file is auto-generated */
-        .wp-block-button__link {
-            color: #fff;
-            background-color: #32373c;
-            border-radius: 9999px;
-            box-shadow: none;
-            text-decoration: none;
-            padding: calc(.667em + 2px) calc(1.333em + 2px);
-            font-size: 1.125em
-        }
-
-        .wp-block-file__button {
-            background: #32373c;
-            color: #fff;
-            text-decoration: none
-        }
-    </style>
-    <style id='global-styles-inline-css' type='text/css'>
-        body {
-            --wp--preset--color--black: #000000;
-            --wp--preset--color--cyan-bluish-gray: #abb8c3;
-            --wp--preset--color--white: #ffffff;
-            --wp--preset--color--pale-pink: #f78da7;
-            --wp--preset--color--vivid-red: #cf2e2e;
-            --wp--preset--color--luminous-vivid-orange: #ff6900;
-            --wp--preset--color--luminous-vivid-amber: #fcb900;
-            --wp--preset--color--light-green-cyan: #7bdcb5;
-            --wp--preset--color--vivid-green-cyan: #00d084;
-            --wp--preset--color--pale-cyan-blue: #8ed1fc;
-            --wp--preset--color--vivid-cyan-blue: #0693e3;
-            --wp--preset--color--vivid-purple: #9b51e0;
-            --wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);
-            --wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);
-            --wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);
-            --wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);
-            --wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);
-            --wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);
-            --wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);
-            --wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);
-            --wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);
-            --wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);
-            --wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);
-            --wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);
-            --wp--preset--font-size--small: 13px;
-            --wp--preset--font-size--medium: 20px;
-            --wp--preset--font-size--large: 36px;
-            --wp--preset--font-size--x-large: 42px;
-            --wp--preset--spacing--20: 0.44rem;
-            --wp--preset--spacing--30: 0.67rem;
-            --wp--preset--spacing--40: 1rem;
-            --wp--preset--spacing--50: 1.5rem;
-            --wp--preset--spacing--60: 2.25rem;
-            --wp--preset--spacing--70: 3.38rem;
-            --wp--preset--spacing--80: 5.06rem;
-            --wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);
-            --wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);
-            --wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);
-            --wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);
-            --wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);
-        }
-
-        :where(.is-layout-flex) {
-            gap: 0.5em;
-        }
-
-        :where(.is-layout-grid) {
-            gap: 0.5em;
-        }
-
-        body .is-layout-flow > .alignleft {
-            float: left;
-            margin-inline-start: 0;
-            margin-inline-end: 2em;
-        }
-
-        body .is-layout-flow > .alignright {
-            float: right;
-            margin-inline-start: 2em;
-            margin-inline-end: 0;
-        }
-
-        body .is-layout-flow > .aligncenter {
-            margin-left: auto !important;
-            margin-right: auto !important;
-        }
-
-        body .is-layout-constrained > .alignleft {
-            float: left;
-            margin-inline-start: 0;
-            margin-inline-end: 2em;
-        }
-
-        body .is-layout-constrained > .alignright {
-            float: right;
-            margin-inline-start: 2em;
-            margin-inline-end: 0;
-        }
-
-        body .is-layout-constrained > .aligncenter {
-            margin-left: auto !important;
-            margin-right: auto !important;
-        }
-
-        body .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)) {
-            max-width: var(--wp--style--global--content-size);
-            margin-left: auto !important;
-            margin-right: auto !important;
-        }
-
-        body .is-layout-constrained > .alignwide {
-            max-width: var(--wp--style--global--wide-size);
-        }
-
-        body .is-layout-flex {
-            display: flex;
-        }
-
-        body .is-layout-flex {
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-            body .is-layout-flex > * {
-                margin: 0;
-            }
-
-        body .is-layout-grid {
-            display: grid;
-        }
-
-            body .is-layout-grid > * {
-                margin: 0;
-            }
-
-        :where(.wp-block-columns.is-layout-flex) {
-            gap: 2em;
-        }
-
-        :where(.wp-block-columns.is-layout-grid) {
-            gap: 2em;
-        }
-
-        :where(.wp-block-post-template.is-layout-flex) {
-            gap: 1.25em;
-        }
-
-        :where(.wp-block-post-template.is-layout-grid) {
-            gap: 1.25em;
-        }
-
-        .has-black-color {
-            color: var(--wp--preset--color--black) !important;
-        }
-
-        .has-cyan-bluish-gray-color {
-            color: var(--wp--preset--color--cyan-bluish-gray) !important;
-        }
-
-        .has-white-color {
-            color: var(--wp--preset--color--white) !important;
-        }
-
-        .has-pale-pink-color {
-            color: var(--wp--preset--color--pale-pink) !important;
-        }
-
-        .has-vivid-red-color {
-            color: var(--wp--preset--color--vivid-red) !important;
-        }
-
-        .has-luminous-vivid-orange-color {
-            color: var(--wp--preset--color--luminous-vivid-orange) !important;
-        }
-
-        .has-luminous-vivid-amber-color {
-            color: var(--wp--preset--color--luminous-vivid-amber) !important;
-        }
-
-        .has-light-green-cyan-color {
-            color: var(--wp--preset--color--light-green-cyan) !important;
-        }
-
-        .has-vivid-green-cyan-color {
-            color: var(--wp--preset--color--vivid-green-cyan) !important;
-        }
-
-        .has-pale-cyan-blue-color {
-            color: var(--wp--preset--color--pale-cyan-blue) !important;
-        }
-
-        .has-vivid-cyan-blue-color {
-            color: var(--wp--preset--color--vivid-cyan-blue) !important;
-        }
-
-        .has-vivid-purple-color {
-            color: var(--wp--preset--color--vivid-purple) !important;
-        }
-
-        .has-black-background-color {
-            background-color: var(--wp--preset--color--black) !important;
-        }
-
-        .has-cyan-bluish-gray-background-color {
-            background-color: var(--wp--preset--color--cyan-bluish-gray) !important;
-        }
-
-        .has-white-background-color {
-            background-color: var(--wp--preset--color--white) !important;
-        }
-
-        .has-pale-pink-background-color {
-            background-color: var(--wp--preset--color--pale-pink) !important;
-        }
-
-        .has-vivid-red-background-color {
-            background-color: var(--wp--preset--color--vivid-red) !important;
-        }
-
-        .has-luminous-vivid-orange-background-color {
-            background-color: var(--wp--preset--color--luminous-vivid-orange) !important;
-        }
-
-        .has-luminous-vivid-amber-background-color {
-            background-color: var(--wp--preset--color--luminous-vivid-amber) !important;
-        }
-
-        .has-light-green-cyan-background-color {
-            background-color: var(--wp--preset--color--light-green-cyan) !important;
-        }
-
-        .has-vivid-green-cyan-background-color {
-            background-color: var(--wp--preset--color--vivid-green-cyan) !important;
-        }
-
-        .has-pale-cyan-blue-background-color {
-            background-color: var(--wp--preset--color--pale-cyan-blue) !important;
-        }
-
-        .has-vivid-cyan-blue-background-color {
-            background-color: var(--wp--preset--color--vivid-cyan-blue) !important;
-        }
-
-        .has-vivid-purple-background-color {
-            background-color: var(--wp--preset--color--vivid-purple) !important;
-        }
-
-        .has-black-border-color {
-            border-color: var(--wp--preset--color--black) !important;
-        }
-
-        .has-cyan-bluish-gray-border-color {
-            border-color: var(--wp--preset--color--cyan-bluish-gray) !important;
-        }
-
-        .has-white-border-color {
-            border-color: var(--wp--preset--color--white) !important;
-        }
-
-        .has-pale-pink-border-color {
-            border-color: var(--wp--preset--color--pale-pink) !important;
-        }
-
-        .has-vivid-red-border-color {
-            border-color: var(--wp--preset--color--vivid-red) !important;
-        }
-
-        .has-luminous-vivid-orange-border-color {
-            border-color: var(--wp--preset--color--luminous-vivid-orange) !important;
-        }
-
-        .has-luminous-vivid-amber-border-color {
-            border-color: var(--wp--preset--color--luminous-vivid-amber) !important;
-        }
-
-        .has-light-green-cyan-border-color {
-            border-color: var(--wp--preset--color--light-green-cyan) !important;
-        }
-
-        .has-vivid-green-cyan-border-color {
-            border-color: var(--wp--preset--color--vivid-green-cyan) !important;
-        }
-
-        .has-pale-cyan-blue-border-color {
-            border-color: var(--wp--preset--color--pale-cyan-blue) !important;
-        }
-
-        .has-vivid-cyan-blue-border-color {
-            border-color: var(--wp--preset--color--vivid-cyan-blue) !important;
-        }
-
-        .has-vivid-purple-border-color {
-            border-color: var(--wp--preset--color--vivid-purple) !important;
-        }
-
-        .has-vivid-cyan-blue-to-vivid-purple-gradient-background {
-            background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;
-        }
-
-        .has-light-green-cyan-to-vivid-green-cyan-gradient-background {
-            background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;
-        }
-
-        .has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background {
-            background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;
-        }
-
-        .has-luminous-vivid-orange-to-vivid-red-gradient-background {
-            background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;
-        }
-
-        .has-very-light-gray-to-cyan-bluish-gray-gradient-background {
-            background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;
-        }
-
-        .has-cool-to-warm-spectrum-gradient-background {
-            background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;
-        }
-
-        .has-blush-light-purple-gradient-background {
-            background: var(--wp--preset--gradient--blush-light-purple) !important;
-        }
-
-        .has-blush-bordeaux-gradient-background {
-            background: var(--wp--preset--gradient--blush-bordeaux) !important;
-        }
-
-        .has-luminous-dusk-gradient-background {
-            background: var(--wp--preset--gradient--luminous-dusk) !important;
-        }
-
-        .has-pale-ocean-gradient-background {
-            background: var(--wp--preset--gradient--pale-ocean) !important;
-        }
-
-        .has-electric-grass-gradient-background {
-            background: var(--wp--preset--gradient--electric-grass) !important;
-        }
-
-        .has-midnight-gradient-background {
-            background: var(--wp--preset--gradient--midnight) !important;
-        }
-
-        .has-small-font-size {
-            font-size: var(--wp--preset--font-size--small) !important;
-        }
-
-        .has-medium-font-size {
-            font-size: var(--wp--preset--font-size--medium) !important;
-        }
-
-        .has-large-font-size {
-            font-size: var(--wp--preset--font-size--large) !important;
-        }
-
-        .has-x-large-font-size {
-            font-size: var(--wp--preset--font-size--x-large) !important;
-        }
-
-        .wp-block-navigation a:where(:not(.wp-element-button)) {
-            color: inherit;
-        }
-
-        :where(.wp-block-post-template.is-layout-flex) {
-            gap: 1.25em;
-        }
-
-        :where(.wp-block-post-template.is-layout-grid) {
-            gap: 1.25em;
-        }
-
-        :where(.wp-block-columns.is-layout-flex) {
-            gap: 2em;
-        }
-
-        :where(.wp-block-columns.is-layout-grid) {
-            gap: 2em;
-        }
-
-        .wp-block-pullquote {
-            font-size: 1.5em;
-            line-height: 1.6;
-        }
-    </style>
-    <link rel='stylesheet' id='cms-plugin-stylesheet-css' href='https://demo.exptheme.com/pizzeria/wp-content/plugins/cmssuperheroes/assets/css/cms-style.css?ver=6.3.1' media='all' />
-    <link rel='stylesheet' id='contact-form-7-css' href='https://demo.exptheme.com/pizzeria/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=5.6' media='all' />
-    <link rel='stylesheet' id='woocommerce-layout-css' href='https://demo.exptheme.com/pizzeria/wp-content/plugins/woocommerce/assets/css/woocommerce-layout.css?ver=6.6.0' media='all' />
-    <link rel='stylesheet' id='woocommerce-smallscreen-css' href='https://demo.exptheme.com/pizzeria/wp-content/plugins/woocommerce/assets/css/woocommerce-smallscreen.css?ver=6.6.0' media='only screen and (max-width: 768px)' />
-    <link rel='stylesheet' id='woocommerce-general-css' href='https://demo.exptheme.com/pizzeria/wp-content/plugins/woocommerce/assets/css/woocommerce.css?ver=6.6.0' media='all' />
-    <style id='woocommerce-inline-inline-css' type='text/css'>
-        .woocommerce form .form-row .required {
-            visibility: visible;
-        }
-    </style>
-    <link rel='stylesheet' id='cmssuperheroes-bootstrap-css' href='https://demo.exptheme.com/pizzeria/wp-content/themes/wp_pizzeria/assets/css/bootstrap.min.css?ver=3.3.2' media='all' />
-    <link rel='stylesheet' id='cmssuperheroes-font-awesome-css' href='https://demo.exptheme.com/pizzeria/wp-content/themes/wp_pizzeria/assets/css/font-awesome.min.css?ver=4.7.0' media='all' />
-    <link rel='stylesheet' id='cmssuperheroes-font-ionicons-css' href='https://demo.exptheme.com/pizzeria/wp-content/themes/wp_pizzeria/assets/css/ionicons.min.css?ver=2.0.1' media='all' />
-    <link rel='stylesheet' id='cmssuperheroes-pe-icon-css' href='https://demo.exptheme.com/pizzeria/wp-content/themes/wp_pizzeria/assets/css/pe-icon-7-stroke.css?ver=1.0.1' media='all' />
-    <link rel='stylesheet' id='cmssuperheroes-style-css' href='https://demo.exptheme.com/pizzeria/wp-content/themes/wp_pizzeria/style.css?ver=6.3.1' media='all' />
-    <link rel='stylesheet' id='cms-fonts-css' href='https://demo.exptheme.com/pizzeria/wp-content/themes/wp_pizzeria/assets/css/fonts.css?ver=6.3.1' media='all' />
-    <link rel='stylesheet' id='animate-css-css' href='https://demo.exptheme.com/pizzeria/wp-content/themes/wp_pizzeria/assets/css/animate.min.css?ver=6.3.1' media='all' />
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+
+
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="~/images/favicon.png" type="">
+
+    <title> ThanhThoaiLapTop </title>
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="~/css/bootstrap.css" />
+
+    <!--owl slider stylesheet -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <!-- nice select  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ==" crossorigin="anonymous" />
+    <!-- font awesome style -->
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="~/css/style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="~/css/responsive.css" rel="stylesheet" />
+
+    <title>Vegefoods - Free Bootstrap 4 Template by Colorlib</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/new/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="~/new/css/animate.css">
+
+    <link rel="stylesheet" href="~/new/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/new/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="~/new/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="~/new/css/aos.css">
+
+    <link rel="stylesheet" href="~/new/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="~/new/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="~/new/css/jquery.timepicker.css">
+
+
+    <link rel="stylesheet" href="~/new/css/flaticon.css">
+    <link rel="stylesheet" href="~/new/css/icomoon.css">
+    <link rel="stylesheet" href="~/new/css/style.css">
+    <!--***************************************************************************-->
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link type="text/css" rel="stylesheet" href="~/new1/css/bootstrap.min.css" />
+
+    <!-- Slick -->
+    <link type="text/css" rel="stylesheet" href="~/new1/css/slick.css" />
+    <link type="text/css" rel="stylesheet" href="~/new1/css/slick-theme.css" />
+
+    <!-- nouislider -->
+    <link type="text/css" rel="stylesheet" href="~/new1/css/nouislider.min.css" />
+
+    <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="~/new1/css/font-awesome.min.css">
+
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="~/new1/css/style.css" />
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-    <link rel='stylesheet' id='twentytwelve-ie-css' href='https://demo.exptheme.com/pizzeria/wp-content/themes/wp_pizzeria/assets/css/ie.css?ver=20121010'  media='all' />
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <link rel='stylesheet' id='cmssuperheroes-static-css' href='https://demo.exptheme.com/pizzeria/wp-content/themes/wp_pizzeria/assets/css/static.css?ver=1.0.0' media='all' />
-    <link rel='stylesheet' id='lightbox-css' href='https://demo.exptheme.com/pizzeria/wp-content/themes/wp_pizzeria/assets/css/lightbox.css?ver=6.3.1' media='all' />
-    <link rel='stylesheet' id='pizzeria-style-css' href='https://demo.exptheme.com/pizzeria/wp-content/themes/wp_pizzeria/assets/css/theme.css?ver=6.3.1' media='all' />
-    <link rel='stylesheet' id='newsletter-css' href='https://demo.exptheme.com/pizzeria/wp-content/plugins/newsletter/style.css?ver=7.4.6' media='all' />
-    <link rel='stylesheet' id='js_composer_front-css' href='https://demo.exptheme.com/pizzeria/wp-content/plugins/js_composer/assets/css/js_composer.min.css?ver=6.9.0' media='all' />
-    <link rel='stylesheet' id='redux-google-fonts-smof_data-css' href='https://fonts.googleapis.com/css?family=Vollkorn%3A400%2C600%2C700%2C900%2C400italic%2C600italic%2C700italic%2C900italic%7CPlayfair+Display%3A400%2C700%2C900%2C400italic%2C700italic%2C900italic&#038;ver=1655710481' media='all' />
-    <script src='https://demo.exptheme.com/pizzeria/wp-includes/js/jquery/jquery.min.js?ver=3.7.0' id='jquery-core-js'></script>
-    <script src='https://demo.exptheme.com/pizzeria/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1' id='jquery-migrate-js'></script>
-    <script src='https://demo.exptheme.com/pizzeria/wp-content/plugins/woocommerce/assets/js/jquery-blockui/jquery.blockUI.min.js?ver=2.7.0-wc.6.6.0' id='jquery-blockui-js'></script>
-    <script type='text/javascript' id='wc-add-to-cart-js-extra'>
-        /* <![CDATA[ */
-        var wc_add_to_cart_params = { "ajax_url": "\/pizzeria\/wp-admin\/admin-ajax.php", "wc_ajax_url": "\/pizzeria\/?wc-ajax=%%endpoint%%", "i18n_view_cart": "View cart", "cart_url": "https:\/\/demo.exptheme.com\/pizzeria\/cart-2\/", "is_cart": "", "cart_redirect_after_add": "no" };
-        /* ]]> */
-    </script>
-    <script src='https://demo.exptheme.com/pizzeria/wp-content/plugins/woocommerce/assets/js/frontend/add-to-cart.min.js?ver=6.6.0' id='wc-add-to-cart-js'></script>
-    <script src='https://demo.exptheme.com/pizzeria/wp-content/plugins/js_composer/assets/js/vendors/woocommerce-add-to-cart.js?ver=6.9.0' id='vc_woocommerce-add-to-cart-js-js'></script>
-    <script src='https://demo.exptheme.com/pizzeria/wp-content/themes/wp_pizzeria/assets/js/bootstrap.min.js?ver=4.1.0' id='cmssuperheroes-bootstrap-js'></script>
-    <script src='https://demo.exptheme.com/pizzeria/wp-content/themes/wp_pizzeria/assets/js/jquery.mousewheel.min.js?ver=6.3.1' id='mousewheel-js'></script>
-    <link rel="https://api.w.org/" href="https://demo.exptheme.com/pizzeria/wp-json/" />
-    <link rel="alternate" type="application/json" href="https://demo.exptheme.com/pizzeria/wp-json/wp/v2/pages/958" />
-    <link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://demo.exptheme.com/pizzeria/xmlrpc.php?rsd" />
-    <meta name="generator" content="WordPress 6.3.1" />
-    <meta name="generator" content="WooCommerce 6.6.0" />
-    <link rel="canonical" href="https://demo.exptheme.com/pizzeria/" />
-    <link rel='shortlink' href='https://demo.exptheme.com/pizzeria/' />
-    <link rel="alternate" type="application/json+oembed" href="https://demo.exptheme.com/pizzeria/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fdemo.exptheme.com%2Fpizzeria%2F" />
-    <link rel="alternate" type="text/xml+oembed" href="https://demo.exptheme.com/pizzeria/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fdemo.exptheme.com%2Fpizzeria%2F&#038;format=xml" />
-    <link rel="shortcut icon" type="image/png" href="https://demo.exptheme.com/pizzeria/wp-content/uploads/2022/06/favicon.png" />
-    <style type="text/css" data-type="cms_shortcodes-custom-css"></style>
-    <noscript>
-        <style>
-            .woocommerce-product-gallery {
-                opacity: 1 !important;
-            }</style>
-    </noscript>
-    <meta name="generator" content="Powered by WPBakery Page Builder - drag and drop page builder for WordPress." />
-    <style type="text/css" title="dynamic-css" class="options-output">
-        #page-title {
-            margin-top: 0;
-            margin-right: 0;
-            margin-bottom: 45px;
-            margin-left: 0;
-        }
-
-        #page-title {
-            padding-top: 0;
-            padding-right: 0;
-            padding-bottom: 0;
-            padding-left: 0;
-        }
-
-        body {
-            background-color: #fff;
-            background-image: url('https://demo.exptheme.com/pizzeria/wp-content/themes/wp_pizzeria/assets/images/backgrounds/bg1.png');
-        }
-
-        body {
-            margin-top: 0;
-            margin-right: 0;
-            margin-bottom: 0;
-            margin-left: 0;
-        }
-
-        body {
-            padding-top: 0;
-            padding-right: 0;
-            padding-bottom: 0;
-            padding-left: 0;
-        }
-
-        #main {
-            margin-top: 0;
-            margin-right: 0;
-            margin-bottom: 0;
-            margin-left: 0;
-        }
-
-        #main {
-            padding-top: 0;
-            padding-right: 0;
-            padding-bottom: 0;
-            padding-left: 0;
-        }
-
-        .page-footer {
-            background-color: #fff;
-        }
-
-            .page-footer:after {
-                background-image: url('https://demo.exptheme.com/pizzeria/wp-content/themes/wp_pizzeria/assets/images/backgrounds/bg3.png');
-            }
-
-            .page-footer:before {
-                background-image: url('https://demo.exptheme.com/pizzeria/wp-content/themes/wp_pizzeria/assets/images/backgrounds/bg_footer.png');
-            }
-
-        .page-footer {
-            margin-top: 100px;
-            margin-right: 0;
-            margin-bottom: 0;
-            margin-left: 0;
-        }
-
-        .page-footer {
-            padding-top: 25px;
-            padding-right: 0;
-            padding-bottom: 0;
-            padding-left: 0;
-        }
-
-        #cshero-footer-top {
-            margin-top: 0;
-            margin-right: 0;
-            margin-bottom: 0;
-            margin-left: 0;
-        }
-
-        #cshero-footer-top {
-            padding-top: 0;
-            padding-right: 0;
-            padding-bottom: 60px;
-            padding-left: 0;
-        }
-
-        footer #cshero-footer-bottom {
-            background-color: #000000;
-        }
-
-        #cshero-footer-bottom {
-            margin-top: 0;
-            margin-right: 0;
-            margin-bottom: 0;
-            margin-left: 0;
-        }
-
-        #cshero-footer-bottom {
-            padding-top: 14px;
-            padding-right: 0;
-            padding-bottom: 14px;
-            padding-left: 0;
-        }
-
-        body {
-            font-family: Vollkorn;
-            font-weight: normal;
-            font-style: normal;
-            font-size: 15px;
-        }
-
-            body h1 {
-                font-family: "Playfair Display";
-                font-weight: normal;
-                font-style: normal;
-                font-size: 29px;
-            }
-
-            body h2 {
-                font-family: "Playfair Display";
-                font-weight: normal;
-                font-style: normal;
-                font-size: 26px;
-            }
-
-            body h3 {
-                font-family: "Playfair Display";
-                font-weight: normal;
-                font-style: normal;
-                font-size: 23px;
-            }
-
-            body h4 {
-                font-family: "Playfair Display";
-                font-weight: normal;
-                font-style: normal;
-                font-size: 21px;
-            }
-
-            body h5 {
-                font-family: "Playfair Display";
-                font-weight: normal;
-                font-style: normal;
-                font-size: 19px;
-            }
-
-            body h6 {
-                font-family: "Playfair Display";
-                font-weight: normal;
-                font-style: normal;
-                font-size: 17px;
-            }</style>
-    <style type="text/css" data-type="vc_shortcodes-custom-css">
-        .vc_custom_1445391202791 {
-            margin-top: 0px !important;
-            margin-bottom: 0px !important;
-            padding-top: 40px !important;
-        }
-
-        .vc_custom_1443780590734 {
-            margin-top: 60px !important;
-            margin-bottom: 60px !important;
-        }
-
-        .vc_custom_1445391429100 {
-            margin-top: 45px !important;
-            margin-bottom: 0px !important;
-        }</style>
-    <noscript>
-        <style>
-            .wpb_animate_when_almost_visible {
-                opacity: 1;
-            }</style>
-    </noscript>
 </head>
 
-     
-<body class="home page-template-default page page-id-958 page-parent theme-wp_pizzeria woocommerce-no-js light_mode wpb-js-composer js-comp-ver-6.9.0 vc_responsive">
 
-    <div id="page-loader" class="bg-pattern bg-white">
-        <div class="page-loader-content">
-      <!--   <div id="loader-pizza-corpus">
-                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="200px" height="200px" viewBox="0 0 128.917 127.773" style="enable-background:new 0 0 128.917 127.773;" xml:space="preserve"> <path d="M112.148,43.321c10.551,21.945,2.659,49.678-17.838,63.816c-21.246,14.655-50.346,12.235-68.023-6.434 C8.099,81.495,5.735,55.679,21.392,33.442C35.476,13.434,63.444,7.15,83.121,15.859c-6.193,15.873-12.396,31.774-18.869,48.367 C80.627,57.078,96.305,50.234,112.148,43.321z M81.305,91.321c-0.007,4.149,3.154,7.36,7.266,7.386 c4.061,0.024,7.272-3.229,7.277-7.373c0.004-4.104-3.27-7.261-7.458-7.194C84.325,84.205,81.313,87.258,81.305,91.321z M39.819,39.253c4.004,0.151,7.538-3.104,7.688-7.078c0.148-3.904-2.925-7.158-6.96-7.365c-4.212-0.215-7.582,2.698-7.865,6.809 C32.417,35.445,35.832,39.099,39.819,39.253z M70.039,89.749c4.184,0.029,7.443-3.131,7.402-7.175 c-0.04-3.969-3.159-7.051-7.171-7.088c-4.269-0.043-7.598,2.997-7.641,6.973C62.586,86.372,65.992,89.722,70.039,89.749z M90.937,59.303c-4.067-0.042-7.361,2.978-7.505,6.874c-0.146,3.944,3.3,7.498,7.285,7.508c4.105,0.01,7.492-3.295,7.487-7.312 C98.198,62.432,95.023,59.342,90.937,59.303z M29.295,95.366c0.007,4.042,3.062,7.148,7.089,7.22 c4.083,0.07,7.361-3.215,7.339-7.356c-0.021-3.995-3.2-7.188-7.152-7.183C32.274,88.052,29.288,91.056,29.295,95.366z M57.163,40.076c-4.235,0.009-7.343,3.131-7.292,7.326c0.048,3.971,3.203,6.975,7.335,6.986c4.162,0.01,7.337-3.197,7.288-7.365 C64.448,43.092,61.258,40.068,57.163,40.076z M24.585,68.434c3.864-0.015,7.275-3.323,7.334-7.11 c0.063-4.043-3.318-7.384-7.419-7.328c-4.104,0.052-7.446,3.427-7.346,7.423C17.251,65.257,20.632,68.451,24.585,68.434z M108.358,70.354c2.906-0.019,5.021-2.196,4.986-5.14c-0.036-2.979-2.121-5.058-5.087-5.067c-2.96-0.012-5.402,2.436-5.304,5.316 C103.044,68.186,105.456,70.368,108.358,70.354z M82.602,104.217c-0.087-2.812-2.385-4.898-5.323-4.833 c-3.054,0.065-5.095,2.125-5.033,5.074c0.059,2.823,2.444,5.088,5.257,4.987C80.333,109.346,82.686,106.932,82.602,104.217z M72.272,23.711c-0.038-2.855-2.233-4.953-5.169-4.945c-2.922,0.01-5.197,2.166-5.226,4.955c-0.028,2.781,2.599,5.363,5.387,5.292 C69.896,28.944,72.308,26.393,72.272,23.711z M45.63,65.794c-3.117-0.02-5.146,1.849-5.226,4.804 c-0.076,2.784,2.167,5.143,4.972,5.236c2.983,0.098,5.38-2.202,5.369-5.151C50.733,67.696,48.764,65.813,45.63,65.794z" /> <path d="M66.479,0c4.401,0.869,10.418,2.046,16.429,3.255c0.627,0.124,1.492,0.237,1.779,0.664 c0.801,1.19,1.357,2.543,2.009,3.827c-1.352,0.464-2.788,1.482-4.042,1.299C77.012,8.21,71.432,6.192,65.811,6.124 C37.184,5.77,13.934,24.036,7.271,51.561c-7.713,31.861,14.09,63.813,47.59,69.741c27.163,4.804,55.603-11.998,64.422-37.782 c4.439-12.974,5.314-25.753-0.247-38.584c-0.737-1.7-1.083-3.453,1.048-4.379c2.418-1.045,3.508,0.49,4.382,2.472 c6.421,14.54,5.49,29.167-0.219,43.512c-9.896,24.861-29.082,38.496-55.47,40.98c-25.346,2.385-53.667-12.146-64.958-41.848 C-9.063,51.791,11.4,8.901,53.722,1.398C57.33,0.757,61.021,0.583,66.479,0z" /> </svg>
-                  </div> -->
+<body>
 
-       <!--   <div id="loader-pizza-piece">
-                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 58.88 59.156" style="enable-background:new 0 0 58.88 59.156;" xml:space="preserve"> <path d="M18.897,10.835C32.395,16.096,41.72,25.19,47.858,38.322C32.091,45.187,16.523,51.959,0,59.156 C6.493,42.551,12.656,26.792,18.897,10.835z M33.058,24.871c-4.319,0.005-7.261,2.776-7.336,6.919 c-0.077,4.225,3.023,7.432,7.211,7.461c4.173,0.028,7.348-3.144,7.334-7.329C40.254,27.838,37.218,24.868,33.058,24.871z M9.626,43.747c0.009,2.815,2.263,5.077,5.073,5.092c2.644,0.012,5.245-2.498,5.282-5.104c0.042-2.887-2.439-5.253-5.438-5.185 C11.595,38.619,9.617,40.708,9.626,43.747z" /> <path d="M58.88,35.033c-0.597,0.656-1.262,2.029-2.036,2.091c-1.15,0.095-2.899-0.392-3.476-1.238 c-1.799-2.655-2.993-5.703-4.733-8.4c-6.181-9.589-14.721-16.471-25.207-21.027c-0.494-0.218-1.002-0.406-1.514-0.575 c-2.028-0.673-3.275-1.945-2.464-4.111c0.908-2.431,3.011-1.9,4.65-1.098c4.452,2.181,9.049,4.219,13.116,6.992 c9.199,6.279,15.998,14.69,20.686,24.741C58.214,33.079,58.424,33.802,58.88,35.033z" /> </svg>
-                 </div> -->
-            <div class="page-loader-text">Loading</div>
-        </div>
-    </div>
-    <div id="page">
-        <div id="screen-cover" class=""></div>
+    <style>
 
-        <header id="masthead" class="site-header header-sticky ">
-            <div id="cshero-header-top">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <aside id="text-8" class="widget widget_text">
-                                <div class="textwidget">
-                                    <p><em>Gọi ngay: 0 800 231 225 &#8211; <span class="text-uppercase">ThanhThoaiRestaurant </span></em></p>
+        a {
+            color: #D10024;
+            font-weight: 500;
+            -webkit-transition: 0.2s color;
+            transition: 0.2s color;
+        }
+
+        .active-nav-item {
+            background-color: orange; /* Thay đổi màu sắc tại đây */
+            color: #fff; /* Màu chữ khi mục được chọn */
+        }
+
+        .auth-link:hover {
+            color: orange; /* Màu khi hover vào liên kết đăng nhập, đăng xuất, đăng ký */
+        }
+
+        .menu-item .fa-shopping-cart {
+            font-size: 20px; /* Điều chỉnh kích thước của icon giỏ hàng */
+            vertical-align: middle; /* Để icon và số lượng nằm giữa cùng hàng */
+        }
+
+        .small-label {
+            vertical-align: top; /* Để số lượng nằm giữa cùng hàng với icon */
+            margin-left:0; /* Điều chỉnh khoảng cách giữa icon và số lượng */
+            font-size: 14px; /* Điều chỉnh kích thước của số lượng */
+        }
+
+
+
+    </style>
+
+    <header class="header_section" style="background-color: black;">
+       
+
+        <!-- TOP HEADER -->
+        <div id="top-header">
+            <div class="container">
+                <ul class="header-links pull-left">
+                    
+                   
+                    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+                    @if (HttpContextAccessor.HttpContext.Session.GetString("IsLoggedIn") == "true" && (HttpContextAccessor.HttpContext.Session.GetString("VaiTro") == "Admin" || HttpContextAccessor.HttpContext.Session.GetString("VaiTro") == "LeTan" || HttpContextAccessor.HttpContext.Session.GetString("VaiTro") == "ThuNgan"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link " href="/Admin">Admin</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home">Trang chủ <span class="sr-only">(current)</span></a>
+                        </li>
+
+
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Product">Mua sắm</a>
+                        </li>
+                        @if (HttpContextAccessor.HttpContext.Session.GetString("IsLoggedIn") == "true")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="/DonHang">Lịch sử mua hàng</a>
+                            </li>
+                        }
+                        <li class="nav-item">
+                            <a class="nav-link" href="/KhuyenMai">Khuyến Mãi  <i style="font-size:20px; color: yellow;" class="fa fa-gift" aria-hidden="true"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Home/Chat">Chat <i style="font-size:20px; color: yellow;" class="fa fa-comments-o" aria-hidden="true"></i></a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home">Trang chủ <span class="sr-only">(current)</span></a>
+                        </li>
+
+                       
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Product">Mua sắm</a>
+                        </li>
+                        @if (HttpContextAccessor.HttpContext.Session.GetString("IsLoggedIn") == "true")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="/DonHang">Lịch sử mua hàng</a>
+                            </li>
+                        }
+                        <li class="nav-item">
+                            <a class="nav-link" href="/KhuyenMai">Khuyến Mãi  <i style="font-size:20px; color: yellow;" class="fa fa-gift" aria-hidden="true"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/Chat">Chat <i style="font-size:20px; color: yellow;" class="fa fa-comments-o" aria-hidden="true"></i></a>
+                        </li>
+
+                    }
+                </ul>
+                <script>
+                    // Lấy URL hiện tại
+                    var currentUrl = window.location.pathname;
+
+                    // Tìm mục menu tương ứng với URL hiện tại
+                    var currentNavItem = document.querySelector('ul.navbar-nav li.nav-item a[href="' + currentUrl + '"]');
+
+                    // Thêm lớp 'active' cho mục hiện tại
+                    if (currentNavItem) {
+                        currentNavItem.parentElement.classList.add('active');
+                    }
+
+                </script>
+
+                <div class=" header-links pull-right user_option" style="display: flex;">
+                    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+                    <aside id="text-2" class="widget widget_text">
+                        <div class="textwidget">
+                            @if (HttpContextAccessor.HttpContext.Session.GetString("TenDangNhap") != null)
+                            {
+                                <p style="color: #fff;">Chào mừng, <a href="/Account/UpDateProfile" style="color:#c7b72e;"> @HttpContextAccessor.HttpContext.Session.GetString("TenDangNhap")! <i style="font-size:24px; color: #c7b72e;" class="fa fa-user" aria-hidden="true"></i></a></p>
+                                <a class="auth-link" href="@Url.Action("Logout", "Account")">Đăng xuất</a>
+                            }
+                            else
+                            {
+                                <div style="white-space: nowrap; width: 200px; color: #fff; margin-right: 50px;">
+                                    Chào mừng quý khách,
+                                    <a class="auth-link" href="/Account/Login">Đăng nhập</a> | <a class="auth-link" href="/Account/Register">Đăng ký</a>
                                 </div>
-                            </aside>
+                            }
                         </div>
-                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right">
-                            @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
-                            <aside id="text-2" class="widget widget_text">
-                                <div class="textwidget">
-                                    @if (HttpContextAccessor.HttpContext.Session.GetString("TenDangNhap") != null)
+                        <div class="menu-item has-small-label cart-trigger">
+                            <a href="/GioHang" style="margin: 0">
+                                <i class="fa fa-shopping-cart" style=" color: #fff;"></i>
+                            </a>
+                            <span class="small-label">
+                                <span id="cart_total" style="color: #fff;">
+                                    @if (HttpContextAccessor.HttpContext.Session.GetString("GioHang") != null)
                                     {
-                                        <p>Chào mừng, @HttpContextAccessor.HttpContext.Session.GetString("TenDangNhap")!</p>
-                                        <a href="@Url.Action("Logout", "Account")">Đăng xuất</a>
+                                        var gioHang = JsonSerializer.Deserialize<List<ChiTietGh>>(HttpContextAccessor.HttpContext.Session.GetString("GioHang"));
+                                        var soLuongMonAnTrongGioHang = gioHang.Select(item => item.MaMon).Distinct().Count();
+                                        @soLuongMonAnTrongGioHang
                                     }
                                     else
                                     {
-                                        <div>
-                                            Chào mừng quý khách,
-                                    <a href="Account/Login">ĐĂNG NHẬP</a> | <a href = "Account/Register" > TẠO TÀI KHOẢN</a>
-                                        </div>
-                                                            }
-                                </div>
-                            </aside>
-
+                                        <span style="color: #fff;">0</span>
+                                    }
+                                </span>
+                            </span>
                         </div>
+                    </aside>
 
-                    </div>
-                </div>
-            </div>
-            <div id="cshero-header" class="relative-container cshero-main-header no-sticky ">
-                <div id="main-navigation-inner">
-                    <div class="container">
-                        <div class="header-wrap">
-                            <div id="main-navigation-button"><i class="fa fa-reorder"></i></div>
-                            <div class="pull-left">
-                                <div class="centered-columns">
-                                    <div class="centered-column">
-                                         <img class="page-logo" src="/img/Logo1.png" height="100" width="100">
-                                    </div>
-                                    <div class="centered-column hidden-xs">
-                                        <aside id="text-3" class="widget widget_text">
-                                            <div class="textwidget">
-                                                <h1 class="site-name">ThanhThoaiRestaurant</h1>
-                                                <h4 class="site-name-info">Chuẩn vị mẹ nấu</h4>
-                                            </div>
-                                        </aside>
-                                    </div>
-                                </div>
-                            </div>
-                            <nav id="main-navigation" >
-                                <div class="menu-main-container ">
-                                    <ul id="menu-main" class="nav-menu menu-main-menu">
-                                      
-                                        
-                                        <li id="menu-item-1013" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-ancestor current-menu-parent menu-item-has-children no_group menu-item-1013" data-depth="0">
-                                            <a href="/"><span class="menu-title">Trang chủ</span></a>
-                                            
-                                        </li>
-                                        <li id="menu-item-972" class="menu-item menu-item-type-post_type menu-item-object-page no_group menu-item-972" data-depth="0"> <a href="/GioiThieu"><span class="menu-title">Về chúng tôi</span></a></li>
-                                                                 
-                                        <li id="menu-item-1033" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-ancestor current-menu-parent menu-item-has-children no_group menu-item-1033" data-depth="0"><a href="/Product"><span class="menu-title">Thực đơn</span></a></li>
-                                                                                                                                                                                                                                                       
-                                       
-                                        <li id="menu-item-1032" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children no_group menu-item-1032" data-depth="0">
-                                            <a href="#"><span class="menu-title">Blogs</span></a>
-                                            <ul class='standar-dropdown standard autodrop_submenu sub-menu' style="width:200px;">
-                                                <li id="menu-item-976" class="menu-item menu-item-type-post_type menu-item-object-page no_group menu-item-976" data-depth="1"><a href="https://demo.exptheme.com/pizzeria/blog/"><span class="menu-title">Blog</span></a></li>
-                                                <li id="menu-item-986" class="menu-item menu-item-type-post_type menu-item-object-post no_group menu-item-986" data-depth="1"><a href="https://demo.exptheme.com/pizzeria/baking-great-meals-4/"><span class="menu-title">Blog Single</span></a></li>
-                                            </ul>
-                                        </li>
-
-
-                                        <li id="menu-item-961" class="menu-item menu-item-type-post_type menu-item-object-page no_group menu-item-961" data-depth="0"><a href="https://demo.exptheme.com/pizzeria/shop-2/"><span class="menu-title">Shop</span></a></li>
-                                        <li id="menu-item-977" class="menu-item menu-item-type-post_type menu-item-object-page no_group menu-item-977" data-depth="0"><a href="https://demo.exptheme.com/pizzeria/contact/"><span class="menu-title">Contact</span></a></li>
-                                    </ul>
-                                </div>
-
-                                <script>
-                                    document.addEventListener("DOMContentLoaded", function () {
-                                        var menuItems = document.querySelectorAll(".menu-item");
-
-                                        menuItems.forEach(function (item) {
-                                            item.addEventListener("click", function () {
-                                                // Xóa dấu gạch chân màu vàng khỏi tất cả các mục
-                                                menuItems.forEach(function (otherItem) {
-                                                    otherItem.classList.remove("current-menu-item");
-                                                });
-
-                                                // Thêm dấu gạch chân màu vàng cho mục được chọn
-                                                item.classList.add("current-menu-item");
-                                            });
-                                        });
-                                    });
-                                </script>
-
-
-                                @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-
-                                <div class="menu-item has-small-label cart-trigger">
-                                    <a href="/GioHang">
-                                        <i class="fa fa-shopping-cart" style="margin-right:20px;"></i>
-                                    </a>
-
-                                    <span class="small-label">
-                                        <span id="cart_total">
-                                            @if (HttpContextAccessor.HttpContext.Session.GetString("GioHang") != null)
-                                            {
-                                                var gioHang = JsonSerializer.Deserialize<List<ChiTietGh>>(HttpContextAccessor.HttpContext.Session.GetString("GioHang"));
-                                                var soLuongMonAnTrongGioHang = gioHang.Sum(item => item.SoLuongMM);
-                                                @soLuongMonAnTrongGioHang
-                                            }
-                                            else
-                                            {
-                                                <span>0</span>
-                                            }
-                                        </span>
-                                    </span>
-                                </div>
-
-
-                            </nav>
-                        </div><!-- .relative-container -->
-                    </div>
                 </div>
 
             </div>
-            <div id="main-navigation-placeholder"></div>
-            <!-- #site-navigation -->
-        </header><!-- #masthead -->
+        </div>
+
+                <!-- Modal hoặc cửa sổ chat -->
+                
+
+        <!-- /TOP HEADER -->
+        <!-- MAIN HEADER -->
+        <div id="header">
+            <!-- container -->
+            <div class="container">
+                <!-- row -->
+                <div class="row">
+                    <!-- LOGO -->
+                    <div class="col-md-3">
+                        <div class="header-logo">
+                            <a href="#" class="logo">
+                                <img src="./img/logo.png" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <!-- /LOGO -->
+                    <!-- SEARCH BAR -->
+                  
+                    <!-- /SEARCH BAR -->
+                    <!-- ACCOUNT -->
+                    <div class="col-md-3 clearfix">
+                        <div class="header-ctn">
+                            
+                          
+                            <!-- Menu Toogle -->
+                            
+                            <!-- /Menu Toogle -->
+                        </div>
+                    </div>
+                    <!-- /ACCOUNT -->
+                </div>
+                <!-- row -->
+            </div>
+            <!-- container -->
+        </div>
+        <!-- /MAIN HEADER -->
+    </header>
         @RenderBody()
-        <footer class="page-footer">
-            <div id="cshero-footer-top">
-                <div class="container">
-                    <div class="row">
-                        <div class=" col-md-4 responsive-column">
-                            <aside id="text-4" class="widget widget_text">
-                                <div class="textwidget" >
-                                    <div >
-                                    <h2 class="footer-heading">Thời gian mở cửa</h2>
-                                    <div class="opening-hours-wrapper">
-                                        <div class="row">
-                                            <div class="col-xs-6">
-                                                <em>Thứ hai - Thứ sáu</em>
-                                            </div>
-                                            <div class="col-xs-6 text-md-right">
-                                                <em>09:00 - 23:00h</em>
-                                            </div>
-                                        </div>
-                                        <div class="margin-5"></div>
-                                        <div class="row">
-                                            <div class="col-xs-6">
-                                                <em>Thứ bảy</em>
-                                            </div>
-                                            <div class="col-xs-6 text-md-right">
-                                                <em>09:00 - 16:00h</em>
-                                            </div>
-                                        </div>
-                                        <div class="margin-5"></div>
-                                        <div class="row">
-                                            <div class="col-xs-6">
-                                                <em>Chủ nhật</em>
-                                            </div>
-                                            <div class="col-xs-6 text-md-right">
-                                                <em>12:00 - 18:00h</em>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    </div>
-                                    <div >
-                                    <h2 class="footer-heading">Địa chỉ:</h2>
-                                    <address>
-                                        ThanhThoai Restaurant<br>
-                                        291 Chiến Thắng , Hà Đông , Hà Nội<br>
-                                        
-                                        <div class="margin-20"></div>
-                                        Liên hệ trực tiếp: 0 800 231 225<br>
-                                        Email: thanhthoai@gmail.com
-                                    </address>
-                                    </div>
-                                </div>
-                            </aside>
-                        </div>
-                        <div class=" col-md-4 responsive-column text-center">
-                            <aside id="text-5" class="widget widget_text">
-                                <div class="textwidget">
-                                    <div class="margin-40 visible-lg visible-md"></div>
-                                    <img class="page-logo" src="/img/Logo1.png" height="150" width="150">
-                                    <p class="logo-footer-text">ThanhThoaiRestaurant</p>
-                                    <p class="logo-footer-detail">Chuẩn vị mẹ nấu</p>
-                                    <a href="/Product" class="scroll-to button-yellow button-heavy">Đặt món ngay!</a>
-                                </div>
-                            </aside>
-                        </div>
-                       
-                    </div>
-                </div>
-            </div>
-            <div id="cshero-footer-bottom">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-8 text-left">
-                            <aside id="text-6" class="widget widget_text">
-                                <div class="textwidget">
-                                    <p>2023 All rights reserved. By IgnitionThemes Made with love.</p>
-                                </div>
-                            </aside>
-                        </div>
-                        <div class="col-xs-4  text-right footer-socials">
-                            <aside id="text-7" class="widget widget_text">
-                                <div class="textwidget">
-                                    Thông báo:
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                    <a href="#"><i class="fa fa-vimeo-square"></i></a>
-                                    <a href="#"><i class="fa fa-pinterest"></i></a>
-                                </div>
-                            </aside>
-                        </div>
-                    </div>
-                </div>
-                <div id="back_to_top" class="back_to_top"><span class="go_up"><i style="" class="fa fa-angle-double-up"></i></span></div>
-            </div>
 
-        </footer><!-- #site-footer -->
-    </div><!-- #page -->
-    @RenderSection("Scripts", required: false)
-    
-    <script type="text/html" id="wpb-modifications"></script>
-    <script type="text/javascript">
-        (function () {
-            var c = document.body.className;
-            c = c.replace(/woocommerce-no-js/, 'woocommerce-js');
-            document.body.className = c;
-        })();
+    <!-- footer section -->
+    <!-- FOOTER -->
+    <footer id="footer">
+        <!-- top footer -->
+        <div class="section">
+            <!-- container -->
+            <div class="container">
+                <!-- row -->
+                <div class="row">
+                    <div class="col-md-3 col-xs-6">
+                        <div class="footer">
+                            <h3 class="footer-title">Về chúng tôi</h3>
+                           
+                            <ul class="footer-links">
+                                <li><a href="#"><i class="fa fa-map-marker"></i>1734 Stonecoal Road</a></li>
+                                <li><a href="#"><i class="fa fa-phone"></i>+021-95-51-84</a></li>
+                                <li><a href="#"><i class="fa fa-envelope-o"></i>email@email.com</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-xs-6">
+                        <div class="footer">
+                            <h3 class="footer-title">Danh mục</h3>
+                            <ul class="footer-links">
+                                <li><a href="#">DELL</a></li>
+                                <li><a href="#">HP</a></li>
+                                <li><a href="#">MACBOOK</a></li>
+                                <li><a href="#">ACER</a></li>
+                                <li><a href="#">LENOVO</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="clearfix visible-xs"></div>
+
+                    <div class="col-md-3 col-xs-6">
+                        <div class="footer">
+                            <h3 class="footer-title">Thông tin</h3>
+                            <ul class="footer-links">
+                               
+                                <li><a href="#">Liên hệ</a></li>
+                                <li><a href="#">Chính sách bảo mật</a></li>
+                                <li><a href="#">Đặt và đổi hàng</a></li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-xs-6">
+                        <div class="footer">
+                            <h3 class="footer-title">Dịch vụ</h3>
+                            <ul class="footer-links">
+                                <li><a href="#">Tài khoản</a></li>
+                                <li><a href="#">Giỏ hàng</a></li>
+                                <li><a href="#">Yêu thích</a></li>
+                                <li><a href="#">Vận chuyển</a></li>
+                                <li><a href="#">Giúp đỡ</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- /row -->
+            </div>
+            <!-- /container -->
+        </div>
+        <!-- /top footer -->
+       
+
+       
+        <!-- Map Container -->
+        <div class="section">
+            <div class="ratio ratio-16x9" style="margin-bottom: 20px; height: 500px; width: 100%;">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.655435110017!2d105.78142047588813!3d21.04646858716882!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab3277f870d7%3A0xf27837785a779a8a!2zMjM2IEhvw6BuZyBRdeG7kWMgVmnhu4d0LCBD4buVIE5odeG6vywgQ-G6p3UgR2nhuqV5LCBIw6AgTuG7mWksIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1700440402075!5m2!1svi!2s" style="border:0; height: 100%; width: 100%;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+
+        <!-- Map Container -->
+        
+    </footer>
+    <!-- /FOOTER -->
+    <!-- footer section -->
+    <!-- jQery -->
+   
+    <!-- popper js -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
     </script>
-    <link rel='stylesheet' id='owl-carousel-css' href='https://demo.exptheme.com/pizzeria/wp-content/themes/wp_pizzeria/assets/css/owl.carousel.css?ver=2.0.0b' media='all' />
-    <link rel='stylesheet' id='vc_font_awesome_5_shims-css' href='https://demo.exptheme.com/pizzeria/wp-content/plugins/js_composer/assets/lib/bower/font-awesome/css/v4-shims.min.css?ver=6.9.0' media='all' />
-    <link rel='stylesheet' id='vc_font_awesome_5-css' href='https://demo.exptheme.com/pizzeria/wp-content/plugins/js_composer/assets/lib/bower/font-awesome/css/all.min.css?ver=6.9.0' media='all' />
-    <script src='https://demo.exptheme.com/pizzeria/wp-includes/js/dist/vendor/wp-polyfill-inert.min.js?ver=3.1.2' id='wp-polyfill-inert-js'></script>
-    <script src='https://demo.exptheme.com/pizzeria/wp-includes/js/dist/vendor/regenerator-runtime.min.js?ver=0.13.11' id='regenerator-runtime-js'></script>
-    <script src='https://demo.exptheme.com/pizzeria/wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=3.15.0' id='wp-polyfill-js'></script>
-    <script type='text/javascript' id='contact-form-7-js-extra'>
-        /* <![CDATA[ */
-        var wpcf7 = { "api": { "root": "https:\/\/demo.exptheme.com\/pizzeria\/wp-json\/", "namespace": "contact-form-7\/v1" } };
-        /* ]]> */
+    <!-- bootstrap js -->
+    <script src="~/js/bootstrap.js"></script>
+    <!-- owl slider -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
     </script>
-    <script src='https://demo.exptheme.com/pizzeria/wp-content/plugins/contact-form-7/includes/js/index.js?ver=5.6' id='contact-form-7-js'></script>
-    <script src='https://demo.exptheme.com/pizzeria/wp-content/plugins/woocommerce/assets/js/js-cookie/js.cookie.min.js?ver=2.1.4-wc.6.6.0' id='js-cookie-js'></script>
-    <script type='text/javascript' id='woocommerce-js-extra'>
-        /* <![CDATA[ */
-        var woocommerce_params = { "ajax_url": "\/pizzeria\/wp-admin\/admin-ajax.php", "wc_ajax_url": "\/pizzeria\/?wc-ajax=%%endpoint%%" };
-        /* ]]> */
-    </script>
-    <script src='https://demo.exptheme.com/pizzeria/wp-content/plugins/woocommerce/assets/js/frontend/woocommerce.min.js?ver=6.6.0' id='woocommerce-js'></script>
-    <script type='text/javascript' id='wc-cart-fragments-js-extra'>
-        /* <![CDATA[ */
-        var wc_cart_fragments_params = { "ajax_url": "\/pizzeria\/wp-admin\/admin-ajax.php", "wc_ajax_url": "\/pizzeria\/?wc-ajax=%%endpoint%%", "cart_hash_key": "wc_cart_hash_c170e291064015165632eb11a38a956c", "fragment_name": "wc_fragments_c170e291064015165632eb11a38a956c", "request_timeout": "5000" };
-        /* ]]> */
-    </script>
-    <script src='https://demo.exptheme.com/pizzeria/wp-content/plugins/woocommerce/assets/js/frontend/cart-fragments.min.js?ver=6.6.0' id='wc-cart-fragments-js'></script>
-    <script src='https://demo.exptheme.com/pizzeria/wp-content/themes/wp_pizzeria/assets/js/jquery.parallax-1.1.3.js?ver=1.1.3' id='cmssuperheroes-parallax-js'></script>
-    <script src='https://demo.exptheme.com/pizzeria/wp-content/themes/wp_pizzeria/assets/js/nicescroll.js?ver=1.0.0' id='cmssuperheroes-nicescroll-js'></script>
-    <script type='text/javascript' id='cmssuperheroes-main-js-extra'>
-        /* <![CDATA[ */
-        var CMSOptions = { "menu_sticky": "0", "back_to_top": "1", "page_loadding": "1", "smoothscroll": "1" };
-        /* ]]> */
-    </script>
-    <script src='https://demo.exptheme.com/pizzeria/wp-content/themes/wp_pizzeria/assets/js/main.js?ver=1.0.0' id='cmssuperheroes-main-js'></script>
-    <script src='https://demo.exptheme.com/pizzeria/wp-content/themes/wp_pizzeria/assets/js/jquery.nav.min.js?ver=1.0.0' id='jquery.nav.min-js'></script>
-    <script src='https://demo.exptheme.com/pizzeria/wp-content/themes/wp_pizzeria/assets/js/menu.js?ver=1.0.0' id='cmssuperheroes-menu-js'></script>
-    <script src='https://demo.exptheme.com/pizzeria/wp-content/themes/wp_pizzeria/assets/js/modernizr-custom.min.js?ver=1.3.0' id='modernizr-custom-js'></script>
-    <script src='https://demo.exptheme.com/pizzeria/wp-content/themes/wp_pizzeria/assets/js/jquery.inview.min.js?ver=1.3.0' id='inview-js-js'></script>
-    <script src='https://demo.exptheme.com/pizzeria/wp-content/themes/wp_pizzeria/assets/js/lightbox.min.js?ver=2.7.1' id='lightbox-js'></script>
-    <script src='https://demo.exptheme.com/pizzeria/wp-content/themes/wp_pizzeria/assets/js/jquery.scrollTo.min.js?ver=1.4.13' id='scrollTo-js'></script>
-    <script type='text/javascript' id='wpb_composer_front_js-js-extra'>
-        /* <![CDATA[ */
-        var vcData = { "currentTheme": { "slug": "wp_pizzeria" } };
-        /* ]]> */
-    </script>
-    <script src='https://demo.exptheme.com/pizzeria/wp-content/plugins/js_composer/assets/js/dist/js_composer_front.min.js?ver=6.9.0' id='wpb_composer_front_js-js'></script>
-    <script src='https://demo.exptheme.com/pizzeria/wp-content/themes/wp_pizzeria/assets/js/owl.carousel.min.js?ver=2.0.0b' id='owl-carousel-js'></script>
-    <script type='text/javascript' id='owl-slider_carousel-cms-js-extra'>
-        /* <![CDATA[ */
-        var cms_slider_carousel = { "cms-slider-carousel": { "nav": "true", "loop": "true", "dots": "true", "autoplay": "true", "autoplayTimeout": 5000, "smartSpeed": 1000, "dotscontainer": "cms-slider-carousel .cms-slider-dots", "responsive": { "0": { "items": 1 }, "768": { "items": 1 }, "992": { "items": 1 }, "1200": { "items": 1 } }, "layout": "0" } };
-        /* ]]> */
-    </script>
-    <script src='https://demo.exptheme.com/pizzeria/wp-content/themes/wp_pizzeria/assets/js/owl.slider.carousel.cms.js?ver=1.0.0' id='owl-slider_carousel-cms-js'></script>
-    
+    <!-- isotope js -->
+    <script src="https://unpkg.com/isotope-layout@3.0.4/dist/isotope.pkgd.min.js"></script>
+    <!-- nice select -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
+    <!-- custom js -->
+    <script src="~/js/custom.js"></script>
+   
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-modal/2.2.6/js/bootstrap-modalmanager.min.js" ></script>
+
+    <script src="~/new/js/jquery.min.js"></script>
+    <script src="~/new/js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="~/new/js/popper.min.js"></script>
+    <script src="~/new/js/bootstrap.min.js"></script>
+    <script src="~/new/js/jquery.easing.1.3.js"></script>
+    <script src="~/new/js/jquery.waypoints.min.js"></script>
+    <script src="~/new/js/jquery.stellar.min.js"></script>
+    <script src="~/new/js/owl.carousel.min.js"></script>
+    <script src="~/new/js/jquery.magnific-popup.min.js"></script>
+    <script src="~/new/js/aos.js"></script>
+    <script src="~/new/js/jquery.animateNumber.min.js"></script>
+    <script src="~/new/js/bootstrap-datepicker.js"></script>
+    <script src="~/new/js/scrollax.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="~/new/js/google-map.js"></script>
+    <script src="~/new/js/main.js"></script>
+
+    <!--****************************************-->
+    <script src="~/new1/js/jquery.min.js"></script>
+    <script src="~/new1/js/bootstrap.min.js"></script>
+    <script src="~/new1/js/slick.min.js"></script>
+    <script src="~/new1/js/nouislider.min.js"></script>
+    <script src="~/new1/js/jquery.zoom.min.js"></script>
+    <script src="~/new1/js/main.js"></script>
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+    <df-messenger intent="WELCOME"
+                  chat-title="ThanhThoaiLapTop"
+                  agent-id="bd0e3f89-2461-4461-b802-e3f7714485e7"
+                  language-code="vi"></df-messenger>
 </body>
 </html>

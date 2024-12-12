@@ -1,0 +1,252 @@
+﻿@model ThanhThoaiRestaurant.Models.NhanVienViewModel
+@{
+    ViewBag.Title = "Chi tiết nhân viên";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+
+    .table tbody tr td {
+        text-align: center !important;
+        vertical-align: middle;
+        border: 1px solid transparent !important;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+    }
+
+
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .ms-content-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    .ms-panel {
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        background-color: #ffffff;
+        width: 80%; /* Đặt chiều rộng cho panel */
+        margin: 20px auto; /* Canh giữa */
+    }
+
+    .ms-panel-body {
+        padding: 20px;
+    }
+
+    .section-title {
+        color: #FF5733;
+        border-bottom: 2px solid #FF5733;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        font-size: 24px; /* Kích thước chữ tiêu đề */
+    }
+
+    .ms-profile-information th,
+    .ms-profile-information td {
+        padding: 12px; /* Padding tăng giảm khoảng cách */
+        border-bottom: 1px solid #eee; /* Đường kẻ giữa các hàng */
+    }
+
+    .ms-profile-information th {
+        width: 200px;
+        font-weight: bold;
+        background-color: #f0f0f0;
+        border-radius: 5px;
+    }
+
+    .ms-profile-information td {
+        max-width: 300px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    #data-table-5 {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse; /* Loại bỏ đường kẻ của table */
+    }
+
+        #data-table-5 th,
+        #data-table-5 td {
+            text-align: left;
+            padding: 15px;
+        }
+
+        #data-table-5 th {
+            font-weight: bold;
+            background-color: #4285f4;
+            color: white;
+        }
+
+        #data-table-5 tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        #data-table-5 tbody tr:hover {
+            background-color: #f0f0f0;
+        }
+
+    .btn-secondary {
+        background-color: #FF5733;
+        color: white;
+        margin-top: 20px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-block;
+        transition: background-color 0.3s;
+    }
+
+        .btn-secondary:hover {
+            background-color: #d14836;
+        }
+
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .ms-content-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    .ms-panel {
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        background-color: #ffffff;
+    }
+
+    .ms-panel-body {
+        padding: 20px;
+    }
+
+    .section-title {
+        color: #FF5733;
+        border-bottom: 2px solid #FF5733;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+    .ms-profile-information th {
+        width: 200px;
+        font-weight: bold;
+        background-color: #f0f0f0;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    .ms-profile-information td {
+        max-width: 300px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        padding: 10px;
+    }
+
+    #data-table-5 {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+        #data-table-5 th,
+        #data-table-5 td {
+            text-align: left;
+            padding: 15px;
+        }
+
+        #data-table-5 th {
+            font-weight: bold;
+            background-color: #4285f4;
+            color: white;
+            border: 1px solid #f8f9fa;
+        }
+
+        #data-table-5 tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        #data-table-5 tbody tr:hover {
+            background-color: #f0f0f0;
+        }
+
+    .btn-secondary {
+        background-color: #FF5733;
+        color: white;
+        margin-top: 20px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-block;
+        transition: background-color 0.3s;
+    }
+
+        .btn-secondary:hover {
+            background-color: #d14836;
+        }
+</style>
+
+<main id="main" class="main">
+    <div class="col-6 mb-60" style="margin-left: 300px;">
+        <h4 class="checkout-title" style="color: #27c4d1; font-size: 30px; font-weight: 900; text-align: center;">THÔNG TIN NHÂN VIÊN</h4>
+        <div class="col-md-12 d-flex mb-5" style="border: solid 2px gray; flex-direction: column;">
+            <div class="cart-detail cart-total p-3 p-md-4">
+                <p class="d-flex">
+                    <img style="height: 100px; margin-left: 200px;" src="~/img/customers/1.png" alt="Ảnh khách hàng" class="customer-image">
+                </p>
+                <p class="d-flex">
+                    <span style="flex: 1; margin-left: 80px; font-size: 17px; font-weight: 700;">Mã nhân viên:</span>
+                    <span style="flex: 1; font-size: 17px; font-weight: 700;">@Model.MaNv</span>
+                </p>
+                <p class="d-flex">
+                    <span style="flex: 1; margin-left: 80px; font-size: 17px; font-weight: 700;">Họ tên:</span>
+                    <span style="flex: 1; font-size: 17px; font-weight: 700;">@Model.TenNv</span>
+                </p>
+                <p class="d-flex">
+                    <span style="flex: 1; margin-left: 80px;font-size: 17px; font-weight: 700;">Giới tính:</span>
+                    <span style="flex: 1; font-size: 17px; font-weight: 700;">@Model.GioiTinhNv</span>
+                </p>
+                <p class="d-flex">
+                    <span style="flex: 1; margin-left: 80px;font-size: 17px; font-weight: 700;">Ngày sinh:</span>
+                    <span style="flex: 1; font-size: 17px; font-weight: 700;">@Model.NgaySinhNv</span>
+                </p>
+                <p class="d-flex">
+                    <span style="flex: 1; margin-left: 80px;font-size: 17px; font-weight: 700;">Ngày vào làm:</span>
+                    <span style="flex: 1; font-size: 17px; font-weight: 700;">@Model.NgayVl</span>
+                </p>
+                <p class="d-flex">
+                    <span style="flex: 1; margin-left: 80px;font-size: 17px; font-weight: 700;">Chức vụ:</span>
+                    <span style="flex: 1; font-size: 17px; font-weight: 700;">@Model.ChucVu</span>
+                </p>
+                <p class="d-flex">
+                    <span style="flex: 1; margin-left: 80px;font-size: 17px; font-weight: 700;">Số điện thoại:</span>
+                    <span style="flex: 1; font-size: 17px; font-weight: 700;">@Model.Sdtnv</span>
+                </p>
+                <p class="d-flex">
+                    <span style="flex: 1; margin-left: 80px;font-size: 17px; font-weight: 700;">Địa chỉ:</span>
+                    <span style="flex: 1; font-size: 17px; font-weight: 700;">@Model.DiaChiNv</span>
+                </p>
+                
+               
+
+               
+            </div>
+        </div>
+        <a href="@Url.Action("Index")" class="btn btn-secondary" style="background-color: #FF5733; color: white; margin-left: 480px; width:100px;">Trở về</a>
+    </div>
+
+</main>
+

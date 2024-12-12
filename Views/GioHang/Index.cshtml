@@ -1,11 +1,102 @@
-﻿
-@{
-    ViewBag.Title = "Thực đơn";
+﻿@{
+    ViewBag.Title = "Giỏ hàng";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var gioHang = ViewBag.GioHang as List<ChiTietGh>;
-    
+
 }
 
+<style>
+    .quantity-control {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    .quantity-btns {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .quantity-btn {
+        padding: 5px;
+        border: 1px solid #ccc;
+        width: 30px;
+        height: 15px; /* Chiều cao bằng một nửa chiều cao của ô số lượng */
+        cursor: pointer;
+        background-color: #fff;
+        text-align: center;
+        display: flex; /* Sử dụng flex để căn giữa nút */
+        align-items: center; /* Căn giữa theo chiều dọc */
+        justify-content: center;
+    }
+    
+
+        .quantity-btn span {
+            display: block;
+            font-size: 14px;
+            line-height: 15px;
+        }
+
+    .soLuongMoi {
+        /* Điều chỉnh kiểu hiển thị ô số lượng nếu cần */
+        /* Ví dụ: */
+        padding: 5px;
+        border: 1px solid #ccc;
+        width: 30px;
+        height: 30px;
+        color: black;
+    }
+    /* Màu mặc định cho nút "THANH TOÁN" và "TIẾP TỤC CHỌN MÓN" */
+    .continue-btn {
+        background-color: #dcc500;
+        color: black;
+        transition: background-color 0.3s, color 0.3s;
+        padding: 10px 20px;
+        text-decoration: none;
+        display: inline-block;
+        cursor: pointer;
+        font-weight: bold;
+        border: 3px solid #ccc;
+        border-radius: 25px;
+        color: white
+    }
+
+    .continue-btn1 {
+        background-color: #D10024;
+        color: black;
+        transition: background-color 0.3s, color 0.3s;
+        padding: 10px 20px;
+        text-decoration: none;
+        display: inline-block;
+        cursor: pointer;
+        font-weight: bold;
+        border: 3px solid #ccc;
+        border-radius: 25px;
+        color: white;
+    }
+
+        /* Màu khi di chuột vào nút */
+        .continue-btn:hover {
+        background-color: #af9d07; /* Màu nền khi di chuột vào */
+            color: white; /* Màu chữ khi di chuột vào */
+        }
+
+    /* Màu khi di chuột vào nút */
+    .continue-btn1:hover {
+        background-color: #8a0c22; /* Màu nền khi di chuột vào */
+        color: white; /* Màu chữ khi di chuột vào */
+    }
+
+    thead th {
+        text-align: center;
+        font-size: 15px;
+        color: white;
+        background-color: #D10024;
+    }
+
+
+</style>
 
 
 
@@ -15,44 +106,57 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <form action="#" class="cart-table">
+                <div class="cart-table">
                     <div class="table-content table-responsive">
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th class="plantmore-product-thumbnail">Hình ảnh</th>
-                                    <th class="cart-product-name">Tên món ăn</th>
-                                    <th class="plantmore-product-price">Giá bán</th>
-                                    <th class="plantmore-product-quantity">Số lượng</th>
-                                    <th class="plantmore-product-subtotal">Thành tiền</th>
-                                    <th class="plantmore-product-remove">Xoá</th>
+                                    <th class="plantmore-product-thumbnail" style="font-weight: bold;">HÌNH ẢNH</th>
+                                    <th class="cart-product-name" style="font-weight: bold;">TÊN SẢN PHẨM</th>
+                                    <th class="plantmore-product-price" style="font-weight: bold;">GIÁ SẢN PHẨM</th>
+                                    <th class="plantmore-product-quantity" style="font-weight: bold;">SỐ LƯỢNG</th>
+                                    <th class="plantmore-product-subtotal" style="font-weight: bold;">THÀNH TIỀN</th>
+                                    <th class="plantmore-product-remove" style="font-weight: bold;">XOÁ</th>
                                 </tr>
                             </thead>
                             <tbody>
-                               
+
                                 @foreach (var item in Model)
                                 {
 
-                                    <tr style="font-size: 20px;">
-                                        <td class="plantmore-product-thumbnail"><img width="300" height="300" src="~/img/food/@item.HinhAnh"></td>
+                                    <tr style="font-size: 15px;">
+                                        <td class="plantmore-product-thumbnail"><img width="100" height="100" src="~/new1/img/@item.HinhAnh"></td>
                                         <td class="plantmore-product-name"><span>@item.TenMon</span></td>
-                                        <td class="plantmore-product-price"><span class="amount">@item.GiaBan.ToString("N0") VNĐ</span></td>
+                                        <td class="plantmore-product-price"><span class="amount">@item.GiaBan VNĐ</span></td>                              
                                         <td class="plantmore-product-quantity">
-                                            <input value="@item.SoLuongMM" type="number" min="1" max="@item.SoLuong" style="width: 50px; color:black;" class="soLuongMoi" data-ma-mon="@item.MaMon" data-thanh-tien="@item.ThanhTien" />
+                                            <div class="quantity-control" style="text-align: center; margin-right: 90px;">
+                                                <input type="text" value="@item.SoLuongMM" class="soLuongMoi" data-ma-mon="@item.MaMon" data-thanh-tien="@item.ThanhTien" data-so-luong-kho1="@item.SoLuong" />
+                                                <div class="quantity-btns">
+                                                    <button class="quantity-btn plus" data-action="increase" data-ma-mon="@item.MaMon" data-so-luong-kho="@item.SoLuong">
+                                                        <span>+</span>
+                                                    </button>
+                                                    <button class="quantity-btn minus1" data-action="decrease" data-ma-mon="@item.MaMon" >
+                                                        <span>-</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            
+
                                         </td>
-                                        <td class="product-subtotal"><span class="amount">@item.ThanhTien.ToString("N0") VNĐ</span></td>
-                                        <td class="plantmore-product-remove">
-                                            <a href="#" class="delete-button" data-ma-mon="@item.MaMon"><i class="fa fa-trash" aria-hidden="true"></i></a>
+
+
+
+                                        <td class="product-subtotal"><span class="amount">@item.ThanhTien VNĐ</span></td>
+                                        <td class="plantmore-product-remove" style="background-color: transparent;">
+                                            <button class="delete-button" data-ma-mon="@item.MaMon"><i class="fa fa-trash" aria-hidden="true"></i></button>
                                         </td>
+
+
+
                                     </tr>
-                                                                 
-                                }  
-                                
-                             
+
+                                }
                             </tbody>
-
-
-
                         </table>
                     </div>
                     <div class="row">
@@ -60,85 +164,407 @@
                             <div class="coupon-all">
 
                                 <div class="coupon2">
-                                    <a href="/Product/Index" class=" continue-btn cart-trigger button-clean button-text-small" style="color: red;">TIẾP TỤC CHỌN MÓN</a>
+                                    <a href="/Product/Index" class=" continue-btn cart-trigger button-clean button-text-small">TIẾP TỤC MUA SẮM</a>
                                 </div>
 
-                                <div class="coupon">
-                                    <h3>Phiếu giảm giá</h3>
-                                    <p>Nhập mã giảm giá nếu bạn có</p>
-                                    <input id="coupon_code" class="input-text" name="coupon_code" value="" placeholder="Mã code" type="text">
-                                    <input class="button" name="apply_coupon" value="Áp dụng mã" type="submit">
-                                </div>
+                                
                             </div>
+
+                            
                         </div>
                         <div class="col-md-4 ml-auto">
                             <div class="cart-page-total">
-                                <h2>Hoá đơn giỏ hàng</h2>
+                                <h2>Tổng tiền giỏ hàng</h2>
                                 <ul>
-
                                     <li class="total-amount">Tổng tiền: <span id="total-amount"></span></li>
-
-                                    <li>Mã giảm <span>$170.00</span></li>
-                                    <li>Phí vận chuyển <span>$170.00</span></li>
-                                    <li>Tiền thanh toán <span>$170.00</span></li>
                                 </ul>
-
-
-                                <script>
-
-                                   
-                                   
-                                    
-
-                                    // Hàm cập nhật tổng tiền và thành tiền khi thay đổi số lượng
-                                    function updateItemTotals() {
-                                        var items = document.querySelectorAll('.soLuongMoi');
-                                        items.forEach(function (input) {
-                                            var maMon = input.getAttribute('data-ma-mon');
-                                            var soLuongMM = parseInt(input.value);
-
-                                            var giaBan = parseInt(input.closest('tr').querySelector('.plantmore-product-price span.amount').textContent.replace(' VNĐ', '').replace(',', '')) * 1000;
-                                            var thanhTien = soLuongMM * giaBan;
-
-                                            // Cập nhật thành tiền cho món ăn
-                                            var formattedThanhTien = thanhTien.toLocaleString('vi-VN', { style: 'currency', currency: 'VND'  });
-                                            input.closest('tr').querySelector('.product-subtotal span.amount').textContent = formattedThanhTien;
-                                        });
-
-                                        // Cập nhật tổng tiền
-                                        document.querySelector('#total-amount').textContent = CalculateTotalAmount();
-                                    }
-
-                                    // Gắn sự kiện cho input số lượng để cập nhật tổng tiền khi thay đổi
-                                    var quantityInputs = document.querySelectorAll('.soLuongMoi');
-                                    quantityInputs.forEach(function (input) {
-                                        input.addEventListener('change', updateItemTotals);
-                                    });
-
-                                    // Tính tổng tiền khi trang tải lên
-                                    window.addEventListener('load', function () {
-                                        updateItemTotals();
-                                    });
-                                </script>
-
-
-                               
-                               
-
-
-
-
-                                <a href="#" class="proceed-checkout-btn">THANH TOÁN</a>
+                                
+                                <a id="thanh-toan-button" href="/HoaDon/Index" style="width: 150px; white-space: nowrap;" class=" continue-btn1 cart-trigger button-clean button-text-small">THANH TOÁN</a>
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
+                <script>
+
+                    document.addEventListener('DOMContentLoaded', function () {
+                        var increaseButtons = document.querySelectorAll('.minus1');
+                        increaseButtons.forEach(function (button) {
+                            button.addEventListener('click', function (event) {
+                                event.preventDefault();
+
+                                var maSanPham = button.getAttribute('data-ma-mon');
+
+                                // Gửi yêu cầu thêm sản phẩm vào giỏ hàng với Ajax
+                                $.ajax({
+                                    url: '/GioHang/Remove_1_FromGioHang',
+                                    type: 'POST',
+                                    data: { maSanPham: maSanPham },
+                                    success: function (data) {
+                                        // Sau khi thêm sản phẩm thành công, làm gì đó (ví dụ: cập nhật lại giao diện hoặc hiển thị thông báo)
+                                        // Ví dụ:
+
+                                        location.reload(); // Load lại trang để cập nhật giỏ hàng
+                                    },
+                                    error: function (xhr, status, error) {
+                                        // Xử lý lỗi khi gửi yêu cầu thêm sản phẩm vào giỏ hàng
+                                        alert('Đã xảy ra lỗi khi xoá sản phẩm vào giỏ hàng');
+                                    }
+                                });
+                            });
+                        });
+                    });
+                    
+
+                    // Hàm cập nhật số lượng và tính tổng tiền cho một món ăn
+                    function updateItemQuantity(maMon, soLuongMM) {
+                        var input = document.querySelector('.soLuongMoi[data-ma-mon="' + maMon + '"]');
+                        if (input) {
+                            input.value = soLuongMM;
+
+                            // Cập nhật thành tiền cho món ăn
+                            var giaBan = parseInt(input.closest('tr').querySelector('.plantmore-product-price span.amount').textContent.replace(' VNĐ', '').replace(',', ''));
+                            var thanhTien = soLuongMM * giaBan;
+
+                            // Cập nhật thành tiền cho món ăn
+                            var formattedThanhTien = thanhTien.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+                            input.closest('tr').querySelector('.product-subtotal span.amount').textContent = formattedThanhTien;
+
+                            // Lưu thông tin giỏ hàng vào Session
+                            updateCartQuantity(maMon, soLuongMM);
+                            //    updateTotalPay(); // Cập nhật tổng thanh toán sau khi cập nhật số lượng
+                        }
+                    }
+
+                    // Hàm cập nhật số lượng trong giỏ hàng
+                    function updateCartQuantity(maMon, soLuongMM) {
+                        $.ajax({
+                            type: "POST",
+                            url: '/GioHang/CapNhatSoLuong', // Điều chỉnh URL dựa trên tên của Controller và phương thức bạn đã định nghĩa
+                            data: { maMon: maMon, soLuongMM: soLuongMM },
+                            success: function (data) {
+                                if (data.success) {
+                                    // Cập nhật tổng tiền sau khi cập nhật giỏ hàng
+                                    updateTotalAmount();
+                                }
+                            }
+                        });
+                    }
+
+                    // Hàm xóa món ăn
+                    function deleteItemFromCart(maMon) {
+                        $.ajax({
+                            type: "POST",
+                            url: '/GioHang/XoaMonAn', // Điều chỉnh URL dựa trên tên của Controller và phương thức bạn đã định nghĩa
+                            data: { maMon: maMon },
+                            success: function (data) {
+                                if (data.success) {
+                                    location.reload();
+                                    updateTotalAmount();
+                                }
+                            }
+                        });
+                    }
+
+                    // Hàm cập nhật tổng tiền
+                    function updateTotalAmount() {
+                        var totalAmount = CalculateTotalAmount();
+                        var formattedTotalAmount = totalAmount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+                        document.querySelector('#total-amount').textContent = formattedTotalAmount;
+                        //      updateTotalPay(); // Cập nhật tổng thanh toán sau khi cập nhật tổng tiền
+
+                    }
+
+
+                    // Hàm cập nhật tổng thanh toán
+                    /*                function updateTotalPay() {
+                                        var totalAmount = CalculateTotalAmount();
+                                        var totalDiscount = parseFloat(document.getElementById("total-discount").textContent.replace('.', '').replace(' VND', ''));
+                                        var totalPay = totalAmount - totalDiscount;
+                                        document.getElementById("total-pay").textContent = totalPay.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+
+                                        sessionStorage.setItem('totalPay', totalPay);
+                                    } */
+
+                    // Hàm tính tổng tổng tiền
+                    function CalculateTotalAmount() {
+                        var items = document.querySelectorAll('.soLuongMoi');
+                        var totalAmount = 0;
+
+                        items.forEach(function (input) {
+                            var maMon = input.getAttribute('data-ma-mon');
+                            var soLuongMM = parseInt(input.value);
+
+                            var giaBan = parseInt(input.closest('tr').querySelector('.plantmore-product-price span.amount').textContent.replace(' VNĐ', '').replace(',', ''));
+                            var thanhTien = soLuongMM * giaBan;
+
+                            totalAmount += thanhTien;
+                        });
+
+                        return totalAmount;
+                    }
+
+                    // Trong view giỏ hàng
+                    // Trong phần script của trang giỏ hàng
+
+
+                    // Gọi hàm để gửi giá trị từ view đến controller
+
+
+                    // Gắn sự kiện "click" cho các nút cộng
+                    var plusButtons = document.querySelectorAll('.quantity-btn.plus');
+                    plusButtons.forEach(function (button) {
+                        button.addEventListener('click', function () {
+                            var maMon = button.getAttribute('data-ma-mon');
+                            var input = document.querySelector('.soLuongMoi[data-ma-mon="' + maMon + '"]');
+                            var soLuongKho = parseInt(button.getAttribute('data-so-luong-kho'));
+
+                            if (input) {
+                                var soLuongMM = parseInt(input.value) + 1;
+
+                                // Kiểm tra nếu soLuongMM không vượt quá soLuongKho
+                                if (soLuongMM <= soLuongKho) {
+                                    input.value = soLuongMM;
+                                    updateItemQuantity(maMon, soLuongMM);
+                                    // updateTotalPay();
+                                }
+                            }
+                        });
+                    });
+
+
+                    // Gắn sự kiện "click" cho các nút trừ
+                    var minusButtons = document.querySelectorAll('.quantity-btn.minus1');
+                    minusButtons.forEach(function (button) {
+                        button.addEventListener('click', function () {
+                            var maMon = button.getAttribute('data-ma-mon');
+                            var input = document.querySelector('.soLuongMoi[data-ma-mon="' + maMon + '"]');
+                            if (input) {
+                                var soLuongMM = parseInt(input.value) - 1;
+                                if (soLuongMM >= 1) {
+                                    input.value = soLuongMM;
+                                    updateItemQuantity(maMon, soLuongMM);
+                                    //  updateTotalPay();
+                                }
+                            }
+                        });
+                    });
+
+                    // Gắn sự kiện cho nút "Xóa"
+                    var deleteButtons = document.querySelectorAll('.delete-button');
+                    deleteButtons.forEach(function (button) {
+                        button.addEventListener('click', function (event) {
+                            var maMon = button.getAttribute('data-ma-mon');
+
+                            // Gọi hàm xóa món ăn và cập nhật tổng tiền
+                            deleteItemFromCart(maMon);
+
+                            // Sau khi xóa món ăn, cập nhật tổng thanh toán
+                            //   updateTotalPay();
+                        });
+                    });
+
+                    // Sự kiện khi nút "Áp dụng mã" được nhấn
+                    /*    document.getElementById("apply-coupon-button").addEventListener("click", function () {
+                                  // Lấy giá trị của mã giảm giá từ ô nhập liệu
+                                  var couponCode = document.getElementById("coupon_code").value;
+
+                                  if (!couponCode) {
+                                      // Tổng giảm giá = 0
+                                      document.getElementById("total-discount").textContent = "0 VND";
+                                      updateTotalPay(); // Cập nhật tổng thanh toán sau khi cập nhật tổng giảm giá
+                                  } else {
+                                      // Gọi API để kiểm tra mã giảm giá
+                                      var apiUrl = "/api/check-coupon?code=" + couponCode; // Điều chỉnh URL dựa trên tên API của bạn
+
+                                      fetch(apiUrl)
+                                          .then(function (response) {
+                                              return response.json();
+                                          })
+                                          .then(function (data) {
+                                              if (data.valid) {
+                                                  // Nếu mã giảm giá hợp lệ, tính toán tổng giảm giá và cập nhật giao diện
+                                                  var totalAmount = CalculateTotalAmount();
+                                                  var discountPercent = data.discountPercent;
+                                                  var totalDiscount = (totalAmount * discountPercent) / 100;
+                                                  document.getElementById("total-discount").textContent = totalDiscount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+
+                                                  sessionStorage.setItem('totalDiscount', totalDiscount);
+                                                  // Cập nhật tổng thanh toán
+                                                  updateTotalPay();
+
+
+                                              } else {
+                                                  // Nếu mã giảm giá không hợp lệ, hiển thị thông báo hoặc xử lý theo ý của bạn
+                                                  alert("Mã giảm giá không hợp lệ.");
+                                              }
+                                          })
+                                          .catch(function (error) {
+                                              console.error(error);
+                                          });
+
+
+                                  }
+
+
+                              }); */
+
+
+                    const soLuongElements = document.querySelectorAll('.soLuongMoi');
+
+                    soLuongElements.forEach(function (element) {
+                        // Lắng nghe sự kiện thay đổi giá trị của input
+                        element.addEventListener('change', function () {
+                            const maMon = element.getAttribute('data-ma-mon');
+                            const soLuong = parseInt(element.value);
+
+                            // Kiểm tra nếu số lượng bằng 0, thực hiện xóa món ăn khỏi giỏ hàng
+                            if (soLuong === 0) {
+                                deleteItemFromCart(maMon);
+                            }
+                        });
+                    });
+
+                    // Lắng nghe sự kiện click trên nút giảm
+                    document.querySelectorAll('.quantity-btn.minus1').forEach(function (button) {
+                        button.addEventListener('click', function () {
+                            const inputElement = button.parentElement.parentElement.querySelector('.soLuongMoi');
+                            const maMon = inputElement.getAttribute('data-ma-mon');
+                            const thanhTien = inputElement.getAttribute('data-thanh-tien');
+                            let currentQuantity = parseInt(inputElement.value, 10);
+
+                            // Kiểm tra nếu giá trị hiện tại lớn hơn 0, thì mới giảm nó đi
+                            if (currentQuantity > 0) {
+                                currentQuantity--;
+                                inputElement.value = currentQuantity;
+
+                                // Thực hiện các tác vụ khác ở đây, ví dụ: cập nhật tổng tiền
+                            }
+                            else {
+                                deleteItemFromCart(maMon);
+
+                            }
+                        });
+                    });
+
+                    document.querySelectorAll('.soLuongMoi').forEach(function (inputElement) {
+                        inputElement.addEventListener('input', function () {
+                            const currentQuantity = parseInt(inputElement.value, 10);
+                            const soLuongKho = parseInt(inputElement.getAttribute('data-so-luong-kho1'));
+
+                            if (isNaN(currentQuantity) || currentQuantity < 0 || currentQuantity > soLuongKho) {
+                                alert('Vui lòng nhập số. Số lượng còn: ' + soLuongKho);
+                                inputElement.value = ""; // Xóa giá trị không hợp lệ
+                            }
+                        });
+                    });
+
+                    document.querySelectorAll('.soLuongMoi').forEach(function (inputElement) {
+                        // Lắng nghe sự kiện thay đổi giá trị của input
+                        inputElement.addEventListener('change', function () {
+                            const maMon = inputElement.getAttribute('data-ma-mon');
+                            const soLuong = parseInt(inputElement.value);
+
+                            // Lưu giá trị số lượng mới vào Session
+                            updateCartQuantity(maMon, soLuong);
+                            // Cập nhật tổng tiền sau khi cập nhật số lượng
+                            updateTotalAmount();
+                        });
+                    });
+
+                    document.querySelectorAll('.soLuongMoi').forEach(function (inputElement) {
+                        inputElement.addEventListener('input', function () {
+                            const maMon = inputElement.getAttribute('data-ma-mon');
+                            const thanhTien = inputElement.getAttribute('data-thanh-tien');
+                            const soLuongKho = parseInt(inputElement.getAttribute('data-so-luong-kho1'));
+                            let currentQuantity = parseInt(inputElement.value, 10);
+
+                            if (isNaN(currentQuantity) || currentQuantity < 0) {
+                                currentQuantity = 0;
+                            }
+
+                            // Kiểm tra nếu giá trị nhập vào lớn hơn số lượng trong kho
+                            if (currentQuantity > soLuongKho) {
+                                // Hiển thị thông báo lỗi
+                                const errorElement = inputElement.closest('td').querySelector('.red-alert');
+                                errorElement.style.display = 'block';
+                                currentQuantity = soLuongKho; // Đặt lại giá trị thành số lượng trong kho
+                            } else {
+                                // Ẩn thông báo lỗi nếu giá trị hợp lệ
+                                const errorElement = inputElement.closest('td').querySelector('.red-alert');
+                                errorElement.style.display = 'none';
+                            }
+
+                            inputElement.value = currentQuantity;
+                        });
+                    });
+
+
+
+
+                    document.querySelectorAll('.soLuongMoi').forEach(function (inputElement) {
+                        inputElement.addEventListener('input', function () {
+                            const maMon = inputElement.getAttribute('data-ma-mon');
+                            const thanhTien = inputElement.getAttribute('data-thanh-tien');
+                            let currentQuantity = parseInt(inputElement.value, 10);
+                            const soLuong = parseInt(inputElement.getAttribute('value')); // Số lượng ban đầu từ data attribute
+
+                            if (isNaN(currentQuantity) || currentQuantity < 0) {
+                                currentQuantity = 0;
+                            }
+
+                            // Kiểm tra nếu giá trị nhập vào lớn hơn số lượng ban đầu (SoLuong)
+                            if (currentQuantity > soLuong) {
+                                // Hiển thị thông báo đỏ
+                                document.querySelector('.red-alert').style.display = 'block';
+                                currentQuantity = soLuong; // Đặt lại giá trị thành số lượng ban đầu
+                            } else {
+                                // Ẩn thông báo đỏ nếu giá trị hợp lệ
+                                document.querySelector('.red-alert').style.display = 'none';
+                            }
+
+                            inputElement.value = currentQuantity;
+                        });
+                    });
+
+
+                    // Tính tổng số lượng món trong giỏ hàng khi trang tải lên
+                    function calculateTotalItems() {
+                        var totalItems = 0;
+                        var soLuongElements = document.querySelectorAll('.soLuongMoi');
+                        soLuongElements.forEach(function (element) {
+                            totalItems += parseInt(element.value);
+                        });
+                        return totalItems;
+                    }
+
+                    // Lắng nghe sự kiện khi trang đã tải xong
+
+
+
+
+                    // Tính tổng tiền khi trang tải lên
+                    window.addEventListener('load', function () {
+                        CalculateTotalAmount();
+                        updateTotalAmount();
+                        var totalItems = calculateTotalItems();
+                        var thanhToanButton = document.getElementById('thanh-toan-button');
+
+                        // Kiểm tra và điều khiển hiển thị nút "THANH TOÁN"
+                        if (totalItems > 0) {
+                            thanhToanButton.style.display = 'block';
+                        } else {
+                            thanhToanButton.style.display = 'none';
+                        }
+                        // Cập nhật tổng thanh toán khi trang tải lên
+                    });
+                </script>
+
+
+
             </div>
         </div>
     </div>
 </div>
+
+
 <!-- main-content-wrap end -->
-
-
-
-

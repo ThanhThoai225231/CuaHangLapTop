@@ -10,11 +10,11 @@ namespace ThanhThoaiRestaurant.Models
             ChiTietGms = new HashSet<ChiTietGm>();
         }
 
-        public string MaPhieuGm { get; set; } = null!;
+        public int MaPhieuGm { get; set; } 
         public string TenMonAnPgm { get; set; } = null!;
         public DateTime NgayGm { get; set; }
         public string MaBan { get; set; } = null!;
-        public string MaHd { get; set; } = null!;
+        public int MaHd { get; set; } 
         public string GhiChu { get; set; }
 
         public virtual BanAn MaBanNavigation { get; set; } = null!;

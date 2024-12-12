@@ -1,0 +1,106 @@
+﻿@model ThanhThoaiRestaurant.Models.CPU
+
+@{
+    ViewBag.Title = "Chi tiết";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+
+}
+
+<style>
+    .center-container {
+        margin: auto;
+        width: 90%;
+        margin-right: 50px;
+    }
+
+    }
+</style>
+
+
+<main id="main" class="main">
+    <div class="ms-content-wrapper">
+        <div class="row">
+            <div class="pagetitle">
+                <h1>CPU sản phẩm</h1>
+                <nav>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/Admin/AdminCPU">Quản lý CPU</a></li>
+                        <li class="breadcrumb-item active">Chi tiết CPU</li>
+                    </ol>
+                </nav>
+            </div><!-- End Page Title -->
+            <div class="col-md-12">
+
+                <div style="display: flex;">
+                    <div class=" col-md-6">
+                        <div class="ms-panel ms-panel-fh">
+                            <div class="ms-panel-body">
+                                <h4 class="section-title bold" style="color: #1019d0; font-size: 30px; font-weight: bold;">
+                                </h4>
+                                <table class="table ms-profile-information">
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Mã CPU</th>
+                                            <td> @Model.MaCPU </td>
+                                        </tr>
+
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" col-md-6" style="margin-left: 50px;">
+                        <div class="ms-panel ms-panel-fh">
+                            <div class="ms-panel-body">
+                                <h4>
+                                </h4>
+                                <table class="table ms-profile-information">
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Tên loại CPU</th>
+                                            <td> @Model.TenLoaiCPU </td>
+                                        </tr>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+            @if (HttpContextAccessor.HttpContext.Session.GetString("IsLoggedIn") == "true" && HttpContextAccessor.HttpContext.Session.GetString("VaiTro") == "Admin")
+            {
+                <div class="text-right mt-3" style="display: flex;">
+                    <a href="@Url.Action("Edit", new { id = Model.MaCPU })" class="btn btn-primary">Sửa</a>
+
+                    <form asp-controller="AdminMenu" asp-action="Delete" asp-route-id="@Model.MaCPU" method="post">
+                        <button type="button" class="btn btn-secondary ml-2" onclick="confirmDelete()" style="margin-left: 20px;">Xoá</button>
+                        <input type="submit" id="deleteButton" style="display: none;" />
+                    </form>
+
+                    <a href="@Url.Action("Index")" class="btn btn-secondary" style="background-color: #FF5733; color: white; margin-left: 20px;">Trở về</a>
+                </div>
+
+                <script>
+                    function confirmDelete() {
+                        if (confirm("Bạn có chắc chắn muốn xóa CPU này?")) {
+                            document.getElementById("deleteButton").click();
+                        }
+                    }
+                </script>
+            }
+            else
+            {
+                <a href="@Url.Action("Index")" class="btn btn-secondary" style="background-color: #FF5733; color: white; margin-left: 20px; width: 100px;">Trở về</a>
+
+            }
+        </div>
+    </div>
+</main>
+

@@ -1,6 +1,7 @@
-﻿@model ThanhThoaiRestaurant.Models.NguoiDung
+﻿@model ThanhThoaiRestaurant.Models.RegisterViewModel
+
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "Đăng ký";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -14,7 +15,6 @@
         padding: 10px 20px;
         cursor: pointer;
         transition: background-color 0.3s, color 0.3s;
-        margin-left: 420px;
     }
 
     /* Hiệu ứng khi di chuột vào nút "Login" */
@@ -37,42 +37,243 @@
             <div class="col-lg-7 col-md-12 m-auto">
                 <div class="login-register-wrapper">
                     <!-- login-register-tab-list start -->
-                    <div class="login-register-tab-list nav" style="margin: 20px 0 40px 500px; text-align: center;">
+                    <!-- login-register-tab-list end -->
+
+                    <div class="login-register-tab-list nav">
                         <a data-bs-toggle="tab" href="#lg2">
-                            <h4> Đăng ký </h4>
+                            <h4 class="text-center" style="margin: 50px 250px;"> Đăng ký </h4>
                         </a>
                     </div>
-                    <!-- login-register-tab-list end -->
-                    <div class="tab-content">
-                        <div id="lg2" class="tab-pane">
-                            <div class="login-form-container">
-                                <div class="login-register-form">
-                                    <form asp-action="Register">
-                                        <div class="login-input-box" style="margin: 20px 0 40px 300px;">
-                                            <div class="form-group" >
-                                                <input asp-for="TenDangNhap" class="form-control" style="margin: 20px 0 20px 120px;" placeholder="Tên đăng nhập" />
-                                                <span asp-validation-for="TenDangNhap" class="text-danger" style="margin: 20px 0 20px 120px;"></span>
-                                            </div>
-                                            <div class="form-group">
-                                                <input asp-for="MatKhau" class="form-control" style="margin: 20px 0 20px 120px;" placeholder="Mật khẩu" />
-                                                <span asp-validation-for="MatKhau" class="text-danger" style="margin: 20px 0 20px 120px;"></span>
-                                            </div>
-                                            <div class="form-group">
-                                                <input asp-for="EmailNd" class="form-control" style="margin: 20px 0 20px 120px;" placeholder="Email" />
-                                                <span asp-validation-for="EmailNd" class="text-danger" style="margin: 20px 0 20px 120px;"></span>
-                                            </div>                                          
-                                           </div>
-                                        <div class="button-box">
-                                            <button class="register-btn btn" type="submit"><span>Đăng ký</span></button>
-                                        </div>
-                                    </form>
-                                </div>
+                    <form asp-action="Register">
+                        <div class="login-input-box">
+                            <div class="form-group">
+                                <input asp-for="TenDangNhap" id="tenDangNhapInput" class="form-control" placeholder="Tên đăng nhập" oninput="validateTenDangNhap()" />
+                                <span asp-validation-for="TenDangNhap" id="tenDangNhapError" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="MatKhau" id="matKhauInput" type="password" class="form-control" placeholder="Mật khẩu" oninput="validateMatKhau()" />
+                                <span asp-validation-for="MatKhau" id="matKhauError" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="EmailNd" id="emailInput" class="form-control" placeholder="Email" oninput="validateEmail()" />
+                                <span asp-validation-for="EmailNd" id="emailError" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="TenKh" id="tenKhInput" class="form-control" placeholder="Họ tên" oninput="validateTenKh()" />
+                                <span asp-validation-for="TenKh" id="tenKhError" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="NgaySinhKh" id="ngaySinhInput" class="form-control" placeholder="Ngày sinh" />
+                                <span asp-validation-for="NgaySinhKh" id="ngaySinhError" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <select asp-for="GioiTinhKh" id="gioiTinhInput" class="form-control">
+                                    <option value="">Chọn giới tính</option>
+                                    <option value="Nam">Nam</option>
+                                    <option value="Nu">Nữ</option>
+                                </select>
+                                <span asp-validation-for="GioiTinhKh" id="gioiTinhError" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="Sdtkh" id="soDienThoaiInput" class="form-control" placeholder="Số điện thoại" oninput="validateSoDienThoai()" />
+                                <span asp-validation-for="Sdtkh" id="soDienThoaiError" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="DiaChiKh" id="diaChiInput" class="form-control" placeholder="Địa chỉ" oninput="validateDiaChi()" />
+                                <span asp-validation-for="DiaChiKh" id="diaChiError" class="text-danger"></span>
                             </div>
                         </div>
-                    </div>
+                        <div class="button-box">
+                            <div class="login-toggle-btn">
+                                <div class="remember-me">
+                                    <a href="Login">Đã có tài khoản?</a>
+                                </div>
+                               
+                            </div>
+                            <button style="margin: 50px 250px;" class="register-btn btn" type="submit"><span>Đăng ký</span></button>
+                        </div>
+                    </form>
+
+
+
+
+
+
+
                 </div>
             </div>
         </div>
     </div>
 </div>
 <!-- main-content-wrap end -->
+<script>
+    function validateTenDangNhap() {
+        var tenDangNhapInput = document.getElementById("tenDangNhapInput");
+        var tenDangNhapError = document.getElementById("tenDangNhapError");
+
+        var tenDangNhapValue = tenDangNhapInput.value.trim();
+        var regexLetters = /[a-zA-Z]/; // Kiểm tra chữ cái
+        var regexNumbers = /\d/; // Kiểm tra số
+
+        if (tenDangNhapValue === "") {
+            tenDangNhapError.innerText = "Tên đăng nhập không được để trống!";
+            tenDangNhapError.style.display = "inline";
+        } else if (tenDangNhapValue.length > 15) {
+            tenDangNhapError.innerText = "Tên đăng nhập không được quá 15 ký tự!";
+            tenDangNhapError.style.display = "inline";
+        } else if (!regexLetters.test(tenDangNhapValue) || !regexNumbers.test(tenDangNhapValue)) {
+            tenDangNhapError.innerText = "Tên đăng nhập phải chứa cả chữ cái và số!";
+            tenDangNhapError.style.display = "inline";
+        } else {
+            tenDangNhapError.style.display = "none";
+        }
+    }
+
+    function validateMatKhau() {
+        var matKhauInput = document.getElementById("matKhauInput");
+        var matKhauError = document.getElementById("matKhauError");
+
+        var matKhauValue = matKhauInput.value.trim();
+        var regexLetters = /[a-zA-Z]/; // Chứa ít nhất một chữ cái
+        var regexNumbers = /\d/; // Chứa ít nhất một số
+        var regexSpecialChars = /[!#$%^&*(),.?":{}|<>]/; // Chứa ít nhất một kí tự đặc biệt
+
+        if (matKhauValue === "") {
+            matKhauError.innerText = "Mật khẩu không được để trống!";
+            matKhauError.style.display = "inline";
+        } else if (matKhauValue.length <= 8 || matKhauValue.length >= 15) {
+            matKhauError.innerText = "Mật khẩu phải có độ dài từ 8 đến 15 ký tự!";
+            matKhauError.style.display = "inline";
+        } else if (!regexLetters.test(matKhauValue) || !regexNumbers.test(matKhauValue) || !regexSpecialChars.test(matKhauValue)) {
+            matKhauError.innerText = "Mật khẩu phải chứa ít nhất một chữ cái, một số và một ký tự đặc biệt!";
+            matKhauError.style.display = "inline";
+        } else {
+            matKhauError.style.display = "none";
+        }
+    }
+
+    function validateEmail() {
+        var emailInput = document.getElementById("emailInput");
+        var emailError = document.getElementById("emailError");
+
+        var emailValue = emailInput.value.trim();
+        var emailRegex = /^[a-zA-Z0-9]{1,30}[a-zA-Z0-9]{1,30}\.gmail\.com$/;
+
+        if (emailValue === "") {
+            emailError.innerText = "Email không được để trống!";
+            emailError.style.display = "inline";
+        } else if (emailValue.length > 50) {
+            emailError.innerText = "Email không được quá 50 ký tự!";
+            emailError.style.display = "inline";
+        } else if (!emailRegex.test(emailValue)) {
+            emailError.innerText = "Email phải có định dạng 'xxx@gmail.com' với xxx là chữ hoặc số, độ dài không quá 30 ký tự!";
+            emailError.style.display = "inline";
+        } else {
+            emailError.style.display = "none";
+        }
+    }
+
+    function validateTenKh() {
+        var tenKhInput = document.getElementById("tenKhInput");
+        var tenKhError = document.getElementById("tenKhError");
+
+        var tenKhValue = tenKhInput.value.trim();
+
+        if (tenKhValue === "") {
+            tenKhError.innerText = "Tên không được để trống!";
+            tenKhError.style.display = "inline";
+        } else if (tenKhValue.length > 50) {
+            tenKhError.innerText = "Tên không được quá 50 ký tự!";
+            tenKhError.style.display = "inline";
+        } else {
+            tenKhError.style.display = "none";
+        }
+    }
+
+    $(function () {
+        $("#ngaySinhInput").datepicker({
+            dateFormat: "yy-mm-dd",
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-100:+0", // Cho phép chọn năm từ năm hiện tại đến 100 năm trước đó
+            onSelect: function (dateText, inst) {
+                validateNgaySinh();
+            }
+        });
+    });
+
+    function validateNgaySinh() {
+        var ngaySinhInput = document.getElementById("ngaySinhInput");
+        var ngaySinhError = document.getElementById("ngaySinhError");
+
+        var ngaySinhValue = ngaySinhInput.value.trim();
+        var ngaySinhDate = new Date(ngaySinhValue);
+        var today = new Date();
+        var minAgeDate = new Date(today.getFullYear() - 10, today.getMonth(), today.getDate()); // Ngày sinh tối thiểu: Hiện tại - 10 năm
+
+        if (!ngaySinhValue) {
+            ngaySinhError.innerText = "Ngày sinh không được để trống!";
+            ngaySinhError.style.display = "inline";
+        } else if (ngaySinhDate > today || ngaySinhDate < minAgeDate) {
+            ngaySinhError.innerText = "Bạn phải ít nhất 10 tuổi và ngày sinh không được sau ngày hiện tại!";
+            ngaySinhError.style.display = "inline";
+        } else {
+            ngaySinhError.style.display = "none";
+        }
+    }
+
+
+    function validateGioiTinh() {
+        var gioiTinhInput = document.getElementById("gioiTinhInput");
+        var gioiTinhError = document.getElementById("gioiTinhError");
+
+        var gioiTinhValue = gioiTinhInput.value.trim();
+
+        if (gioiTinhValue === "") {
+            gioiTinhError.innerText = "Giới tính không được để trống!";
+            gioiTinhError.style.display = "inline";
+        } else {
+            gioiTinhError.style.display = "none";
+        }
+    }
+
+    // Gọi hàm validateGioiTinh khi giá trị thay đổi
+    document.getElementById("gioiTinhInput").addEventListener("change", validateGioiTinh);
+
+
+    function validateSoDienThoai() {
+        var soDienThoaiInput = document.getElementById("soDienThoaiInput");
+        var soDienThoaiError = document.getElementById("soDienThoaiError");
+
+        var soDienThoaiValue = soDienThoaiInput.value.trim();
+        var regex = /^[0][0-9]{9}$/; // Bắt đầu từ 0 và theo sau là 9 chữ số
+
+        if (soDienThoaiValue === "") {
+            soDienThoaiError.innerText = "Số điện thoại không được để trống!";
+            soDienThoaiError.style.display = "inline";
+        } else if (!regex.test(soDienThoaiValue)) {
+            soDienThoaiError.innerText = "Số điện thoại phải bắt đầu từ 0 và có đúng 10 chữ số!";
+            soDienThoaiError.style.display = "inline";
+        } else {
+            soDienThoaiError.style.display = "none";
+        }
+    }
+
+
+    function validateDiaChi() {
+        var diaChiInput = document.getElementById("diaChiInput");
+        var diaChiError = document.getElementById("diaChiError");
+
+        var diaChiValue = diaChiInput.value.trim();
+
+        if (diaChiValue === "") {
+            diaChiError.innerText = "Địa chỉ không được để trống!";
+            diaChiError.style.display = "inline";
+        } else if (diaChiValue.length > 100) {
+            diaChiError.innerText = "Địa chỉ không được quá 100 ký tự!";
+            diaChiError.style.display = "inline";
+        } else {
+            diaChiError.style.display = "none";
+        }
+    }
+</script>

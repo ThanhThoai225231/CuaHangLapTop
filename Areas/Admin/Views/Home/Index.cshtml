@@ -1,502 +1,125 @@
 ﻿@{
-    ViewBag.Title = "Điều khiển";
+    ViewBag.Title = "Trang Admin";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="container-fluid p-0 ">
-    <div class="row">
-        <div class="col-12">
-            <div class="page_title_box d-flex align-items-center justify-content-between">
-                <div class="page_title_left">
-                    <h3 class="f_s_30 f_w_700 text_white">Quản lý hệ thống</h3>
-                    <ol class="breadcrumb page_bradcam mb-0">
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">ThanhThoaiRestaurant </a></li>
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">Quản lý hệ thống</a></li>
-                        <li class="breadcrumb-item active">Kinh doanh</li>
-                    </ol>
-                </div>
-                <a href="#" class="white_btn3">Tạo báo cáo</a>
-            </div>
-        </div>
-    </div>
-    <div class="row ">
-        <div class="col-lg-8 card_height_100">
-            <div class="white_card mb_20">
-                <div class="white_card_header">
-                    <div class="box_header m-0">
-                        <div class="main-title">
-                            <h3 class="m-0">Doanh thu</h3>
-                        </div>
-                        <div class="float-lg-right float-none sales_renew_btns justify-content-end">
-                            <ul class="nav">
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="#">Tuần này</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Tuần trước</a>
-                                </li>
-                                <li class="nav-item"><a class="nav-link" href="#">Tháng trước</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="white_card_body" style="height: 286px;">
-                    <canvas id="bar"></canvas>
-                </div>
-            </div>
-            <div class="white_card mb_20">
-                <div class="white_card_body renew_report_card d-flex align-items-center justify-content-between flex-wrap">
-                    <div class="renew_report_left">
-                        <h4 class="f_s_19 f_w_600 color_theme2 mb-0">Tải xuống báo cáo thu nhập của bạn</h4>
-                        <p class="color_gray2 f_s_12 f_w_600">Có nhiều sự đa dạng.</p>
-                    </div>
-                    <div class="create_report_btn">
-                        <a href="#" class="btn_1 mt-1 mb-1">Tạo báo cáo</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 card_height_100 mb_20">
-            <div class="white_card">
-                <div class="white_card_header">
-                    <div class="box_header m-0">
-                        <div class="main-title">
-                            <h3 class="m-0">Tổng số lượng bán hàng</h3>
-                        </div>
-                        <div class="header_more_tool">
-                            <div class="dropdown">
-                                <span class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown">
-                                    <i class="ti-more-alt"></i>
-                                </span>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#"> <i class="ti-eye"></i> Action</a>
-                                    <a class="dropdown-item" href="#"> <i class="ti-trash"></i> Delete</a>
-                                    <a class="dropdown-item" href="#"> <i class="fas fa-edit"></i> Edit</a>
-                                    <a class="dropdown-item" href="#"> <i class="ti-printer"></i> Print</a>
-                                    <a class="dropdown-item" href="#"> <i class="fa fa-download"></i> Download</a>
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Trang chủ quản lý</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/Admin/Home">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="row">
+
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+                <div class="row">
+
+                    <!-- Sales Card -->
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card sales-card">
+
+                           
+
+                            <div class="card-body">
+                                <h5 class="card-title">Tổng đơn hàng </h5>
+
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-cart"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>@ViewBag.TotalPaidInvoicesCount</h6>
+                                       
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
-                    </div>
-                </div>
-                <div class="white_card_body p-0">
-                    <div class="card_container">
-                        <div id="platform_type_dates_donut" style="height:280px"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="sales_unit_footer d-flex justify-content-between">
-                <div class="single_sales">
-                    <p>Doanh thu tháng này</p>
-                    <h3>$57k</h3>
-                    <p class="d-flex align-items-center"> <i class="ti-arrow-up"></i> <span> 14.5%</span> Up From Last Month </p>
-                </div>
-                <div class="single_sales disable_sales">
-                    <p>Doanh thu tháng trước</p>
-                    <h3>$14k</h3>
-                    <p class="d-flex align-items-center"> <i class="ti-arrow-up"></i> <span> 14.5%</span> Up From Last Month </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="white_card card_height_100 mb_20">
-                <div class="white_card_header">
-                    <div class="box_header m-0">
-                        <div class="main-title">
-                            <h3 class="m-0">Kinh doanh hàng ngày</h3>
-                        </div>
-                        <div class="header_more_tool">
-                            <div class="dropdown">
-                                <span class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown">
-                                    <i class="ti-more-alt"></i>
-                                </span>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#"> <i class="ti-eye"></i> Action</a>
-                                    <a class="dropdown-item" href="#"> <i class="ti-trash"></i> Delete</a>
-                                    <a class="dropdown-item" href="#"> <i class="fas fa-edit"></i> Edit</a>
-                                    <a class="dropdown-item" href="#"> <i class="ti-printer"></i> Print</a>
-                                    <a class="dropdown-item" href="#"> <i class="fa fa-download"></i> Download</a>
+                    </div><!-- End Sales Card -->
+                    <!-- Revenue Card -->
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card revenue-card">
+
+                           
+
+                            <div class="card-body">
+                                <h5 class="card-title">Tổng doanh thu </h5>
+
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-cash"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6> @ViewBag.TotalAmountPaid.ToString("N0") VNĐ</h6>
+                                        
+
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
-                    </div>
-                </div>
-                <div class="white_card_body">
-                    <div id="chart-currently"></div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-lg-4">
-            <div class="white_card card_height_100 mb_20">
-                <div class="white_card_header">
-                    <div class="box_header m-0">
-                        <div class="main-title">
-                            <h3 class="m-0">Tổng hoá đơn</h3>
-                        </div>
-                        <div class="float-lg-right float-none sales_renew_btns justify-content-end">
-                            <ul class="nav">
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="#">Hôm nay</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Tuần này</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="white_card_body d-flex align-items-center" style="height:140px">
-                    <h4 class="f_w_900 f_s_60 mb-0 me-2">356</h4>
-                    <div class="w-100" style="height:100px">
-                        <canvas width="100%" id="page_views"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-lg-4">
-            <div class="white_card card_height_100  mb_20">
-                <div class="white_card_header">
-                    <div class="box_header m-0">
-                        <div class="main-title">
-                            <h3 class="m-0">News & Update</h3>
-                        </div>
-                        <div class="single_wrap_input">
-                            <select class="nice_Select2 wide" name id>
-                                <option value="1">Today</option>
-                                <option value="1">Tomorrow</option>
-                                <option value="1">Yesterday</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="white_card_body">
-                    <div class="single_update_news">
-                        <h5 class="byer_name  f_s_16 f_w_600 color_theme2">36% off For pixel lights Couslations Types.</h5>
-                        <p class="color_gray f_s_12 f_w_700 ">Sorem Kpsum is simply of the printing..</p>
-                    </div>
-                    <div class="single_update_news">
-                        <h5 class="byer_name  f_s_16 f_w_600 color_theme2">We are produce new product this</h5>
-                        <p class="color_gray f_s_12 f_w_700 ">Gorem Rpsum is simply text of the printing...</p>
-                    </div>
-                    <div class="single_update_news">
-                        <h5 class="byer_name  f_s_16 f_w_600 color_theme2">50% off For COVID Couslations Types.</h5>
-                        <p class="color_gray f_s_12 f_w_700 ">EoremHpsum is simply dummy...</p>
-                    </div>
-                    <div class="load_more_button text-center mt_30">
-                        <a class="theme_text_btn d-flex align-items-center justify-content-center" href="#">Load more <i class="ti-angle-down f_s_12 ms-2"></i> </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        
-        <div class="col-lg-6">
-            <div class="white_card card_height_100 mb_30 ">
-                <div class="white_card_header">
-                    <div class="box_header m-0">
-                        <div class="main-title">
-                            <h3 class="m-0">Khách hàng VIP</h3>
-                        </div>
-                        <div class="header_more_tool">
-                            <div class="dropdown">
-                                <span class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown">
-                                    <i class="ti-more-alt"></i>
-                                </span>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#"> <i class="ti-eye"></i> Action</a>
-                                    <a class="dropdown-item" href="#"> <i class="ti-trash"></i> Delete</a>
-                                    <a class="dropdown-item" href="#"> <i class="fas fa-edit"></i> Edit</a>
-                                    <a class="dropdown-item" href="#"> <i class="ti-printer"></i> Print</a>
-                                    <a class="dropdown-item" href="#"> <i class="fa fa-download"></i> Download</a>
+                    </div><!-- End Revenue Card -->
+                    <!-- Customers Card -->
+                    <div class="col-xxl-4 col-xl-12">
+
+                        <div class="card info-card customers-card">
+
+                            
+
+                            <div class="card-body">
+                                <h5 class="card-title">Khách hàng</h5>
+
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-people"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>@ViewBag.CustomerCount</h6>
+                                       
+
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
-                    </div>
+
+                    </div><!-- End Customers Card -->
+                    
+
+                    <!-- Recent Sales -->
+                    <div class="col-12">
+                        <div class="card recent-sales overflow-auto">
+
+
+                            @await Component.InvokeAsync("TopMonAnPhoBien")
+
+                        </div>
+                    </div><!-- End Recent Sales -->
+                    <!-- Top Selling -->
+                    <div class="col-12">
+                        <div class="card top-selling overflow-auto">
+
+                           
+
+                            @await Component.InvokeAsync("TopMonAn")
+
+                        </div>
+                    </div><!-- End Top Selling -->
+
                 </div>
-                <div class="white_card_body QA_section">
-                    <div class="QA_table ">
-                        <table class="table lms_table_active2 p-0">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Khách hàng</th>
-                                    <th scope="col">Doanh số</th>
-                                    <th scope="col">Điểm tích luỹ</th>
-                                    <th scope="col">Sinh nhật</th>
-                                    
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="customer d-flex align-items-center">
-                                            <div class="thumb_34 mr_15 mt-0"><img class="img-fluid radius_50" src="/img/customers/1.png" alt></div>
-                                            <span class="f_s_14 f_w_400 color_text_1">Customer</span>
-                                        </div>
-                                    </td>
-                                    <td class="f_s_14 f_w_400 color_text_2">Sunglass</td>
-                                    <td class="f_s_14 f_w_400 color_text_3">#DE2548</td>
-                                    <td class="f_s_14 f_w_400 color_text_4">$350</td>
-                                    <td class="f_s_14 f_w_400 text-end"><a href="#" class="badge_btn_1">Pending</a></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="customer d-flex align-items-center">
-                                            <div class="thumb_34 mr_15 mt-0"><img class="img-fluid radius_50" src="/img/customers/2.png" alt></div>
-                                            <span class="f_s_14 f_w_400 color_text_1">Customer</span>
-                                        </div>
-                                    </td>
-                                    <td class="f_s_14 f_w_400 color_text_2">Sunglass</td>
-                                    <td class="f_s_14 f_w_400 color_text_3">#DE2548</td>
-                                    <td class="f_s_14 f_w_400 color_text_4">$350</td>
-                                    <td class="f_s_14 f_w_400 text-end"><a href="#" class="badge_btn_2">Paid</a></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="customer d-flex align-items-center">
-                                            <div class="thumb_34 mr_15 mt-0"><img class="img-fluid radius_50" src="/img/customers/3.png" alt></div>
-                                            <span class="f_s_14 f_w_400 color_text_1">Customer</span>
-                                        </div>
-                                    </td>
-                                    <td class="f_s_14 f_w_400 color_text_2">Sunglass</td>
-                                    <td class="f_s_14 f_w_400 color_text_3">#DE2548</td>
-                                    <td class="f_s_14 f_w_400 color_text_4">$350</td>
-                                    <td class="f_s_14 f_w_400 text-end"><a href="#" class="badge_btn_3">Shipped</a></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="customer d-flex align-items-center">
-                                            <div class="thumb_34 mr_15 mt-0"><img class="img-fluid radius_50" src="/img/customers/4.png" alt></div>
-                                            <span class="f_s_14 f_w_400 color_text_1">Customer</span>
-                                        </div>
-                                    </td>
-                                    <td class="f_s_14 f_w_400 color_text_2">Sunglass</td>
-                                    <td class="f_s_14 f_w_400 color_text_3">#DE2548</td>
-                                    <td class="f_s_14 f_w_400 color_text_4">$350</td>
-                                    <td class="f_s_14 f_w_400 text-end"><a href="#" class="badge_btn_3">Shipped</a></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="customer d-flex align-items-center">
-                                            <div class="thumb_34 mr_15 mt-0"><img class="img-fluid radius_50" src="/img/customers/5.png" alt></div>
-                                            <span class="f_s_14 f_w_400 color_text_1">Customer</span>
-                                        </div>
-                                    </td>
-                                    <td class="f_s_14 f_w_400 color_text_2">Sunglass</td>
-                                    <td class="f_s_14 f_w_400 color_text_3">#DE2548</td>
-                                    <td class="f_s_14 f_w_400 color_text_4">$350</td>
-                                    <td class="f_s_14 f_w_400 text-end"><a href="#" class="badge_btn_2">Paid</a></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="customer d-flex align-items-center">
-                                            <div class="thumb_34 mr_15 mt-0"><img class="img-fluid radius_50" src="/img/customers/6.png" alt></div>
-                                            <span class="f_s_14 f_w_400 color_text_1">Customer</span>
-                                        </div>
-                                    </td>
-                                    <td class="f_s_14 f_w_400 color_text_2">Sunglass</td>
-                                    <td class="f_s_14 f_w_400 color_text_3">#DE2548</td>
-                                    <td class="f_s_14 f_w_400 color_text_4">$350</td>
-                                    <td class="f_s_14 f_w_400 text-end"><a href="#" class="badge_btn_4 ">Delivered</a></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+            </div><!-- End Left side columns -->
+           
+
         </div>
-        <div class="col-lg-6">
-            <div class="white_card card_height_100 mb_20 ">
-                <div class="white_card_header">
-                    <div class="box_header m-0">
-                        <div class="main-title">
-                            <h3 class="m-0">Sản phẩm hot</h3>
-                        </div>
-                        <div class="header_more_tool">
-                            <div class="dropdown">
-                                <span class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown">
-                                    <i class="ti-more-alt"></i>
-                                </span>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#"> <i class="ti-eye"></i> Action</a>
-                                    <a class="dropdown-item" href="#"> <i class="ti-trash"></i> Delete</a>
-                                    <a class="dropdown-item" href="#"> <i class="fas fa-edit"></i> Edit</a>
-                                    <a class="dropdown-item" href="#"> <i class="ti-printer"></i> Print</a>
-                                    <a class="dropdown-item" href="#"> <i class="fa fa-download"></i> Download</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="white_card_body QA_section">
-                    <div class="QA_table ">
-                        <table class="table lms_table_active2 p-0">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Mã sản phẩm</th>
-                                    <th scope="col">Tên sản phẩm</th>
-                                    <th scope="col">Giá bán</th>
-                                    <th scope="col">Mô tả ngắn</th>
-                                    <th scope="col">Hình ảnh</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="customer d-flex align-items-center">
-                                            <div class="thumb_34 mr_15 mt-0"><img class="img-fluid radius_50" src="/img/customers/pro_1.png" alt></div>
-                                            <span class="f_s_14 f_w_400 color_text_1">Product 1</span>
-                                        </div>
-                                    </td>
-                                    <td class="f_s_14 f_w_400 color_text_2">$564</td>
-                                    <td class="f_s_14 f_w_400 color_text_3">#DE2548</td>
-                                    <td class="f_s_14 f_w_400 color_text_4">60</td>
-                                    <td class="f_s_14 f_w_400 text-end"><a href="#" class="text_color_1">Google</a></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="customer d-flex align-items-center">
-                                            <div class="thumb_34 mr_15 mt-0"><img class="img-fluid radius_50" src="/img/customers/pro_2.png" alt></div>
-                                            <span class="f_s_14 f_w_400 color_text_1">Product 1</span>
-                                        </div>
-                                    </td>
-                                    <td class="f_s_14 f_w_400 color_text_2">$564</td>
-                                    <td class="f_s_14 f_w_400 color_text_3">#DE2548</td>
-                                    <td class="f_s_14 f_w_400 color_text_4">60</td>
-                                    <td class="f_s_14 f_w_400 text-end"><a href="#" class="text_color_2">Direct</a></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="customer d-flex align-items-center">
-                                            <div class="thumb_34 mr_15 mt-0"><img class="img-fluid radius_50" src="/img/customers/pro_3.png" alt></div>
-                                            <span class="f_s_14 f_w_400 color_text_1">Product 1</span>
-                                        </div>
-                                    </td>
-                                    <td class="f_s_14 f_w_400 color_text_2">$564</td>
-                                    <td class="f_s_14 f_w_400 color_text_3">#DE2548</td>
-                                    <td class="f_s_14 f_w_400 color_text_4">60</td>
-                                    <td class="f_s_14 f_w_400 text-end"><a href="#" class="text_color_1">Email</a></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="customer d-flex align-items-center">
-                                            <div class="thumb_34 mr_15 mt-0"><img class="img-fluid radius_50" src="/img/customers/pro_4.png" alt></div>
-                                            <span class="f_s_14 f_w_400 color_text_1">Product 1</span>
-                                        </div>
-                                    </td>
-                                    <td class="f_s_14 f_w_400 color_text_2">$564</td>
-                                    <td class="f_s_14 f_w_400 color_text_3">#DE2548</td>
-                                    <td class="f_s_14 f_w_400 color_text_4">60</td>
-                                    <td class="f_s_14 f_w_400 text-end"><a href="#" class="text_color_3">Refferal</a></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="customer d-flex align-items-center">
-                                            <div class="thumb_34 mr_15 mt-0"><img class="img-fluid radius_50" src="/img/customers/pro_5.png" alt></div>
-                                            <span class="f_s_14 f_w_400 color_text_1">Product 1</span>
-                                        </div>
-                                    </td>
-                                    <td class="f_s_14 f_w_400 color_text_2">$564</td>
-                                    <td class="f_s_14 f_w_400 color_text_3">#DE2548</td>
-                                    <td class="f_s_14 f_w_400 color_text_4">60</td>
-                                    <td class="f_s_14 f_w_400 text-end"><a href="#" class="text_color_2">Direct</a></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="customer d-flex align-items-center">
-                                            <div class="thumb_34 mr_15 mt-0"><img class="img-fluid radius_50" src="/img/customers/pro_6.png" alt></div>
-                                            <span class="f_s_14 f_w_400 color_text_1">Product 1</span>
-                                        </div>
-                                    </td>
-                                    <td class="f_s_14 f_w_400 color_text_2">$564</td>
-                                    <td class="f_s_14 f_w_400 color_text_3">#DE2548</td>
-                                    <td class="f_s_14 f_w_400 color_text_4">60</td>
-                                    <td class="f_s_14 f_w_400 text-end"><a href="#" class="text_color_3">Refferal</a></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-8">
-            <div class="white_card card_height_100 mb_20 ">
-                <div class="white_card_header">
-                    <div class="box_header m-0">
-                        <div class="main-title">
-                            <h3 class="m-0">Sản phẩm phổ biến</h3>
-                        </div>
-                        <div class="header_more_tool">
-                            <div class="dropdown">
-                                <span class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown">
-                                    <i class="ti-more-alt"></i>
-                                </span>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#"> <i class="ti-eye"></i> Action</a>
-                                    <a class="dropdown-item" href="#"> <i class="ti-trash"></i> Delete</a>
-                                    <a class="dropdown-item" href="#"> <i class="fas fa-edit"></i> Edit</a>
-                                    <a class="dropdown-item" href="#"> <i class="ti-printer"></i> Print</a>
-                                    <a class="dropdown-item" href="#"> <i class="fa fa-download"></i> Download</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="white_card_body QA_section">
-                    <div class="QA_table ">
-                        <table class="table lms_table_active2 p-0">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Mã sản phẩm</th>
-                                    <th scope="col">Tên sản phẩm</th>
-                                    <th scope="col">Giá bán</th>
-                                    <th scope="col">Mô tả ngắn</th>
-                                    <th scope="col">Hình ảnh</th>
-                                    <th scope="col">Số lượt bán</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="customer d-flex align-items-center">
-                                            <div class="thumb_62 mr_15 mt-0"><img class="img-fluid radius_50" src="/img/customers/pro_big.png" alt></div>
-                                            <span class="f_s_20 f_w_400 color_text_3">Unique Watch</span>
-                                        </div>
-                                    </td>
-                                    <td class="f_s_14 f_w_400 color_text_4">#DE2548</td>
-                                    <td class="f_s_14 f_w_400 color_text_3">$99.00</td>
-                                    <td class="f_s_14 f_w_400 text-end"><a href="#" class="badge_btn_1">354 sold</a></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="customer d-flex align-items-center">
-                                            <div class="thumb_62 mr_15 mt-0"><img class="img-fluid radius_50" src="/img/customers/pro_big_1.png" alt></div>
-                                            <span class="f_s_20 f_w_400 color_text_3">Wireless Headphone</span>
-                                        </div>
-                                    </td>
-                                    <td class="f_s_14 f_w_400 color_text_4">#DE2548</td>
-                                    <td class="f_s_14 f_w_400 color_text_3">$99.00</td>
-                                    <td class="f_s_14 f_w_400 text-end"><a href="#" class="badge_btn_1">354 sold</a></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="customer d-flex align-items-center">
-                                            <div class="thumb_62 mr_15 mt-0"><img class="img-fluid radius_50" src="/img/customers/pro_big_2.png" alt></div>
-                                            <span class="f_s_20 f_w_400 color_text_3">Sport Shoe</span>
-                                        </div>
-                                    </td>
-                                    <td class="f_s_14 f_w_400 color_text_4">#DE2548</td>
-                                    <td class="f_s_14 f_w_400 color_text_3">$99.00</td>
-                                    <td class="f_s_14 f_w_400 text-end"><a href="#" class="badge_btn_1">354 sold</a></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <a href="#" class="badge_btn_semi mt_30 ml_15">Xem tiếp</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-       
-    </div>
-</div>
+    </section>
+
+</main><!-- End #main -->

@@ -1,0 +1,42 @@
+﻿@model List<MonAn>
+
+
+   
+       
+            <div class="white_card_body QA_section">
+                <div class="QA_table">
+                    <table class="table lms_table_active2 p-0">
+                        <thead>
+                            <tr>
+                    <th style="color: black; font-weight: bold; font-size: 17px;text-align:center;" scope="col"> Hình ảnh</th>
+                    <th style="color: black; font-weight: bold; font-size: 17px;text-align:center;" scope="col">Tên sản phẩm</th>
+                    <th style="color: black; font-weight: bold; font-size: 17px; width: 200px;text-align:center;" scope="col">Giá bán</th>
+                    <th style="color: black; font-weight: bold; font-size: 17px;text-align:center;" scope="col">Số lượt bán</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var food in Model)
+                            {
+                                <tr>
+                        <td style="text-align:center;">
+                                        <div class="customer d-flex align-items-center">
+                                            <div class="thumb_34 mr_15 mt-0">
+                                    <img class="img-fluid radius_50"  src="~/new1/img/@food.HinhAnh" alt="@food.TenMon">
+                                            </div>
+                                            
+                                        </div>
+                                    </td>
+                        <td style="color: #4154f1; text-align:center;" class="f_s_14 f_w_400 ">@food.TenMon</td>
+                        <td style="color: #4154f1; text-align:center;" class="f_s_14 f_w_400">@food.GiaBan.ToString("N0") VNĐ</td>
+                        <td style="color: #4154f1; text-align:center;" class="f_s_14 f_w_400 ">@food.SoLuongDaBan</td>
+                                    
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        
+  
+

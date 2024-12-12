@@ -10,9 +10,9 @@ namespace ThanhThoaiRestaurant.Models
             HoaDons = new HashSet<HoaDon>();
         }
 
-        public string MaPhieuGg { get; set; } = null!;
+        public int MaPhieuGg { get; set; } 
         public string MoTa { get; set; } = null!;
-        public double PhanTram { get; set; }
+        public int PhanTram { get; set; }
         public string LoaiMa { get; set; } = null!;
         public int SoLuongPhieu { get; set; }
         public int Diem { get; set; }

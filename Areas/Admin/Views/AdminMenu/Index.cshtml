@@ -9,114 +9,443 @@
 }
 
 <style>
+    .reset-filters {
+        display: inline-block;
+        padding: 10px; /* Điều chỉnh khoảng cách giữa các cạnh của span */
+        font-size: 17px; /* Điều chỉnh kích thước chữ */
+        cursor: pointer;      
+        color: #fff; /* Màu chữ trắng */
+        border-radius: 5px; /* Bo tròn các góc */
+        text-align: center; /* Canh giữa nội dung */
+        line-height: 0.5; /* Điều chỉnh chiều cao của dòng để chữ nằm giữa */
+        margin-top: 5px;
+    }
+
+    .table > :not(:last-child) > :last-child > * {
+        border-bottom-color: currentColor;
+        text-align: center;
+    }
+
+    table.dataTable tbody th, table.dataTable tbody td {
+        vertical-align: middle;
+        font-weight: bold;
+    }
+
+    .mt-3 {
+        margin-top: 1rem !important;
+        margin-bottom: 50px;
+    }
+    /* CSS cho container */
+    .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .form-control1 {
+        background: #fff !important;
+        color: #000000 !important;
+        font-size: 15px;
+        border-radius: 0px;
+        box-shadow: none !important;
+        height: 30px;
+    }
+    /* CSS cho woocommerce-ordering và woocommerce_product_search-2 */
+    .woocommerce-ordering,
+    .woocommerce-product-search {
+        flex: 1;
+        margin-right: 10px; /* Khoảng cách giữa hai phần tử */
+    }
+
+        /* CSS cho nút Search */
+        .woocommerce-product-search button {
+            background-color: #0073e6;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+        }
+
+    #woocommerce_price_filter-2 {
+        text-align: center; /* Căn giữa nội dung trong khối */
+        margin-top: 20px; /* Khoảng cách từ khối trước đó */
+    }
+
+    .quantityRed {
+        color: red;
+    }
+
+    .quantityGreen {
+        color: green;
+    }
+
+    /* Hiệu ứng chuyển trang */
+    .pagination {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .page-numbers {
+        display: inline-block;
+        margin: 0 5px;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    }
+
+        .page-numbers.current {
+            background-color: yellow; /* Màu nền vàng cho số trang hiện tại */
+            color: #333; /* Màu chữ mặc định cho số trang hiện tại */
+        }
+
+    #gallery-filter {
+        display: flex;
+        flex-direction: column;
+    }
+
+        #gallery-filter li {
+            margin-bottom: 5px; /* Điều này đảm bảo mỗi mục li nằm trên một hàng */
+        }
+
+
+    .shop-sidebar-wrap {
+        position: sticky;
+        width: 100px;
+        height: 100%;
+        margin-right: 700px;
+    }
+
+    /* CSS cho "outer-container" */
+    .outer-container {
+        border: 2px solid #ccc; /* Đổi màu và kiểu đường viền theo nhu cầu */
+        padding: 20px; /* Đổi kích thước padding theo nhu cầu */
+        text-align: center; /* Để nội dung ở giữa khung */
+        margin-top: 100px;
+    }
+
+
+    #main {
+        overflow: hidden; /* Ngăn nội dung tràn ra ngoài */
+    }
+
+    #page-default {
+        overflow: hidden;
+    }
+
+
+    .filter-container {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 30px;
+    }
+
+    .select-label {
+        flex: 1;
+        margin-right: 10px;
+    }
+
+        .select-label:last-child {
+            margin-right: 0;
+        }
+
+    .search-container {
+        flex: 2;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Add any additional styling you need for the form elements */
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+        width: 150px;
+    }
+
+    .dropdown-content {
+        display: none;
+        background-color: #388585;
+        min-width: 160px;
+        border: 2px solid #fff;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        position: relative;
+        z-index: 1;
+        margin-left: 400px;
+    }
+
+        .dropdown-content label {
+            display: block;
+            padding: 10px;
+            color: black;
+            width: 150px;
+        }
+
+    .quantity {
+        display: none;
+    }
+
+    .filter-container {
+        display: flex;
+        justify-content: space-between; /* Các nút sẽ nằm ngang hàng nhau */
+        align-items: center; /* Căn giữa theo chiều dọc */
+    }
+   
+
+    .table {
+        width: 100%;
+    }
+
     .pagination li.active a {
-        background-color: #007bff;
+        background-color: #007bff; 
         color: #fff;
     }
+
+    .page-item.active .page-link {
+        z-index: 3;
+        color: black;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .quantity {
+        display: none;
+    }
+        .th
+
+    {
+        background-color: #f2f2f2;
+        color: #333;
+        text-align: left;
+        padding: 10px;
+    }
+
+    /* Định dạng các ô dữ liệu trong bảng */
+    td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    /* Tô màu các dòng lẻ của bảng */
+    tr.odd {
+        background-color: #f9f9f9;
+    }
+
+    /* Định dạng nút chức năng */
+    .function-buttons a {
+        margin-right: 5px;
+        color: #333;
+    }
+    
+    .dropdown-toggle {
+        display: flex;
+        justify-content: center;
+        align-items: center; /* Căn chữ theo chiều dọc */
+    }
+
+    
 </style>
 
+<main id="main" class="main">
 
-<!-- Main Content -->
+<div class="pagetitle">
+    <h1>Sản phẩm</h1>
+    <nav>
+        <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/Admin/AdminMenu">Quản lý sản phẩm</a></li>
+            <li class="breadcrumb-item active">Tất cả</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+
 <div class="ms-panel-body">
-    <div class="table-responsive">
+    <div class="table">
         <div id="data-table-5_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                <div class="filter-container" style="display:flex;">
+                    <div class="row" style="display:flex;">
+                                                                                                              
+                        <!--Nhóm món ăn-->
+                       
+                            <div class="col-sm-12 col-md-2" style="margin: 20px 20px 0 20px; width: auto; height: auto;">
+                                <div class="row">
+                                    <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="foodGroupDropdownButton" style="background-color: #fff; color: black; border: solid 3px #178a98; margin-left: 400px;  height:35px; width: 158px;">
+                                            Hãng sản xuất
+                                        </button>
+                                        <div class="dropdown-content" id="foodGroupDropdown">
+                                            <label>
+                                                <input type="checkbox" value="DELL" class="foodGroupCheckbox"> DELL
+                                            </label>
+                                            <label>
+                                                <input type="checkbox" value="HP" class="foodGroupCheckbox"> HP
+                                            </label>
+                                            <label>
+                                                <input type="checkbox" value="MACBOOK" class="foodGroupCheckbox"> MACBOOK
+                                            </label>
+                                            <label>
+                                                <input type="checkbox" value="ACER" class="foodGroupCheckbox"> ACER
+                                            </label>
+                                            <label>
+                                                <input type="checkbox" value="LENOVO" class="foodGroupCheckbox"> LENOVO
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                var foodGroupDropdownButton = document.getElementById("foodGroupDropdownButton");
+
+                                foodGroupDropdownButton.addEventListener("click", function () {
+                                    var foodGroupDropdown = document.getElementById("foodGroupDropdown");
+                                    if (foodGroupDropdown.style.display === "block") {
+                                        foodGroupDropdown.style.display = "none";
+                                    } else {
+                                        foodGroupDropdown.style.display = "block";
+                                    }
+                                });
+
+
+
+                            </script>
+
+                       
+
+                        <div class="col-sm-12 col-md-1" style="margin: 21px 0 0 40px;">
+                            <div id="data-table-5_filter" class="dataTables_filter">
+                                <label>
+                                    <input style="width: 150px;" type="search" class="form-control1 form-control-sm" placeholder="Tìm sản phẩm..." aria-controls="data-table-5" id="searchInput">
+                                </label>
+
+                            </div>
+                        </div>
+
+
+                        <script>
+                            // Get the search input element
+                            var searchInput = document.getElementById('searchInput');
+
+                            // Check if there is a saved search value in Local Storage
+                            var savedSearch = localStorage.getItem('savedSearch');
+                            if (savedSearch) {
+                                // If there is a saved search value, set it as the value of the search input
+                                searchInput.value = savedSearch;
+                            }
+
+                            // Add an event listener to the search input to save its value in Local Storage
+                            searchInput.addEventListener('input', function () {
+                                // Save the current value of the search input in Local Storage
+                                localStorage.setItem('savedSearch', searchInput.value);
+                            });
+                        </script>
+
+                        <!--Nút tìm-->
+                        <div class="col-sm-12 col-md-1" style="margin: 20px 20px 0 0;">
+                            <button type="button" class="btn btn-primary" onclick="searchItems()" style=" background-color: #388585; height:35px; width: 100px; margin-left: 400px; font-weight: bold; border: solid 2px #d4c9c9;">Tìm</button>
+                        </div>
+
+                        <div class="col-sm-12 col-md-2" style="height: 35px; align-content: center; margin-top: 14px; margin-left: 500px;">
+                            <a style="height: 35px; align-content: center;" href="@Url.Action("Create")" class="badge bg-success  reset-filters">Thêm sản phẩm</a>
+                        </div>
+
+                        <script>
+                            var foodGroupDropdownButton = document.getElementById("foodGroupDropdownButton");
+                            var searchInput = document.getElementById("searchInput");
+
+                            
+
+                            // Function to save filter state to local storage
+                            function saveFiltersState() {
+                                localStorage.setItem("searchInput", searchInput.value);
+                                localStorage.setItem("foodGroupCheckboxes", getSelectedValues(foodGroupCheckboxes));
+                            }
+
+                            // Function to load filter state from local storage
+                            function loadFiltersState() {
+                                searchInput.value = localStorage.getItem("searchInput");
+                                setCheckboxValues(foodGroupCheckboxes, localStorage.getItem("foodGroupCheckboxes"));
+                            }
+
+                            // Function to get selected values from checkboxes
+                            function getSelectedValues(checkboxes) {
+                                var values = [];
+                                checkboxes.forEach(function (checkbox) {
+                                    if (checkbox.checked) {
+                                        values.push(checkbox.value);
+                                    }
+                                });
+                                return values;
+                            }
+
+                            // Function to set checkbox values based on saved state
+                            function setCheckboxValues(checkboxes, savedValues) {
+                                var savedValuesArray = savedValues.split(",");
+                                checkboxes.forEach(function (checkbox) {
+                                    if (savedValuesArray.includes(checkbox.value)) {
+                                        checkbox.checked = true;
+                                    } else {
+                                        checkbox.checked = false;
+                                    }
+                                });
+                            }
+
+                            // Add event listener to search input
+                            searchInput.addEventListener('input', function () {
+                                saveFiltersState(); // Save state when search input changes
+                            });
+
+                            // Add event listener to food group checkboxes
+                            var foodGroupCheckboxes = document.querySelectorAll(".foodGroupCheckbox");
+                            foodGroupCheckboxes.forEach(function (checkbox) {
+                                checkbox.addEventListener("change", function () {
+                                    saveFiltersState(); // Save state when food group checkbox changes
+                                });
+                            });
+
+                            // Call the function to load the initial filter state
+                            window.onload = loadFiltersState;
+
+                            // Function to search items
+                            function searchItems() {
+                                var searchInputValue = searchInput.value.trim();
+                                var foodGroups = getSelectedValues(foodGroupCheckboxes);
+
+                                // Construct the search URL
+                                var pageUrl = '@Url.Action("Index", "AdminMenu")' +
+                                    '?search=' + encodeURIComponent(searchInputValue);
+
+                                if (foodGroups.length > 0) {
+                                    pageUrl += '&foodGroup=' + encodeURIComponent(foodGroups.join(","));
+                                }
+
+                                // Redirect to the search URL
+                                window.location.href = pageUrl;
+
+                                // Save filter state
+                                saveFiltersState();
+                            }
+                        </script>
+
+                    </div>
+
+                </div>
             <div class="row">
                 
-                <div class="col-sm-12 col-md-6">
-                    <div id="data-table-5_filter" class="dataTables_filter">
-                        <label>
-                            <input type="search" class="form-control form-control-sm" placeholder="Search Data..." aria-controls="data-table-5" id="searchInput">
-                        </label>
-                        <button type="button" class="btn btn-primary" onclick="searchItems()">Search</button>
-                    </div>
-                </div>
-
-               
-
-                <div class="col-sm-12 col-md-6">
-                    <div class="row">
-                        
-                        <div class="col-sm-4">
-                            <select multiple="multiple" id="statusSelect">
-                                <option value="conhang">Còn hàng</option>
-                                <option value="hethang">Hết hàng</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-4">
-                            <select multiple="multiple" id="priceSelect">
-                                <option value="0-100000">0-100,000 VNĐ</option>
-                                <option value="100000-200000">100,000-200,000 VNĐ</option>
-                                <option value="200000-300000">200,000-300,000 VNĐ</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <script>
-                    function searchItems() {
-                        var searchKeyword = document.getElementById("searchInput").value;
-
-                        // Lấy các giá trị đã chọn trong multi-select
-                        
-                        var selectedStatus = $('#statusSelect').val();
-                        var selectedPriceRange = $('#priceSelect').val();
-
-                        // Gửi yêu cầu tìm kiếm đến trang Index
-                        var url = '/Admin/AdminMenu/Index?search=' + searchKeyword;
-                        
-                        if (selectedStatus != null) {
-                            url += '&status=' + selectedStatus.join(',');
-                        }
-                        if (selectedPriceRange != null) {
-                            url += '&priceRange=' + selectedPriceRange.join(',');
-                        }
-
-                        window.location.href = url;
-                    }
-
-                    // JavaScript
-                    function updateFilters() {
-                       
-                        var selectedStatus = Array.from(document.querySelectorAll('input[name="status"]:checked')).map(e => e.value);
-                        var selectedPriceRange = Array.from(document.querySelectorAll('input[name="priceRange"]:checked')).map(e => e.value);
-
-                        // Sử dụng URLSearchParams để xây dựng tham số truy vấn
-                        var params = new URLSearchParams();
-                       
-                        params.append("status", selectedStatus.join(","));
-                        params.append("priceRange", selectedPriceRange.join(","));
-
-                        // Cập nhật URL với các tham số truy vấn
-                        var currentUrl = new URL(window.location.href);
-                        currentUrl.search = params.toString();
-
-                        // Chuyển hướng đến URL đã cập nhật
-                        window.location.href = currentUrl.toString();
-                    }
-
-                    // Theo dõi sự kiện khi các giá trị của bộ lọc thay đổi
-                    document.querySelectorAll( input[name="status"], input[name="priceRange"]').forEach(function (el) {
-                        el.addEventListener("change", updateFilters);
-                    });
-
-                </script>
-
-            </div>
-            <div class="row">
-               
+                    <div class="table-responsive">
                 <div class="col-sm-12">
                     <table id="data-table-5" class="table w-100 thead-primary dataTable no-footer" role="grid" aria-describedby="data-table-5_info" style="width: 1098px;">
                         <thead>
-                            <tr role="row" style="font-size: 80px; font-weight: bold;">
+                            <tr role="row" style="font-size: 100px; font-weight: bold;">
                                 
-                                <th class="sorting" tabindex="0" aria-controls="data-table-5" rowspan="1" colspan="1" aria-label="Product Name: activate to sort column ascending" style="width: 100px;">Tên món ăn</th>
-                                <th class="sorting" tabindex="0" aria-controls="data-table-5" rowspan="1" colspan="1" aria-label="Product Name: activate to sort column ascending" style="width: 150px;">Hình ảnh</th>
-                               
-                                <th class="sorting" tabindex="0" aria-controls="data-table-5" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 156px;">Trạng thái</th>
-                                <th class="sorting" tabindex="0" aria-controls="data-table-5" rowspan="1" colspan="1" aria-label="Price: activate to sort column ascending" style="width: 100px;">Giá bán</th>
-                                <th class="sorting" tabindex="0" aria-controls="data-table-5" rowspan="1" colspan="1" aria-label="Price: activate to sort column ascending" style="width: 100px;">
-  
-                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="data-table-5" rowspan="1" colspan="1" aria-label="Product Name: activate to sort column ascending" style="  font-weight: bold; font-size:17px;">Tên sản phẩm</th>
+                                        <th class="sorting" tabindex="0" aria-controls="data-table-5" rowspan="1" colspan="1" aria-label="Product Name: activate to sort column ascending" style=" font-weight: bold; font-size:17px;">Hình ảnh</th>
+
+                                        <th class="sorting" tabindex="0" aria-controls="data-table-5" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style=" font-weight: bold; font-size:17px;">Trạng thái</th>
+                                        <th class="sorting" tabindex="0" aria-controls="data-table-5" rowspan="1" colspan="1" aria-label="Price: activate to sort column ascending" style=" font-weight: bold; font-size:17px;">Giá bán</th>
+                                        <th class="sorting" tabindex="0" aria-controls="data-table-5" rowspan="1" colspan="1" aria-label="Price: activate to sort column ascending" style=" font-weight: bold; font-size:17px;"> Chức năng</th>
 
                             </tr>
                         </thead>
@@ -124,58 +453,62 @@
                            
                             @foreach (var item in Model)
                             {
-                                <tr role="row" class="odd" >
+                                <tr role="row" class="odd text-center " >
                                     @if (item != null) {}
-                                    <td style="font-size:15px;"> @item.TenMon </td>
-                                    <td> <img src="~/img/food/@item.HinhAnh" style="width:100px; height:60px;"></td>
-  
-                                    <td style="font-size: 15px; color: @(item.SoLuong > 0 ? "green" : "red");">
-                                        @(item.SoLuong > 0 ? "Còn hàng: " + item.SoLuong + " " + item.DonViTinh : "Hết hàng")
+                                            <td class="text-center" style="font-size:15px;"> @item.TenMon </td>
+                                            <td class="text-center"> <img src="~/new1/img/@item.HinhAnh" style="width:100px; height:100px;"></td>
+
+                                            <td class="text-center" style="font-size: 15px; color: @(item.SoLuong > 0 ? "green" : "red");">
+                                        @(item.SoLuong > 0 ? "Còn hàng: " + item.SoLuong + " " + " " + "sản phẩm" : "Hết hàng")
                                     </td>
-                                    <td style="font-size: 15px;"><span class="amount">@item.GiaBan.ToString("N0") VNĐ</span></td>
-                                    <td style="font-size: 15px;">
-                                        <a href="#" onclick="redirectToDetails(@item.MaMon)">
-                                            <i class="fa fa-file-text"></i>
-                                        </a>
-                                        | <a href="#" onclick="redirectToEdit(@item.MaMon)">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                         </a>
-                                        |  <a href="#" onclick="deleteItem(@item.MaMon)">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
+                                            <td class="text-center" style="font-size: 15px;"><span class="amount">@item.GiaBan.ToString("N0") VNĐ</span></td>
+                                            
 
-                                        <script>
-                                            function redirectToDetails(id) {
-                                                // Chuyển hướng đến trang chi tiết với id của món ăn
-                                                window.location.href = "/Admin/AdminMenu/Details/" + id;
-                                            }
+                                            <td class="text-center" style="font-size: 15px;">
+                                                <a href="#" onclick="redirectToDetails('@item.MaMon')">
+                                            <span class="badge bg-success">Xem</span>
+                                                </a>
+                                                | <a href="#" onclick="redirectToEdit('@item.MaMon')">
+                                                    <span class="badge bg-warning">Sửa</span>
+                                                </a>
+                                                | <a href="#" onclick="deleteItem('@item.MaMon')">
+                                                    <span class="badge bg-danger">Xoá</span>
+                                                </a>
+                                                |  <a href="#" onclick="redirectToNhapKho('@item.MaMon', '@item.GiaGoc')">
+                                                    <span class="badge bg-primary">Nhập kho</span>
+                                                </a>
 
-                                            function redirectToEdit(id) {
-                                                // Chuyển hướng đến trang chi tiết với id của món ăn
-                                                window.location.href = "/Admin/AdminMenu/Edit/" + id;
-                                            }
+                                                <script>
+                                                    function redirectToDetails(id) {
+                                                        // Chuyển hướng đến trang chi tiết với id của món ăn
+                                                        window.location.href = "/Admin/AdminMenu/Details/" + id;
+                                                    }
 
-                                            function deleteItem(id) {
-                                                if (confirm("Bạn có chắc chắn muốn xóa món ăn này?")) {
-                                                    $.ajax({
-                                                        type: "POST",
-                                                        url: "/Admin/AdminMenu/Delete/" + id,
-                                                        success: function (result) {
-                                                            // Ẩn dòng dữ liệu của món ăn đã bị xóa
-                                                            $("#foodItem-" + id).remove();
-                                                            
-                                                            location.reload();
+                                                    function redirectToEdit(id) {
+                                                        // Chuyển hướng đến trang sửa với id của món ăn
+                                                        window.location.href = "/Admin/AdminMenu/Edit/" + id;
+                                                    }
+
+                                                    function deleteItem(id) {
+                                                        if (confirm("Bạn có chắc chắn muốn xóa món ăn này?")) {
+                                                            $.ajax({
+                                                                type: "POST",
+                                                                url: "/Admin/AdminMenu/Delete/" + id,
+                                                                success: function (result) {
+                                                                    // Ẩn dòng dữ liệu của món ăn đã bị xóa
+                                                                    $("#foodItem-" + id).remove();
+                                                                    location.reload();
+                                                                }
+                                                            });
                                                         }
-                                                    });
-                                                }
-                                            }
+                                                    }
+                                                    function redirectToNhapKho(maMon, giaGoc) {
+                                                        window.location.href = "/Admin/AdminLoHang/NhapKho?maMon=" + maMon + "&giaLo=" + giaGoc;
+                                                    }
+                                                </script>
+                                            </td>
 
-                                        </script>
-
-                                    </td>
-
-                                    }
-
+                                    
                                 </tr>
 
 
@@ -183,45 +516,93 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
-            <div class="row">
-                <div class="dataTables_info" id="data-table-5_info" role="status" aria-live="polite">
-                    Showing @ViewBag.StartItem to @ViewBag.EndItem of @ViewBag.TotalItems entries
                 </div>
-
-                <div class="col-sm-12 col-md-7">
-                    <div class="dataTables_paginate paging_simple_numbers" id="data-table-5_paginate">
-                        <div class="text-center">
-                            @if (ViewBag.TotalItems > ViewBag.PageSize)
-                            {
-                                <ul class="pagination">
-                                    @if (ViewBag.PageNumber > 1)
-                                    {
-                                        <li class="page-item">
-                                            <a class="page-link" href="@Url.Action("Index", new { page = ViewBag.PageNumber - 1, pageSize = ViewBag.PageSize, search = ViewBag.Search })"><i class="fa-solid fa-circle-chevron-left"></i></a>
-                                        </li>
-                                    }
-                                    @for (int i = 1; i <= ViewBag.TotalPages; i++)
-                                    {
-                                        <li class="page-item @(i == ViewBag.PageNumber ? "active" : "")">
-                                            <a class="page-link" href="@Url.Action("Index", new { page = i, pageSize = ViewBag.PageSize, search = ViewBag.Search })">@i</a>
-                                        </li>
-                                    }
-                                    @if (ViewBag.PageNumber < ViewBag.TotalPages)
-                                    {
-                                        <li class="page-item">
-                                            <a class="page-link" href="@Url.Action("Index", new { page = ViewBag.PageNumber + 1, pageSize = ViewBag.PageSize, search = ViewBag.Search })"><i class="fa-solid fa-circle-chevron-right"></i></a>
-                                        </li>
-                                    }
-                                </ul>
-                            }
-                        </div>
-                    </div>
-                </div>
-
-
             </div>
+           
         </div>
     </div>
 </div>
 
+@if (Model.TotalItemCount > 0)
+{
+    <!-- Hiển thị thông tin phân trang -->
+    <div class="paging-info" style="font-size: 13px; color: red; text-align: center;">
+        Hiển thị từ sản phẩm thứ @ViewBag.StartItem đến @ViewBag.EndItem trên tổng số @ViewBag.TotalItems sản phẩm
+    </div>
+}
+<nav class="navigation paging-navigation clearfix d-flex justify-content-center" style=" white-space: nowrap;">
+
+    <div class="col-sm-12 col-md-7 d-flex justify-content-center">
+        <div class="dataTables_paginate paging_simple_numbers" id="data-table-5_paginate">
+            <div class="text-center">
+                @if (ViewBag.TotalItems > ViewBag.PageSize)
+                {
+                    <ul class="pagination">
+                        @if (ViewBag.PageNumber > 1)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="@Url.Action("Index", new { page=1, pageSize=ViewBag.PageSize, search=ViewBag.Search, status=ViewBag.Status, priceRange=ViewBag.PriceRange, quantityRange=ViewBag.QuantityRange, foodGroup=ViewBag.FoodGroup })"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                            </li>
+                        }
+
+                        @if (ViewBag.PageNumber > 3)
+                        {
+                            <li class="page-item">
+                                <input style="width: 40px; padding: 3px;" type="number" id="customPageInput" min="1" max="@ViewBag.TotalPages" class="page-link"  onkeydown="if (event.key === 'Enter') { goToCustomPage(); }">
+                            </li>
+
+                        }
+
+                        @for (int i = Math.Max(1, ViewBag.PageNumber - 2); i <= Math.Min(ViewBag.TotalPages, ViewBag.PageNumber + 2); i++)
+                        {
+                            <li class="page-item @(i == ViewBag.PageNumber ? " active" : "" )">
+                                <a class="page-link" href="@Url.Action("Index", new { page=i, pageSize=ViewBag.PageSize, search=ViewBag.Search, status=ViewBag.Status, priceRange=ViewBag.PriceRange, quantityRange=ViewBag.QuantityRange, foodGroup=ViewBag.FoodGroup })">@i</a>
+                            </li>
+                        }
+
+                        @if (ViewBag.PageNumber < ViewBag.TotalPages - 2)
+                        {
+                            <li class="page-item">
+                                <input style="width: 40px; padding: 3px;" type="number" id="customPageInput" min="1" max="@ViewBag.TotalPages" class="page-link"  onkeydown="if (event.key === 'Enter') { goToCustomPage(); }">
+                            </li>
+
+                        }
+
+                        @if (ViewBag.PageNumber < ViewBag.TotalPages)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="@Url.Action("Index", new { page=ViewBag.TotalPages, pageSize=ViewBag.PageSize, search=ViewBag.Search, status=ViewBag.Status, priceRange=ViewBag.PriceRange, quantityRange=ViewBag.QuantityRange, foodGroup=ViewBag.FoodGroup })"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                            </li>
+                        }
+                    </ul>
+                }
+                <script>
+                    function goToCustomPage() {
+                        var customPageInput = document.getElementById("customPageInput");
+                        var customPage = customPageInput.value;
+                        if (customPage >= 1 && customPage <= @ViewBag.TotalPages) {
+                            var url = "@Url.Action("Index", new { page = "__page__", pageSize = ViewBag.PageSize, search = ViewBag.Search, status = ViewBag.Status, priceRange = ViewBag.PriceRange, quantityRange = ViewBag.QuantityRange, foodGroup = ViewBag.FoodGroup })";
+                            url = url.replace("__page__", customPage);
+                            window.location.href = url;
+                        }
+                    }
+
+                    document.getElementById("customPageInput").addEventListener("keyup", function (event) {
+                        if (event.key === "Enter") {
+                            goToCustomPage();
+                        }
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+</nav><!-- .navigation -->
+@if (Model.TotalItemCount > 0)
+{
+    <!-- Hiển thị thông tin phân trang -->
+    <div class="paging-info" style="font-size: 13px; color: red; text-align: center;">
+        Trang @ViewBag.PageNumber/@ViewBag.TotalPages
+    </div>
+}
+
+</main>

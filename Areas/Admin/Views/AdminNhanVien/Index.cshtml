@@ -1,0 +1,983 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model X.PagedList.IPagedList<NhanVien>
+
+
+@{
+    ViewBag.Title = "Thực đơn";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+
+    .filter-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center; /* Đảm bảo căn giữa theo chiều dọc */
+    }
+
+    .reset-filters {
+        display: inline-block;
+        padding: 10px; /* Điều chỉnh khoảng cách giữa các cạnh của span */
+        font-size: 13px; /* Điều chỉnh kích thước chữ */
+        cursor: pointer;
+        color: #fff; /* Màu chữ trắng */
+        border-radius: 5px; /* Bo tròn các góc */
+        text-align: center; /* Canh giữa nội dung */
+        line-height: 0.5; /* Điều chỉnh chiều cao của dòng để chữ nằm giữa */
+        margin-top: 5px;
+    }
+
+    .pagination li.active a {
+        background-color: #007bff;
+        color: black;
+    }
+
+    #data-table-5 th {
+        background-color: #268c90;
+        color: #fff;
+        font-weight: bold;
+        text-align: center;
+        padding: 10px;
+        border: 2px solid #f7f0f0;
+    }
+
+    .page-item.active .page-link {
+        z-index: 3;
+        color: black;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content1 {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        border: 1px solid #ccc;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        margin-left: 100px;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        border: 1px solid #ccc;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        margin-left: 40px;
+    }
+
+        .dropdown-content label {
+            display: block;
+            padding: 10px;
+        }
+
+    .quantity {
+        display: none;
+    }
+
+
+
+    #data-table-5 tbody tr:nth-child(even) {
+        background-color: #aadaaa; /* Màu nền cho hàng chẵn */
+        text-align: center;
+    }
+
+    #data-table-5 tbody tr:nth-child(odd) {
+        background-color: #d9eeb8; /* Màu nền cho hàng lẻ */
+        text-align: center;
+    }
+
+    #data-table-5 td {
+        padding: 10px; /* Khoảng cách trong ô */
+        border: 1px solid #ddd; /* Viền cho ô */
+    }
+
+    #data-table-5 td {
+        font-size: 15px; /* Kích thước chữ */
+        color: #333; /* Màu chữ */
+    }
+
+    #data-table-5 tbody tr:hover {
+        background-color: #ffc107; /* Màu nền khi di chuột vào */
+        color: #333; /* Màu chữ khi di chuột vào */
+        transform: scale(1.02); /* Thu nhỏ dòng khi di chuột vào */
+        transition: background-color 0.3s, color 0.3s, transform 0.3s; /* Hiệu ứng màu và thu nhỏ trong 0.3 giây */
+        cursor: pointer; /* Con trỏ biến thành bàn tay khi di chuột vào */
+    }
+
+
+
+    .btn-secondary {
+        color: #fff;
+        background-color: #df0a0a;
+        border-color: #252728;
+    }
+
+    .status-block > div {
+        flex-grow: 1;
+        text-align: center;
+        padding: 10px;
+    }
+
+    .status-block::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%; /* Để đường kẻ ngang kéo dài cả chiều rộng màn hình */
+        border-top: 2px solid #000; /* Đường kẻ ngang ở dưới khối */
+    }
+
+    .status-block > div:last-child {
+        border-right: none; /* Loại bỏ đường kẻ phân cách bên phải của div cuối cùng */
+    }
+
+    .search-button {
+        margin: 0 20px 0 50px;
+        width: 100px;
+        background-color: #4CAF50; /* Màu nền */
+        color: white; /* Màu chữ */
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s; /* Hiệu ứng chuyển đổi màu nền */
+    }
+
+        .search-button:hover {
+            background-color: #45a049; /* Màu nền khi di chuột qua */
+        }
+
+    /* Ô tìm đơn */
+    .search-input {
+        margin: 0 20px;
+    }
+
+    /* Ô chọn ngày */
+    .date-picker {
+        margin: 0 20px 0 50px;
+        width: 200px;
+    }
+
+        .date-picker label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .date-picker input {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc; /* Viền */
+            border-radius: 3px;
+            transition: border-color 0.3s; /* Hiệu ứng chuyển đổi màu viền */
+        }
+
+            .date-picker input:focus {
+                border-color: #4CAF50; /* Màu viền khi ô được focus */
+            }
+
+    .custom-row {
+        margin: 100px -50px 0 0;
+        background-color: #f5f5f5; /* Màu nền */
+        padding: 20px; /* Khoảng cách nội dung và viền */
+        border-radius: 10px; /* Góc bo tròn */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+        transition: background-color 0.3s; /* Hiệu ứng chuyển đổi màu nền */
+    }
+
+        .custom-row:hover {
+            background-color: #e0e0e0; /* Màu nền khi di chuột qua */
+        }
+
+    /* Nút tìm */
+    .search-button {
+        margin: 0 20px 0 50px;
+        width: 100px;
+        background-color: #4CAF50; /* Màu nền */
+        color: white; /* Màu chữ */
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s; /* Hiệu ứng chuyển đổi màu nền */
+    }
+
+        .search-button:hover {
+            background-color: #45a049; /* Màu nền khi di chuột qua */
+        }
+
+    /* Ô tìm đơn */
+    .search-input {
+        margin: 0 20px;
+    }
+
+    /* Ô chọn ngày */
+    .date-picker {
+        margin: 0 20px 0 50px;
+        width: 200px;
+    }
+
+        .date-picker label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .date-picker input {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc; /* Viền */
+            border-radius: 3px;
+            transition: border-color 0.3s; /* Hiệu ứng chuyển đổi màu viền */
+        }
+
+            .date-picker input:focus {
+                border-color: #4CAF50; /* Màu viền khi ô được focus */
+            }
+
+    .form-control {
+        background-color: #fff;
+        border: 2px solid #222323;
+    }
+
+    .fa, .fa-brands, .fa-classic, .fa-regular, .fa-sharp, .fa-solid, .fab, .far, .fas {
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased;
+        display: var(--fa-display,inline-block);
+        font-style: normal;
+        font-variant: normal;
+        line-height: 1;
+        text-rendering: auto;
+    }
+
+    .status-block {
+        display: flex;
+        font-weight: bold;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        background-color: #f8f9fa;
+    }
+
+        .status-block a {
+            text-decoration: none;
+            color: #333;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin: 0 0 0 -20px; /* Dời nút lên trái để tạo hiệu ứng nối khối */
+            position: relative;
+            transition: background-color 0.3s ease;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+
+        .status-block .fa-arrow-right {
+            margin-left: 5px;
+            color: #aaa; /* Màu của mũi tên */
+            font-size: 18px;
+        }
+
+        .status-block a:first-child {
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+        }
+
+        .status-block a:last-child::before {
+            content: none; /* Xoá mũi tên cuối cùng */
+        }
+
+        .status-block a:hover {
+            background-color: #e8e8e8;
+        }
+
+    .active .fa-arrow-right {
+        color: #fff; /* Màu của mũi tên khi được chọn */
+    }
+
+    .reset-filters {
+        display: inline-block;
+        padding: 10px; /* Điều chỉnh khoảng cách giữa các cạnh của span */
+        font-size: 13px; /* Điều chỉnh kích thước chữ */
+        cursor: pointer;
+        color: #fff; /* Màu chữ trắng */
+        border-radius: 5px; /* Bo tròn các góc */
+        text-align: center; /* Canh giữa nội dung */
+        line-height: 0.5; /* Điều chỉnh chiều cao của dòng để chữ nằm giữa */
+        margin-top: 5px;
+    }
+
+    .table > :not(:last-child) > :last-child > * {
+        border-bottom-color: currentColor;
+        text-align: center;
+    }
+
+    table.dataTable tbody th, table.dataTable tbody td {
+        vertical-align: middle;
+        font-weight: bold;
+    }
+
+    .mt-3 {
+        margin-top: 1rem !important;
+        margin-bottom: 50px;
+    }
+    /* CSS cho container */
+    .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .form-control1 {
+        background: #fff !important;
+        color: #000000 !important;
+        font-size: 15px;
+        border-radius: 0px;
+        box-shadow: none !important;
+        height: 30px;
+    }
+    /* CSS cho woocommerce-ordering và woocommerce_product_search-2 */
+    .woocommerce-ordering,
+    .woocommerce-product-search {
+        flex: 1;
+        margin-right: 10px; /* Khoảng cách giữa hai phần tử */
+    }
+
+        /* CSS cho nút Search */
+        .woocommerce-product-search button {
+            background-color: #0073e6;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+        }
+
+    #woocommerce_price_filter-2 {
+        text-align: center; /* Căn giữa nội dung trong khối */
+        margin-top: 20px; /* Khoảng cách từ khối trước đó */
+    }
+
+    .quantityRed {
+        color: red;
+    }
+
+    .quantityGreen {
+        color: green;
+    }
+
+    /* Hiệu ứng chuyển trang */
+    .pagination {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .page-numbers {
+        display: inline-block;
+        margin: 0 5px;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    }
+
+        .page-numbers.current {
+            background-color: yellow; /* Màu nền vàng cho số trang hiện tại */
+            color: #333; /* Màu chữ mặc định cho số trang hiện tại */
+        }
+
+    #gallery-filter {
+        display: flex;
+        flex-direction: column;
+    }
+
+        #gallery-filter li {
+            margin-bottom: 5px; /* Điều này đảm bảo mỗi mục li nằm trên một hàng */
+        }
+
+
+    .shop-sidebar-wrap {
+        position: sticky;
+        width: 100px;
+        height: 100%;
+        margin-right: 700px;
+    }
+
+    /* CSS cho "outer-container" */
+    .outer-container {
+        border: 2px solid #ccc; /* Đổi màu và kiểu đường viền theo nhu cầu */
+        padding: 20px; /* Đổi kích thước padding theo nhu cầu */
+        text-align: center; /* Để nội dung ở giữa khung */
+        margin-top: 100px;
+    }
+
+
+    #main {
+        overflow: hidden; /* Ngăn nội dung tràn ra ngoài */
+    }
+
+    #page-default {
+        overflow: hidden;
+    }
+
+
+    .filter-container {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 30px;
+    }
+
+    .select-label {
+        flex: 1;
+        margin-right: 10px;
+    }
+
+        .select-label:last-child {
+            margin-right: 0;
+        }
+
+    .search-container {
+        flex: 2;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Add any additional styling you need for the form elements */
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+        width: 150px;
+    }
+
+    .dropdown-content {
+        display: none;
+        background-color: #388585;
+        min-width: 120px;
+        border: 2px solid #fff;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        position: relative;
+        z-index: 1;
+        
+    }
+
+        .dropdown-content label {
+            display: block;
+            padding: 5px;
+            color: black;
+            width: 110px;
+        }
+
+    .quantity {
+        display: none;
+    }
+
+    .filter-container {
+        display: flex;
+        justify-content: space-between; /* Các nút sẽ nằm ngang hàng nhau */
+        align-items: center; /* Căn giữa theo chiều dọc */
+    }
+
+
+    .table {
+        width: 100%;
+    }
+
+    .pagination li.active a {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .page-item.active .page-link {
+        z-index: 3;
+        color: black;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .quantity {
+        display: none;
+    }
+
+    .th {
+        background-color: #f2f2f2;
+        color: #333;
+        text-align: left;
+        padding: 10px;
+    }
+
+    /* Định dạng các ô dữ liệu trong bảng */
+    td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    /* Tô màu các dòng lẻ của bảng */
+    tr.odd {
+        background-color: #f9f9f9;
+    }
+
+    /* Định dạng nút chức năng */
+    .function-buttons a {
+        margin-right: 5px;
+        color: #333;
+    }
+
+    table {
+        table-layout: fixed;
+        width: 100%;
+    }
+
+    th, td {
+        width: 16.66%; /* 100% / số lượng cột */
+        text-align: center; /* Căn giữa nội dung trong mỗi ô */
+    }
+
+    .dropdown-toggle {
+        display: flex;
+        justify-content: center;
+        align-items: center; /* Căn chữ theo chiều dọc */
+    }
+
+</style>
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Nhân viên</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/Admin/AdminNhanVien">Quản lý nhân viên</a></li>
+                <li class="breadcrumb-item active">Tất cả</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+
+    <div class="ms-panel-body">
+        <div class="table">
+            <div id="data-table-5_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                
+
+
+                <div class="filter-container" style="display:flex;">
+                    <div class="row" style="display:flex;">
+
+                        <!-- Giới tính -->
+                        <div class="col-sm-12 col-md-1" style="margin: 20px 0 0 0;">
+                            <div class="row">
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="genderDropdownButton" style="background-color: #fff; color: black; border: solid 2px #178a98; height:35px; width: 120px; margin-left: 40px;">
+                                        Giới tính
+                                    </button>
+                                    <div class="dropdown-content" id="genderDropdown">
+                                        <label>
+                                            <input type="checkbox" id="maleCheckbox" value="Nam" class="genderCheckbox"> Nam
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" id="femaleCheckbox" value="Nữ" class="genderCheckbox"> Nữ
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <script>
+                            var genderDropdownButton = document.getElementById("genderDropdownButton");
+
+                            genderDropdownButton.addEventListener("click", function () {
+                                var genderDropdown = document.getElementById("genderDropdown");
+                                if (genderDropdown.style.display === "block") {
+                                    genderDropdown.style.display = "none";
+                                } else {
+                                    genderDropdown.style.display = "block";
+                                }
+                            });
+                        </script>
+
+                        <!-- Chức vụ -->
+                        <div class="col-sm-12 col-md-1" style="margin: 20px 0 0 50px; width: auto; height: auto;">
+                            <div class="row">
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="positionDropdownButton" style="background-color: #fff; color: black; border: solid 2px #178a98; margin-left: 70px;  height:35px; width: 120px;">
+                                        Chức vụ
+                                    </button>
+                                    <div class="dropdown-content" id="positionDropdown" style="margin-left: 80px;">
+                                        <label>
+                                            <input type="checkbox" value="Admin" class="positionCheckbox"> Admin
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" value="LeTan" class="positionCheckbox"> Lễ tân
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" value="ThuNgan" class="positionCheckbox"> Thu Ngân
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <script>
+                            var positionDropdownButton = document.getElementById("positionDropdownButton");
+
+                            positionDropdownButton.addEventListener("click", function () {
+                                var positionDropdown = document.getElementById("positionDropdown");
+                                if (positionDropdown.style.display === "block") {
+                                    positionDropdown.style.display = "none";
+                                } else {
+                                    positionDropdown.style.display = "block";
+                                }
+                            });
+                        </script>
+
+                        <!-- Ô tìm kiếm -->
+                        <div class="col-sm-12 col-md-1" style="margin: 21px 0 0 180px;">
+                            <div id="data-table-5_filter" class="dataTables_filter">
+                                <label>
+                                    <input style="width: 150px;" type="search" class="form-control1 form-control-sm" placeholder="Tìm nhân viên..." aria-controls="data-table-5" id="searchInput">
+                                </label>
+                            </div>
+                        </div>
+
+                        <script>
+                            // Get the search input element
+                            var searchInput = document.getElementById('searchInput');
+
+                            // Check if there is a saved search value in Local Storage
+                            var savedSearch = localStorage.getItem('savedSearch');
+                            if (savedSearch) {
+                                // If there is a saved search value, set it as the value of the search input
+                                searchInput.value = savedSearch;
+                            }
+
+                            // Add an event listener to the search input to save its value in Local Storage
+                            searchInput.addEventListener('input', function () {
+                                // Save the current value of the search input in Local Storage
+                                localStorage.setItem('savedSearch', searchInput.value);
+                            });
+                        </script>
+
+                        <!-- Nút tìm -->
+                        <div class="col-sm-12 col-md-1" style="margin:20px 80px 0 40px;">
+                            <button type="button" class="btn btn-primary" onclick="searchItems()" style=" background-color: #388585; height:35px; width: 100px; margin-left: 10px; font-weight: bold; border: solid 2px #d4c9c9;">Tìm</button>
+                        </div>
+
+                        <!-- Nút reset -->
+                        <div class="col-sm-12 col-md-1" style="margin: 20px 30px 0 0; white-space: nowrap; font-weight: bold; color: #aec619;">
+                            <span onclick="resetFilters()" class="badge bg-danger reset-filters">Xoá bộ lọc</span>
+                        </div>
+
+                        <div class="col-sm-12 col-md-1" style="margin-top: 14px;">
+                            <a style="height: 35px;" href="@Url.Action("Create")" class="badge bg-success reset-filters d-inline-block p-3 text-center">
+                                <span class="align-middle">Thêm nhân viên</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <script>
+                        // Function to reset filters
+                        function resetFilters() {
+                            // Set values to null
+                            var genderCheckboxes = document.querySelectorAll(".genderCheckbox");
+                            var positionCheckboxes = document.querySelectorAll(".positionCheckbox");
+
+                            genderCheckboxes.forEach(function (checkbox) {
+                                checkbox.checked = false;
+                            });
+
+                            positionCheckboxes.forEach(function (checkbox) {
+                                checkbox.checked = false;
+                            });
+
+                            searchInput.value = "";
+
+                            // Hide dropdowns
+                            var genderDropdown = document.getElementById("genderDropdown");
+                            var positionDropdown = document.getElementById("positionDropdown");
+
+                            genderDropdown.style.display = "none";
+                            positionDropdown.style.display = "none";
+
+                            // Save the reset state
+                            saveFiltersState();
+                        }
+                    </script>
+
+                    <script>
+                        var genderCheckboxes = document.querySelectorAll(".genderCheckbox");
+                        var positionCheckboxes = document.querySelectorAll(".positionCheckbox");
+
+                        var searchInput = document.getElementById('searchInput');
+
+                        // Load filter state when the page loads
+                        window.onload = loadFiltersState;
+
+                        // Add event listeners for checkboxes and date inputs
+                        genderCheckboxes.forEach(function (checkbox) {
+                            checkbox.addEventListener("change", function () {
+                                saveFiltersState(); // Save state when a gender checkbox changes
+                            });
+                        });
+
+                        positionCheckboxes.forEach(function (checkbox) {
+                            checkbox.addEventListener("change", function () {
+                                saveFiltersState(); // Save state when a position checkbox changes
+                            });
+                        });
+
+                        searchInput.addEventListener('input', function () {
+                            saveFiltersState(); // Save state when the search input changes
+                        });
+
+                        // Function to save filter state to local storage
+                        function saveFiltersState() {
+                            localStorage.setItem("genderCheckboxes", getSelectedValues(genderCheckboxes));
+                            localStorage.setItem("positionCheckboxes", getSelectedValues(positionCheckboxes));
+                            localStorage.setItem("savedSearch", searchInput.value);
+                        }
+
+                        // Function to load filter state from local storage
+                        function loadFiltersState() {
+                            setCheckboxValues(genderCheckboxes, localStorage.getItem("genderCheckboxes"));
+                            setCheckboxValues(positionCheckboxes, localStorage.getItem("positionCheckboxes"));
+                            searchInput.value = localStorage.getItem('savedSearch');
+                        }
+
+                        // Function to get selected values from checkboxes
+                        function getSelectedValues(checkboxes) {
+                            var values = [];
+                            checkboxes.forEach(function (checkbox) {
+                                if (checkbox.checked) {
+                                    values.push(checkbox.value);
+                                }
+                            });
+                            return values.join(",");
+                        }
+
+                        // Function to set checkbox values based on saved state
+                        function setCheckboxValues(checkboxes, savedValues) {
+                            var savedValuesArray = savedValues.split(",");
+                            checkboxes.forEach(function (checkbox) {
+                                if (savedValuesArray.includes(checkbox.value)) {
+                                    checkbox.checked = true;
+                                } else {
+                                    checkbox.checked = false;
+                                }
+                            });
+                        }
+
+                        // Function to perform search
+                        function searchItems() {
+                            var genderCheckboxes = document.querySelectorAll(".genderCheckbox:checked");
+                            var positionCheckboxes = document.querySelectorAll(".positionCheckbox:checked");
+
+                            var position = [];
+                            var gender = [];
+
+                            genderCheckboxes.forEach(function (checkbox) {
+                                gender.push(checkbox.value);
+                            });
+
+                            positionCheckboxes.forEach(function (checkbox) {
+                                position.push(checkbox.value);
+                            });
+
+
+                          
+
+                            var pageUrl = '@Url.Action("Index", "AdminNhanVien")' +
+                                '?search=' + encodeURIComponent(searchInput.value);
+
+                            if (position.length > 0) {
+                                pageUrl += '&position=' + position.join(",");
+                            }
+
+                            if (gender.length > 0) {
+                                pageUrl += '&gender=' + gender.join(",");
+                            }
+
+                            window.location.href = pageUrl;
+                            saveFiltersState(); // Save the current filter state after the search
+                        }
+                    </script>
+                </div>
+
+                <div class="row" style="margin: 100px auto;">
+                    <div class="col-sm-12">
+                        <table id="data-table" class="table w-100 thead-primary dataTable no-footer" role="grid" aria-describedby="data-table_info" style="width: 898px; margin: 0 auto;">
+                            <thead>
+                                <tr role="row">
+                                    <th style="font-weight: bold; font-size: 17px;">Mã nhân viên</th>
+                                    <th style="font-weight: bold; font-size: 17px;">Họ tên </th>
+                                    <th style="font-weight: bold; font-size: 17px;">Giới tính</th>
+                                    <th style="font-weight: bold; font-size: 17px;">Chức vụ</th>
+                                    <th style="font-weight: bold; font-size: 17px;">Số điện thoại</th>
+                                    <th style="font-weight: bold; font-size: 17px; width: 150px;">Chức năng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var donHang in Model)
+                                {
+                                    <tr role="row" class="odd">
+                                        <td style="font-size: 14px;">@donHang.MaNv</td>
+                                        <td style="font-size: 14px;">@donHang.TenNv</td>
+                                        <td style="font-size: 14px;">@donHang.GioiTinhNv</td>
+                                        <td style="font-size: 14px;">
+                                            @{
+                                                string tenChucVu = "";
+                                                switch (donHang.ChucVu)
+                                                {
+                                                    case "LeTan":
+                                                        tenChucVu = "Lễ tân";
+                                                        break;
+                                                    case "ThuNgan":
+                                                        tenChucVu = "Thu ngân";
+                                                        break;
+                                                    // Thêm các trường hợp khác nếu cần
+                                                    default:
+                                                        tenChucVu = donHang.ChucVu; // Mặc định hiển thị giá trị hiện tại nếu không khớp với bất kỳ trường hợp nào
+                                                        break;
+                                                }
+                                            }
+                                            @tenChucVu
+                                        </td>
+
+                                        <td style="font-size: 14px;">@donHang.Sdtnv</td>
+                                        <td style="font-size: 14px;" class="text-center">
+                                            <a href="#" onclick="redirectToDetails('@donHang.MaNv')">
+                                                <span class="badge bg-success">Xem</span>
+                                            </a>
+                                            | <a href="#" onclick="redirectToEdit('@donHang.MaNv')">
+                                                <span class="badge bg-warning">Sửa</span>
+                                            </a>
+                                            | <a href="#" onclick="deleteItem('@donHang.MaNv')">
+                                                <span class="badge bg-danger">Xoá</span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <script>
+                    function redirectToDetails(id) {
+                        window.location.href = "/Admin/AdminNhanVien/Details/" + id;
+                    }
+
+                    function redirectToEdit(id) {
+                        window.location.href = "/Admin/AdminNhanVien/Edit/" + id;
+                    }
+
+                    function deleteItem(id) {
+                        if (confirm("Bạn có chắc chắn muốn xóa nhân viên này?")) {
+                            $.ajax({
+                                type: "POST",
+                                url: "/Admin/AdminNhanVien/Delete/" + id,
+                                success: function (result) {
+                                    // Ẩn dòng dữ liệu của món ăn đã bị xóa
+                                    $("#foodItem-" + id).remove();
+                                    location.reload();
+                                }
+                            });
+                        }
+                    }
+                </script>
+
+            </div>
+        </div>
+    </div>
+
+    @if (Model.TotalItemCount > 0)
+    {
+        <!-- Hiển thị thông tin phân trang -->
+        <div class="paging-info" style="font-size: 13px; color: red; text-align: center;">
+            Hiển thị từ nhân viên thứ @ViewBag.StartItem đến @ViewBag.EndItem trên tổng số @ViewBag.TotalItems nhân viên
+        </div>
+    }
+
+    <nav class="navigation paging-navigation clearfix d-flex justify-content-center" style="white-space: nowrap;">
+
+        <div class="col-sm-12 col-md-7 d-flex justify-content-center">
+            <div class="dataTables_paginate paging_simple_numbers" id="data-table-5_paginate">
+                <div class="text-center">
+                    @if (ViewBag.TotalItems > ViewBag.PageSize)
+                    {
+                        <ul class="pagination">
+                            @if (ViewBag.PageNumber > 1)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action("Index", new { page = 1, pageSize = ViewBag.PageSize, search = ViewBag.Search, gender = ViewBag.Gender, position = ViewBag.Position, startDate = ViewBag.StartDate, endDate = ViewBag.EndDate })"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                                </li>
+                            }
+
+                            @if (ViewBag.PageNumber > 3)
+                            {
+                                <li class="page-item">
+                                    <input style="width: 40px; padding: 3px;" type="number" id="customPageInput" min="1" max="@ViewBag.TotalPages" class="page-link" onkeydown="if (event.key === 'Enter') { goToCustomPage(); }">
+                                </li>
+                            }
+
+                            @for (int i = Math.Max(1, ViewBag.PageNumber - 2); i <= Math.Min(ViewBag.TotalPages, ViewBag.PageNumber + 2); i++)
+                            {
+                                <li class="page-item @(i == ViewBag.PageNumber ? " active" : "")">
+                                    <a class="page-link" href="@Url.Action("Index", new { page = i, pageSize = ViewBag.PageSize, search = ViewBag.Search, gender = ViewBag.Gender, position = ViewBag.Position, startDate = ViewBag.StartDate, endDate = ViewBag.EndDate })">@i</a>
+                                </li>
+                            }
+
+                            @if (ViewBag.PageNumber < ViewBag.TotalPages - 2)
+                            {
+                                <li class="page-item">
+                                    <input style="width: 40px; padding: 3px;" type="number" id="customPageInput" min="1" max="@ViewBag.TotalPages" class="page-link" onkeydown="if (event.key === 'Enter') { goToCustomPage(); }">
+                                </li>
+                            }
+
+                            @if (ViewBag.PageNumber < ViewBag.TotalPages)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action("Index", new { page = ViewBag.TotalPages, pageSize = ViewBag.PageSize, search = ViewBag.Search, gender = ViewBag.Gender, position = ViewBag.Position, startDate = ViewBag.StartDate, endDate = ViewBag.EndDate })"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    <script>
+                        function goToCustomPage() {
+                            var customPageInput = document.getElementById("customPageInput");
+                            var customPage = customPageInput.value;
+                            if (customPage >= 1 && customPage <= @ViewBag.TotalPages) {
+                                var url = "@Url.Action("Index", new { page = "__page__", pageSize = ViewBag.PageSize, search = ViewBag.Search, gender = ViewBag.Gender, position = ViewBag.Position, startDate = ViewBag.StartDate, endDate = ViewBag.EndDate })";
+                                url = url.replace("__page__", customPage);
+                                window.location.href = url;
+                            }
+                        }
+
+                        document.getElementById("customPageInput").addEventListener("keyup", function (event) {
+                            if (event.key === "Enter") {
+                                goToCustomPage();
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </nav><!-- .navigation -->
+    @if (Model.TotalItemCount > 0)
+    {
+        <!-- Hiển thị thông tin phân trang -->
+        <div class="paging-info" style="font-size: 13px; color: red; text-align: center;">
+            Trang @ViewBag.PageNumber/@ViewBag.TotalPages
+        </div>
+    }
+
+
+</main>

@@ -1,0 +1,268 @@
+﻿@model ThanhThoaiRestaurant.Models.UserViewModel
+
+@{
+    ViewBag.Title = "UpDateProfile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+
+    .invalid-feedback {
+        margin-left: 200px;
+    }
+    /* CSS cho form chỉnh sửa thông tin người dùng */
+    .container {
+        margin-top: 50px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .btn-primary {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .btn-secondary {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        .btn-secondary:hover {
+            background-color: #0056b3;
+        }
+
+    .form-control {
+        display: block;
+        width: 350px;
+        margin-left: 200px;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    }
+
+    label {
+        display: inline-block;
+        max-width: 100%;
+        margin-bottom: 5px;
+        font-weight: 700;
+        margin-left: 200px;
+    }
+
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <h2 class="text-center mb-4">Thông tin</h2>
+            <form asp-action="UpDateProfile" method="post">
+                <div class="form-group">
+                    <label for="tendangnhap">Tên đăng nhập:</label>
+                    <input type="text" id="tendangnhap" name="TenDangNhap" class="form-control" value="@Model.TenDangNhap" required disabled />
+                    
+                   
+                </div>
+
+                <div class="form-group">
+                    <label for="tenkh">Tên khách hàng:</label>
+                    <input type="text" id="khachHang" name="TenKh" class="form-control" value="@Model.TenKh" required />
+                    <div id="tenkh-validation-msg" class="invalid-feedback">Tên khách hàng không được để trống và không quá 50 kí tự.</div>
+                </div>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        var tenkhInput = document.getElementById('khachHang');
+                        var tenkhValidationMsg = document.getElementById('tenkh-validation-msg');
+
+                        tenkhInput.addEventListener('input', function () {
+                            if (tenkhInput.validity.valid) {
+                                tenkhValidationMsg.style.display = 'none';
+                            } else {
+                                tenkhValidationMsg.style.display = 'block';
+                            }
+                        });
+
+                        tenkhInput.addEventListener('invalid', function () {
+                            if (tenkhInput.value === '') {
+                                tenkhValidationMsg.textContent = 'Tên khách hàng không được để trống.';
+                            } else if (tenkhInput.value.length > 40) {
+                                tenkhValidationMsg.textContent = 'Tên khách hàng không được quá 50 kí tự.';
+                            }
+                        });
+                    });
+                </script>
+
+                <div class="form-group">
+                    <label for="matKhau">Mật khẩu:</label>
+                    <input type="text" id="matKhau" name="MatKhau" class="form-control" value="@Model.MatKhau" required />
+                    <div id="matkhau-validation-msg" class="invalid-feedback">Mật khẩu không được để trống và không quá 20 kí tự.</div>
+                </div>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        var matKhauInput = document.getElementById('matKhau');
+                        var matKhauValidationMsg = document.getElementById('matkhau-validation-msg');
+
+                        matKhauInput.addEventListener('input', function () {
+                            if (matKhauInput.validity.valid) {
+                                matKhauValidationMsg.style.display = 'none';
+                            } else {
+                                matKhauValidationMsg.style.display = 'block';
+                            }
+                        });
+
+                        matKhauInput.addEventListener('invalid', function () {
+                            if (matKhauInput.value === '') {
+                                matKhauValidationMsg.textContent = 'Mật khẩu không được để trống.';
+                            } else if (matKhauInput.value.length > 20) {
+                                matKhauValidationMsg.textContent = 'Mật khẩu không được quá 20 kí tự.';
+                            }
+                        });
+                    });
+                </script>
+
+                <div class="form-group">
+                    <label for="diaChi">Địa chỉ nhận hàng:</label>
+                    <input type="text" id="diaChi" name="DiaChiKh" class="form-control" value="@Model.DiaChiKh" required />
+                    <div id="diachi-validation-msg" class="invalid-feedback">Địa chỉ không được để trống và không quá 100 kí tự.</div>
+                </div>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        var diaChiInput = document.getElementById('diaChi');
+                        var diaChiValidationMsg = document.getElementById('diachi-validation-msg');
+
+                        diaChiInput.addEventListener('input', function () {
+                            if (diaChiInput.validity.valid) {
+                                diaChiValidationMsg.style.display = 'none';
+                            } else {
+                                diaChiValidationMsg.style.display = 'block';
+                            }
+                        });
+
+                        diaChiInput.addEventListener('invalid', function () {
+                            if (diaChiInput.value === '') {
+                                diaChiValidationMsg.textContent = 'Địa chỉ không được để trống.';
+                            } else if (diaChiInput.value.length > 100) {
+                                diaChiValidationMsg.textContent = 'Địa chỉ không được quá 100 kí tự.';
+                            }
+                        });
+                    });
+                </script>
+
+                <div class="form-group">
+                    <label for="soDienThoai">Số điện thoại:</label>
+                    <input type="tel" id="soDienThoai" name="Sdtkh" class="form-control" value="@Model.Sdtkh" required />
+                    <div id="sdt-validation-msg" class="invalid-feedback">Số điện thoại không hợp lệ. Vui lòng nhập đúng 10 số và bắt đầu từ số 0.</div>
+                </div>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        var soDienThoaiInput = document.getElementById('soDienThoai');
+                        var sdtValidationMsg = document.getElementById('sdt-validation-msg');
+
+                        soDienThoaiInput.addEventListener('input', function () {
+                            if (soDienThoaiInput.validity.valid) {
+                                sdtValidationMsg.style.display = 'none';
+                            } else {
+                                sdtValidationMsg.style.display = 'block';
+                            }
+                        });
+
+                        soDienThoaiInput.addEventListener('invalid', function () {
+                            if (soDienThoaiInput.value === '') {
+                                sdtValidationMsg.textContent = 'Số điện thoại không được để trống.';
+                            } else {
+                                sdtValidationMsg.textContent = 'Số điện thoại không hợp lệ. Vui lòng nhập đúng 10 số và bắt đầu từ số 0.';
+                            }
+                        });
+                    });
+                </script>
+
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="Email" class="form-control" value="@Model.EmailNd" required />
+                    <input type="hidden" id="EmailNd" name="EmailNd" value="@Model.EmailNd" />
+                    <input type="hidden" id="EmailKh" name="EmailKh" value="@Model.EmailKh" />
+                    <div id="email-validation-msg" class="invalid-feedback">Email không hợp lệ. Vui lòng nhập đúng định dạng và không quá 50 kí tự.</div>
+                </div>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        var emailInput = document.getElementById('email');
+                        var emailValidationMsg = document.getElementById('email-validation-msg');
+
+                        emailInput.addEventListener('input', function () {
+                            if (emailInput.validity.valid) {
+                                emailValidationMsg.style.display = 'none';
+                            } else {
+                                emailValidationMsg.style.display = 'block';
+                            }
+                        });
+
+                        emailInput.addEventListener('invalid', function () {
+                            if (emailInput.value === '') {
+                                emailValidationMsg.textContent = 'Email không được để trống.';
+                            } else {
+                                emailValidationMsg.textContent = 'Email không hợp lệ. Vui lòng nhập đúng định dạng và không quá 50 kí tự.';
+                            }
+                        });
+                    });
+                </script>
+
+
+                <div style="display: flex;">
+                <button type="submit" class="btn btn-primary" style="width:60px; margin-left: 410px;">Lưu</button>
+                <a href="/Home" class="btn btn-secondary" style="width:70px; margin-left: 10px;">Trở về</a>
+                </div>
+            </form>
+           
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('email').addEventListener('input', function () {
+        var emailValue = this.value;
+        document.getElementById('EmailNd').value = emailValue;
+        document.getElementById('EmailKh').value = emailValue;
+    });
+</script>

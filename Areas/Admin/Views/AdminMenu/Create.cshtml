@@ -1,0 +1,461 @@
+﻿@model ThanhThoaiRestaurant.Models.MonAn
+
+@{
+    ViewBag.Title = "Thêm món";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .form-control {
+        display: block;
+        width: 500px;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: var(--bs-body-color);
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background-color: var(--bs-body-bg);
+        background-clip: padding-box;
+        border: var(--bs-border-width) solid var(--bs-border-color);
+        border-radius: var(--bs-border-radius);
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
+
+    label {
+        display: inline-block;
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+
+</style>
+<main id="main" class="main">
+<div class="row">
+        <div class="pagetitle">
+            <h1>Sản phẩm</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/Admin/AdminMenu">Quản lý sản phẩm</a></li>
+                    <li class="breadcrumb-item active">Thêm sản phẩm</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+    <div class="col-md-6">
+        <div class="ms-panel ms-panel-fh">
+            <div class="ms-panel-header">
+                    <h4 style="font-weight: bold; color: #df1d1b; font-weight: bold;">
+                        Thêm sản phẩm
+                    </h4>
+            </div>
+               
+                       
+            <div class="ms-panel-body">
+                <form asp-controller="AdminMenu" asp-action="Create" method="post" enctype="multipart/form-data">
+                        <div class="form-row" style="display:flex; justify-content: space-between;">
+                            <div class="col-md-8" style="margin-left: 10px;">
+                        <!--Nhóm món ăn-->
+                                <label for="MaNhom">Hãng sản xuất</label>
+                                <div class="input-group">
+                                    <select class="form-control" id="validationCustom22" name="MaNhom" required="" onchange="updateHiddenFields()">
+                                        @if (ViewBag.NhomMonAnList != null)
+                                        {
+                                            @foreach (var nhomMonAn in ViewBag.NhomMonAnList as List<NhomMonAn>)
+                                            {
+                                                <option value="@nhomMonAn.MaNhom" data-tennhom="@nhomMonAn.TenNhom">@nhomMonAn.TenNhom</option>
+                                            }
+                                        }
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Vui lòng chọn một hãng sản xuất.
+                                    </div>
+                                </div>
+
+                                <script>
+                                    function updateHiddenFields() {
+                                        var selectElement = document.getElementById("validationCustom22");
+                                        var selectedOption = selectElement.options[selectElement.selectedIndex];
+                                        var selectedMaNhom = selectedOption.value;
+                                        var selectedTenNhom = selectedOption.textContent; // Lấy nội dung của tùy chọn
+
+                                        console.log("Mã nhóm: " + selectedMaNhom);
+                                        console.log("Tên nhóm: " + selectedTenNhom);
+
+                                        // Bạn có thể thực hiện các thao tác khác với mã nhóm và tên nhóm ở đây
+                                    }
+                                </script>
+
+
+
+
+
+
+                        <!--Mã món-->
+
+                        <div class="mb-3">
+                            <label for="MaMon">Mã sản phẩm</label>
+                                    <div class="input-group">
+                            <input type="text" class="form-control" id="MaMon" name="MaMon" placeholder="Mã sản phẩm" required pattern="[0-9]{1,6}">
+                            <span id="MaMonError" class="text-danger" style="display: none;">Mã sản phẩm phải là số và không được dài hơn 6 chữ số.</span>
+                            @if (ViewData.ModelState.ContainsKey("MaMon"))
+                            {
+                                <span class="text-danger">Mã sản phẩm đã tồn tại trong CSDL.</span>
+                            }
+                            </div>
+                        </div>
+
+                        <script>
+                            var maMonInput = document.getElementById("MaMon");
+                            var maMonError = document.getElementById("MaMonError");
+
+                            maMonInput.addEventListener("input", function () {
+                                if (!maMonInput.checkValidity()) {
+                                    maMonError.style.display = "inline";
+                                } else {
+                                    maMonError.style.display = "none";
+                                }
+                            });
+                        </script>
+
+                        <!--Tên món-->
+
+
+                        <div class=" mb-3">
+                            <label for="TenMon">Tên sản phẩm</label>
+                                    <div class="input-group">
+                            <input type="text" class="form-control" id="TenMon" name="TenMon" placeholder="Tên sản phẩm">
+                            <span id="TenMonError" class="text-danger" style="display: none;"></span>
+                            </div>
+                        </div>
+
+                        <script>
+                            var tenMonInput = document.getElementById("TenMon");
+                            var tenMonError = document.getElementById("TenMonError");
+
+                            tenMonInput.addEventListener("input", function () {
+                                var tenMonValue = tenMonInput.value;
+                                
+
+                                if (tenMonValue.length > 50 ||  tenMonValue.trim() === "") {
+                                    tenMonError.innerText = "Tên sản phẩm không được quá 50 ký tự và không được để trống!";
+                                    tenMonError.style.display = "inline";
+                                } else {
+                                    tenMonError.style.display = "none";
+                                }
+                            });
+                        </script>
+
+
+                                <div class=" mb-3">
+                                    <label for="validationCustom221">Ổ cứng</label>
+                                    <div class="input-group">
+                                        <select class="form-control" id="MaOC" name="MaOC" required onchange="updateHiddenFields()">
+                                            @foreach (var nhomMonAn in ViewBag.OCungList as List<OCung>)
+                                            {
+                                                <option value="@nhomMonAn.MaOC">@nhomMonAn.DungLuong</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <!-- Thêm các trường input ẩn tại đây -->
+                                    <input id="DungLuongHidden" name="DungLuong" value="" type="hidden" />
+                                    <input id="MaOCHidden" name="MaOC" value="" type="hidden" />
+
+                                </div>
+
+                                <script>
+                                    function updateHiddenFields() {
+                                        var selectElement = document.getElementById("MaOC");
+                                        var maNhomInput = document.getElementById("MaOCHidden");
+                                        var tenNhomInput = document.getElementById("DungLuongHidden");
+
+                                        var selectedOption = selectElement.options[selectElement.selectedIndex];
+                                        var selectedMaNhom = selectedOption.value;
+                                        var selectedTenNhom = selectedOption.text;
+
+                                        maNhomInput.value = selectedMaNhom;
+                                        tenNhomInput.value = selectedTenNhom;
+                                    }
+                                </script>
+
+                                <div class=" mb-3">
+                                    <label for="validationCustom222">Ram</label>
+                                    <div class="input-group">
+                                        <select class="form-control" id="MaNhom" name="MaRam" required onchange="updateHiddenFields()">
+                                            @foreach (var nhomMonAn in ViewBag.RamList as List<RAM>)
+                                            {
+                                                <option value="@nhomMonAn.MaRam">@nhomMonAn.DungLuongRam</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <!-- Thêm các trường input ẩn tại đây -->
+                                    <input id="DungLuongRamHidden" name="DungLuongRam" value="" type="hidden" />
+                                    <input id="MaRamHidden" name="MaRam" value="" type="hidden" />
+
+                                </div>
+
+                                <script>
+                                    function updateHiddenFields() {
+                                        var selectElement = document.getElementById("MaRam");
+                                        var maNhomInput = document.getElementById("MaRamHidden");
+                                        var tenNhomInput = document.getElementById("DungLuongRamHidden");
+
+                                        var selectedOption = selectElement.options[selectElement.selectedIndex];
+                                        var selectedMaNhom = selectedOption.value;
+                                        var selectedTenNhom = selectedOption.text;
+
+                                        maNhomInput.value = selectedMaNhom;
+                                        tenNhomInput.value = selectedTenNhom;
+                                    }
+                                </script>
+
+                                <div class=" mb-3">
+                                    <label for="validationCustom223">Màn hình</label>
+                                    <div class="input-group">
+                                        <select class="form-control" id="MaMH" name="MaMH" required onchange="updateHiddenFields()">
+                                            @foreach (var nhomMonAn in ViewBag.ManHinhList as List<ManHinh>)
+                                            {
+                                                <option value="@nhomMonAn.MaMH">@nhomMonAn.KichThuoc</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <!-- Thêm các trường input ẩn tại đây -->
+                                    <input id="KichThuocHidden" name="KichThuoc" value="" type="hidden" />
+                                    <input id="MaMHHidden" name="MaMH" value="" type="hidden" />
+
+                                </div>
+
+                                <script>
+                                    function updateHiddenFields() {
+                                        var selectElement = document.getElementById("MaMH");
+                                        var maNhomInput = document.getElementById("MaMHHidden");
+                                        var tenNhomInput = document.getElementById("KichThuocHidden");
+
+                                        var selectedOption = selectElement.options[selectElement.selectedIndex];
+                                        var selectedMaNhom = selectedOption.value;
+                                        var selectedTenNhom = selectedOption.text;
+
+                                        maNhomInput.value = selectedMaNhom;
+                                        tenNhomInput.value = selectedTenNhom;
+                                    }
+                                </script>
+
+                                <div class=" mb-3">
+                                    <label for="validationCustom224">CPU</label>
+                                    <div class="input-group">
+                                        <select class="form-control" id="MaCPU" name="MaCPU" required onchange="updateHiddenFields()">
+                                            @foreach (var nhomMonAn in ViewBag.CPUList as List<CPU>)
+                                            {
+                                                <option value="@nhomMonAn.MaCPU">@nhomMonAn.TenLoaiCPU</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <!-- Thêm các trường input ẩn tại đây -->
+                                    <input id="TenLoaiCPUHidden" name="KichThuoc" value="" type="hidden" />
+                                    <input id="MaCPUHidden" name="MaMH" value="" type="hidden" />
+
+                                </div>
+
+                                <script>
+                                    function updateHiddenFields() {
+                                        var selectElement = document.getElementById("MaCPU");
+                                        var maNhomInput = document.getElementById("MaCPUHidden");
+                                        var tenNhomInput = document.getElementById("TenLoaiCPUHidden");
+
+                                        var selectedOption = selectElement.options[selectElement.selectedIndex];
+                                        var selectedMaNhom = selectedOption.value;
+                                        var selectedTenNhom = selectedOption.text;
+
+                                        maNhomInput.value = selectedMaNhom;
+                                        tenNhomInput.value = selectedTenNhom;
+                                    }
+                                </script>
+
+                                <div class="mb-3">
+                                    <label for="NgayMoBan">Ngày mở bán</label>
+                                    <div class="input-group">
+                                        <input type="date" class="form-control" id="NgayMoBan" name="NgayMoBan" placeholder="Ngày mở bán" required>
+                                        <div id="ngayMoBanError" class="text-danger"></div>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    document.getElementById("NgayMoBan").addEventListener("input", function () {
+                                        var ngayMoBanInput = this.value;
+                                        var ngayMoBanError = document.getElementById("ngayMoBanError");
+
+                                        // Kiểm tra nếu ngày không được chọn
+                                        if (!ngayMoBanInput) {
+                                            ngayMoBanError.textContent = "Vui lòng chọn ngày mở bán.";
+                                        } else {
+                                            ngayMoBanError.textContent = "";
+
+                                            // Kiểm tra xem ngày có nằm trong khoảng từ năm 2000 đến hiện tại không
+                                            var selectedDate = new Date(ngayMoBanInput);
+                                            var minDate = new Date("2000-01-01");
+                                            var maxDate = new Date();
+                                            if (selectedDate < minDate || selectedDate > maxDate) {
+                                                ngayMoBanError.textContent = "Ngày mở bán phải nằm trong khoảng từ năm 2000 đến hiện tại.";
+                                            }
+                                        }
+                                    });
+                                </script>
+
+                               
+
+
+
+                        </div>
+                            <div class="col-md-8" style="margin-left: 200px;">
+                        <!--Số lượng-->
+
+                        <div class=" mb-3">
+                            <label for="SoLuong">Số lượng</label>
+                                    <div class="input-group">
+                            <input type="text" class="form-control" id="SoLuong" name="SoLuong" placeholder="Số lượng" required pattern="[0-9]+" maxlength="4">
+                            <span id="SoLuongError" class="text-danger" style="display: none;"></span>
+                            </div>
+                        </div>
+
+                        <script>
+                            var soLuongInput = document.getElementById("SoLuong");
+                            var soLuongError = document.getElementById("SoLuongError");
+
+                            soLuongInput.addEventListener("input", function () {
+                                var soLuongValue = soLuongInput.value;
+
+                                if ( soLuongValue < 0 || soLuongValue > 1000 || soLuongValue.trim() === "") {
+                                    soLuongError.innerText = "Số lượng không quá 1000 và không để trống";
+                                    soLuongError.style.display = "inline";
+                                } else {
+                                    soLuongError.style.display = "none";
+                                }
+                            });
+                        </script>
+
+                        
+
+                        <!--Giá bán-->
+
+                        <div class="mb-3">
+                            <label for="GiaBan">Giá bán</label>
+                                    <div class="input-group">
+                            <input type="text" class="form-control" id="GiaBan" name="GiaBan" placeholder="Giá bán" required pattern="^[0-9]{1,9}$" maxlength="9">
+                            <div id="giaBanError" class="text-danger"></div>
+                            </div>
+                        </div>
+
+                        <script>
+                            document.getElementById("GiaBan").addEventListener("input", function () {
+                                var giaBanInput = this.value;
+                                var errorElement = document.getElementById("giaBanError");
+
+                                if (!/^[0-9]{1,9}$/.test(giaBanInput) || giaBanInput < 0 || giaBanInput > 100000000) {
+                                    errorElement.textContent = "Giá bán không hợp lệ. Giá trị phải từ 0 đến 100,000,000 và chỉ chứa số!";
+                                } else {
+                                    errorElement.textContent = ""; // Xóa thông báo lỗi nếu không có lỗi
+                                }
+                            });
+                        </script>
+
+
+                               
+
+                               
+
+                               
+
+                               
+
+
+                        <!--Hình ảnh-->
+
+                        <div class="mb-3">
+                            <label for="HinhAnh">Hình ảnh</label>
+                                    <div class="input-group">
+                                            <input type="file" class="form-control" id="hinhAnhInput" name="HinhAnhFile" accept="image/*" style="background-color: white;">
+                                            </div>
+                            
+                        </div>
+
+                        <script>
+                            document.getElementById("hinhAnhInput").addEventListener("change", function (event) {
+                                var input = event.target;
+                                if (input.files.length > 0) {
+                                    var fileName = input.files[0].name;
+                                    document.getElementById("validationCustom29").value = fileName;
+                                }
+                            });
+                        </script>
+
+                                <div class="mb-3">
+                                    <label for="HinhAnh">Hình ảnh 1</label>
+                                    <div class="input-group">
+                                        <input type="file" class="form-control" id="hinhAnhInput1" name="HinhAnhFile1" accept="image/*" style="background-color: white;">
+                                    </div>
+
+                                </div>
+
+                                <script>
+                                    document.getElementById("hinhAnhInput1").addEventListener("change", function (event) {
+                                        var input = event.target;
+                                        if (input.files.length > 0) {
+                                            var fileName = input.files[0].name;
+                                            document.getElementById("validationCustom29").value = fileName;
+                                        }
+                                    });
+                                </script>
+
+                                <div class="mb-3">
+                                    <label for="HinhAnh">Hình ảnh 2</label>
+                                    <div class="input-group">
+                                        <input type="file" class="form-control" id="hinhAnhInput2" name="HinhAnhFile2" accept="image/*" style="background-color: white;">
+                                    </div>
+
+                                </div>
+
+                                <script>
+                                    document.getElementById("hinhAnhInput2").addEventListener("change", function (event) {
+                                        var input = event.target;
+                                        if (input.files.length > 0) {
+                                            var fileName = input.files[0].name;
+                                            document.getElementById("validationCustom29").value = fileName;
+                                        }
+                                    });
+                                </script>
+
+                                <div class="mb-3">
+                                    <label for="HinhAnh">Hình ảnh 3</label>
+                                    <div class="input-group">
+                                        <input type="file" class="form-control" id="hinhAnhInput3" name="HinhAnhFile3" accept="image/*" style="background-color: white;">
+                                    </div>
+
+                                </div>
+
+                                <script>
+                                    document.getElementById("hinhAnhInput3").addEventListener("change", function (event) {
+                                        var input = event.target;
+                                        if (input.files.length > 0) {
+                                            var fileName = input.files[0].name;
+                                            document.getElementById("validationCustom29").value = fileName;
+                                        }
+                                    });
+                                </script>
+
+                    </div>  
+                            </div>
+                   
+                    <div class="text-right mt-3">
+                        <button type="submit" class="btn btn-primary">Lưu</button>
+                    </div>
+                </form>
+            </div>
+           
+        </div>
+    </div>
+    <div class="col-md-6">
+        <!-- Hình ảnh -->
+    </div>
+</div>
+</main>

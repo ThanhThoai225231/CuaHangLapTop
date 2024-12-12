@@ -1,0 +1,47 @@
+﻿
+@model IEnumerable<ThanhThoaiRestaurant.Models.MonAn>
+
+@foreach (var menuItem in Model)
+{
+    <!-- product -->
+    <div class="col-md-4 col-xs-6" onclick="redirectToDetails(@menuItem.MaMon)">
+        <div class="product">
+            <div class="product-img">
+                <img src="~/new1/img/@menuItem.HinhAnh" alt="" onclick="redirectToDetails(@menuItem.MaMon)">
+                <div class="product-label">
+                    <span class="sale">-30%</span>
+                    <span class="new">NEW</span>
+                </div>
+            </div>
+            <div class="product-body">
+                <p class="product-category">@menuItem.TenNhom</p>
+                <h3 class="product-name"><a href="#">@menuItem.TenMon</a></h3>
+                <h4 class="product-price">@menuItem.GiaBan.ToString("N0") VNĐ <del class="product-old-price"></del></h4>
+                <div class="product-rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </div>
+                <div class="product-btns">
+                   
+
+                    <button class="quick-view" onclick="redirectToDetails(@menuItem.MaMon)">
+                        <i class="fa fa-eye"></i><span class="tooltipp">Xem chi tiết</span>
+                    </button>
+                </div>
+            </div>
+            <div class="add-to-cart">
+            </div>
+
+            <div class="add-to-cart">
+                <button class="add-to-cart-btn" onclick="addToCart(@menuItem.MaMon)">
+                    <i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng
+                </button>
+            </div>
+
+        </div>
+    </div>
+    <!-- /product -->
+}

@@ -1,0 +1,411 @@
+﻿@model ThanhThoaiRestaurant.Models.NhanVien
+
+@{
+    ViewBag.Title = "Chi tiết nhân viên";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+
+}
+
+
+<style>
+    label {
+        display: inline-block;
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    .centered-image {
+        display: block;
+        margin: 0 300px 40px 349px;
+        height: 250px;
+    }
+
+</style>
+
+<main id="main" class="main">
+    <div class="row">
+        <div class="pagetitle">
+            <h1>Nhân viên</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/Admin/AdminNhanVien">Quản lý nhân viên</a></li>
+                    <li class="breadcrumb-item active">Sửa nhân viên</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+        <div class="col-xl-6 col-md-12">
+            <div class="ms-panel ms-panel-fh">
+                <div class="ms-panel-header">
+                    <h4 style="font-weight: bold; color: #df1d1b; font-weight: bold;">
+                        Sửa nhân viên
+                    </h4>
+
+                    <img style="height: 150px; margin-left: 500px;" src="~/img/food/@Model.HinhAnh" alt="Ảnh khách hàng" class="customer-image">
+
+                </div>
+
+
+
+
+
+                <div class="ms-panel-body">
+
+
+                    <form asp-controller="AdminNhanVien" asp-action="Edit" asp-route-id="@Model.MaNv" method="post" enctype="multipart/form-data">
+                        <div class="form-row" style="display:flex; justify-content: space-between;">
+                            <div class="col-md-8" style="margin-left: 100px;">
+                                <!--Tên nhân viên-->
+                                <div class="mb-3">
+                                    <label for="validationCustom18">Họ tên nhân viên</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="validationCustom18" name="TenNv" placeholder="Tên nhân viên" required maxlength="50" value="@Model.TenNv">
+                                        <div class="invalid-feedback" id="validationCustom18Error">
+                                            <!-- Thông báo lỗi không được để trống -->
+                                            Tên nhân viên không được để trống.
+                                        </div>
+                                        <div class="invalid-feedback" id="validationCustom18LengthError">
+                                            <!-- Thông báo lỗi vượt quá 50 kí tự -->
+                                            Tên nhân viên không được quá 50 kí tự.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    document.getElementById("validationCustom18").addEventListener("input", function () {
+                                        var tenNhanVienInput = this.value;
+                                        var errorElement = this.nextElementSibling.querySelector(".invalid-feedback#validationCustom18Error");
+                                        var lengthErrorElement = this.nextElementSibling.querySelector(".invalid-feedback#validationCustom18LengthError");
+
+                                        // Kiểm tra lỗi không được để trống
+                                        if (tenNhanVienInput.trim() === "") {
+                                            // Đặt thông báo lỗi cụ thể
+                                            this.setCustomValidity("Tên nhân viên không được để trống.");
+
+                                            // Hiển thị thông báo lỗi
+                                            errorElement.style.display = "block";
+                                        } else {
+                                            // Xóa thông báo lỗi nếu không có lỗi
+                                            this.setCustomValidity("");
+                                            errorElement.style.display = "none";
+                                        }
+
+                                        // Kiểm tra lỗi vượt quá 50 kí tự
+                                        if (tenNhanVienInput.length > 50) {
+                                            // Đặt thông báo lỗi cụ thể
+                                            this.setCustomValidity("Tên nhân viên không được quá 50 kí tự.");
+
+                                            // Hiển thị thông báo lỗi
+                                            lengthErrorElement.style.display = "block";
+                                        } else {
+                                            // Xóa thông báo lỗi nếu không có lỗi
+                                            this.setCustomValidity("");
+                                            lengthErrorElement.style.display = "none";
+                                        }
+                                    });
+                                </script>
+
+                                <!--Giới tính-->
+                                <div class="mb-3">
+                                    <label for="validationCustom19">Giới tính</label>
+                                    <div class="input-group">
+                                        <select class="form-control" id="validationCustom19" name="GioiTinhNv" required>
+                                            <option value="Nam" selected="@(Model.GioiTinhNv == "Nam")">Nam</option>
+                                            <option value="Nữ" selected="@(Model.GioiTinhNv == "Nữ")">Nữ</option>
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Vui lòng chọn giới tính.
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!--Ngày sinh-->
+                                <div class="mb-3">
+                                    <label for="validationCustom20">Ngày sinh</label>
+                                    <div class="input-group">
+                                        <input type="date" class="form-control" id="validationCustom20" name="NgaySinhNv" placeholder="Ngày sinh" required value="@Model.NgaySinhNv.ToString("yyyy-MM-dd")">
+                                        <div class="invalid-feedback" id="validationCustom20Error">
+                                            <!-- Thông báo lỗi ngày sinh không được để trống -->
+                                            Ngày sinh không được để trống.
+                                        </div>
+                                        <div class="invalid-feedback" id="validationCustom20RangeError">
+                                            <!-- Thông báo lỗi ngày sinh nằm ngoài khoảng cho phép -->
+                                            Ngày sinh phải trong khoảng từ năm 1980 đến trước năm 2005.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    document.getElementById("validationCustom20").addEventListener("input", function () {
+                                        var ngaySinhInput = this.value;
+                                        var errorElement = this.nextElementSibling.querySelector(".invalid-feedback#validationCustom20Error");
+                                        var rangeErrorElement = this.nextElementSibling.querySelector(".invalid-feedback#validationCustom20RangeError");
+
+                                        // Kiểm tra xem ngày sinh có được chọn không
+                                        if (!ngaySinhInput) {
+                                            // Đặt thông báo lỗi cụ thể
+                                            this.setCustomValidity("Ngày sinh không được để trống.");
+
+                                            // Hiển thị thông báo lỗi
+                                            errorElement.style.display = "block";
+                                            rangeErrorElement.style.display = "none";
+                                            return;
+                                        }
+
+                                        var ngaySinh = new Date(ngaySinhInput);
+                                        var ngaySinhMin = new Date("1980-01-01");
+                                        var ngaySinhMax = new Date("2005-01-01");
+
+                                        // Kiểm tra xem ngày sinh có nằm trong khoảng cho phép không
+                                        if (ngaySinh < ngaySinhMin || ngaySinh >= ngaySinhMax) {
+                                            // Đặt thông báo lỗi cụ thể
+                                            this.setCustomValidity("Ngày sinh phải trong khoảng từ năm 1980 đến trước năm 2005.");
+
+                                            // Hiển thị thông báo lỗi
+                                            errorElement.style.display = "none";
+                                            rangeErrorElement.style.display = "block";
+                                        } else {
+                                            // Xóa thông báo lỗi nếu không có lỗi
+                                            this.setCustomValidity("");
+                                            errorElement.style.display = "none";
+                                            rangeErrorElement.style.display = "none";
+                                        }
+                                    });
+                                </script>
+
+
+                                <!--Chức vụ-->
+
+                                <div class="mb-3">
+                                    <label for="validationCustom21">Chức vụ</label>
+                                    <div class="input-group">
+                                        <select class="form-control" id="validationCustom21" name="ChucVu" required>
+                                            <option value="Admin" selected="@(Model.ChucVu == "Admin")">Admin</option>
+                                            <option value="LeTan" selected="@(Model.ChucVu == "LeTan")">Lễ tân</option>
+                                            <option value="ThuNgan" selected="@(Model.ChucVu == "ThuNgan")">Thu ngân</option>
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Vui lòng chọn chức vụ.
+                                        </div>
+                                    </div>
+                                </div>
+
+                               <!--Hình ảnh-->
+                                <div class=" mb-3">
+                                    <label for="validationCustom29">Hình ảnh</label>
+                                    <div class="input-group">
+                                        <input type="file" class="form-control" id="hinhAnhInput" name="HinhAnhFile" accept="image/*" style="background-color: white">
+                                        <input type="hidden" class="form-control" id="validationCustom29" name="HinhAnh" placeholder="Hình ảnh" required="" value="@Model.HinhAnh">
+                                        <div class="invalid-feedback">
+                                            <!-- Thông báo lỗi (nếu cần) -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    document.getElementById("hinhAnhInput").addEventListener("change", function (event) {
+                                        var input = event.target;
+                                        if (input.files.length > 0) {
+                                            var fileName = input.files[0].name;
+                                            document.getElementById("validationCustom29").value = fileName;
+                                        }
+                                    });
+                                </script>
+
+                            </div>
+                            <div class="col-md-8" style="margin-left: 200px;">
+
+
+
+                                <!--Ngày vào làm-->
+                                <div class="mb-3">
+                                    <label for="validationCustom22">Ngày vào làm</label>
+                                    <div class="input-group">
+                                        <input type="date" class="form-control" id="validationCustom22" name="NgayVl" placeholder="Ngày vào làm" required value="@Model.NgayVl.ToString("yyyy-MM-dd")">
+                                        <div class="invalid-feedback" id="validationCustom22RequiredError">
+                                            <!-- Thông báo lỗi nếu ngày vào làm bị để trống -->
+                                            Ngày vào làm không được để trống.
+                                        </div>
+                                        <div class="invalid-feedback" id="validationCustom22FormatError">
+                                            <!-- Thông báo lỗi nếu ngày vào làm không đúng định dạng -->
+                                            Ngày vào làm không đúng định dạng.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    document.getElementById("validationCustom22").addEventListener("input", function () {
+                                        var ngayVaoLamInput = this.value;
+                                        var errorRequiredElement = this.nextElementSibling.querySelector(".invalid-feedback#validationCustom22RequiredError");
+                                        var errorFormatElement = this.nextElementSibling.querySelector(".invalid-feedback#validationCustom22FormatError");
+
+                                        // Kiểm tra xem ngày vào làm có được chọn không
+                                        if (!ngayVaoLamInput) {
+                                            // Đặt thông báo lỗi cụ thể
+                                            this.setCustomValidity("Ngày vào làm không được để trống.");
+
+                                            // Hiển thị thông báo lỗi
+                                            errorRequiredElement.style.display = "block";
+                                            errorFormatElement.style.display = "none";
+                                            return;
+                                        }
+
+                                        // Kiểm tra xem ngày vào làm có đúng định dạng không (yyyy-MM-dd)
+                                        var dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+                                        if (!dateRegex.test(ngayVaoLamInput)) {
+                                            // Đặt thông báo lỗi cụ thể
+                                            this.setCustomValidity("Ngày vào làm không đúng định dạng.");
+
+                                            // Hiển thị thông báo lỗi
+                                            errorRequiredElement.style.display = "none";
+                                            errorFormatElement.style.display = "block";
+                                        } else {
+                                            // Xóa thông báo lỗi nếu không có lỗi
+                                            this.setCustomValidity("");
+                                            errorRequiredElement.style.display = "none";
+                                            errorFormatElement.style.display = "none";
+                                        }
+                                    });
+                                </script>
+                                <!--Dịa chỉ-->
+                                <div class="mb-3">
+                                    <label for="validationCustomAddress">Địa chỉ</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="validationCustomAddress" name="DiaChiNv" placeholder="Địa chỉ" required maxlength="200" value="@Model.DiaChiNv">
+                                        <div class="invalid-feedback" id="validationCustomAddressRequiredError">
+                                            <!-- Thông báo lỗi nếu Địa chỉ bị để trống -->
+                                            Địa chỉ không được để trống.
+                                        </div>
+                                        <div class="invalid-feedback" id="validationCustomAddressLengthError">
+                                            <!-- Thông báo lỗi nếu Địa chỉ quá 200 kí tự -->
+                                            Địa chỉ không được quá 200 kí tự.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    document.getElementById("validationCustomAddress").addEventListener("input", function () {
+                                        var diaChiInput = this.value;
+                                        var errorRequiredElement = this.nextElementSibling.querySelector(".invalid-feedback#validationCustomAddressRequiredError");
+                                        var errorLengthElement = this.nextElementSibling.querySelector(".invalid-feedback#validationCustomAddressLengthError");
+
+                                        // Kiểm tra xem Địa chỉ có được nhập không
+                                        if (!diaChiInput) {
+                                            // Đặt thông báo lỗi cụ thể
+                                            this.setCustomValidity("invalid");
+
+                                            // Hiển thị thông báo lỗi
+                                            errorRequiredElement.style.display = "block";
+                                            errorLengthElement.style.display = "none";
+                                        } else if (diaChiInput.length > 200) {
+                                            // Đặt thông báo lỗi cụ thể
+                                            this.setCustomValidity("invalid");
+
+                                            // Hiển thị thông báo lỗi
+                                            errorRequiredElement.style.display = "none";
+                                            errorLengthElement.style.display = "block";
+                                        } else {
+                                            // Xóa thông báo lỗi nếu không có lỗi
+                                            this.setCustomValidity("");
+                                            errorRequiredElement.style.display = "none";
+                                            errorLengthElement.style.display = "none";
+                                        }
+                                    });
+                                </script>
+
+                                <!--CCCD-->
+                                <div class="mb-3">
+                                    <label for="validationCustomCccdnv">Số CCCD</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="validationCustomCccdnv" name="Cccdnv" placeholder="Số CCCD" required pattern="[0-9]{12}" value="@Model.Cccdnv?.Trim()">
+                                        <div class="invalid-feedback" id="validationCustomCccdnvError">
+                                            <!-- Thông báo lỗi sẽ được hiển thị ở đây -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    document.getElementById("validationCustomCccdnv").addEventListener("input", function () {
+                                        var cccdnvInput = this.value.trim();
+                                        var errorElement = this.nextElementSibling.querySelector(".invalid-feedback#validationCustomCccdnvError");
+
+                                        if (cccdnvInput === "") {
+                                            this.setCustomValidity("Số CCCD không được để trống.");
+                                            errorElement.style.display = "block";
+                                        } else if (!/^[0-9]{12}$/.test(cccdnvInput)) {
+                                            this.setCustomValidity("Số CCCD phải chỉ chứa số và có độ dài 12 kí tự.");
+                                            errorElement.style.display = "block";
+                                        } else {
+                                            this.setCustomValidity("");
+                                            errorElement.style.display = "none";
+                                        }
+                                    });
+                                </script>
+
+
+                                <!--SDT-->
+
+                                <div class="mb-3">
+                                    <label for="validationCustomPhoneNumber">Số điện thoại</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="validationCustomPhoneNumber" name="Sdtnv" placeholder="Số điện thoại" required pattern="0\d{9}" title="Số điện thoại phải bắt đầu bằng 0 và có đúng 10 chữ số" value="@Model.Sdtnv?.Trim()">
+                                        <div class="invalid-feedback" id="validationCustomPhoneNumberError">
+                                            <!-- Thông báo lỗi sẽ được hiển thị ở đây -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    document.getElementById("validationCustomPhoneNumber").addEventListener("input", function () {
+                                        var soDienThoaiInput = this.value.trim();
+                                        var errorElement = this.nextElementSibling.querySelector(".invalid-feedback#validationCustomPhoneNumberError");
+
+                                        if (soDienThoaiInput === "") {
+                                            this.setCustomValidity("Số điện thoại không được để trống.");
+                                            errorElement.textContent = "Số điện thoại không được để trống.";
+                                            errorElement.style.display = "block";
+                                        } else if (!/^0\d{9}$/.test(soDienThoaiInput)) {
+                                            this.setCustomValidity("Số điện thoại phải bắt đầu bằng 0, chỉ chứa số, và có độ dài đúng 10 chữ số.");
+                                            errorElement.textContent = "Số điện thoại phải bắt đầu bằng 0, chỉ chứa số, và có độ dài đúng 10 chữ số.";
+                                            errorElement.style.display = "block";
+                                        } else {
+                                            this.setCustomValidity("");
+                                            errorElement.style.display = "none";
+                                        }
+                                    });
+                                </script>
+
+
+
+
+                              
+                            </div>
+                        </div>
+                        <div class="text-right mt-3" style="display:flex;">
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+                            <form asp-controller="AdminMenu" asp-action="Delete" asp-route-id="@Model.MaNv" method="post">
+                                <button type="button" class="btn btn-secondary ml-2" onclick="confirmDelete()" style="margin-left: 20px;">Xoá</button>
+                                <input type="submit" id="deleteButton" style="display: none;" />
+                            </form>
+                            <a href="@Url.Action("Index")" class="btn btn-secondary" style="background-color: #FF5733; color: white; margin-left: 20px;">Trở về</a>
+                        </div>
+
+                        <script>
+                            function confirmDelete() {
+                                if (confirm("Bạn có chắc chắn muốn xóa món ăn này?")) {
+                                    document.getElementById("deleteButton").click();
+                                }
+                            }
+                        </script>
+
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</main>
+

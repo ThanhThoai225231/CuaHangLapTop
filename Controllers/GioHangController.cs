@@ -6,12 +6,8 @@ using Microsoft.AspNetCore.Identity;
 using System.Security;
 using Microsoft.AspNetCore.Authorization;
 using System.Text.RegularExpressions;
-using System.Text.Json;
-
-
-
-
 using static ThanhThoaiRestaurant.Models.GioHang;
+using System.Text.Json;
 
 namespace ThanhThoaiRestaurant.Controllers
 {
@@ -33,10 +29,24 @@ namespace ThanhThoaiRestaurant.Controllers
             if (!string.IsNullOrEmpty(gioHangJson))
             {
                 chiTietGhs = JsonSerializer.Deserialize<List<ChiTietGh>>(gioHangJson);
+                // Lưu các giá trị vào Session
+                
             }
 
+           
             // Truyền Model chứa giỏ hàng đến View
             return View(chiTietGhs);
+        }
+
+        private float CalculateTotalAmount(List<ChiTietGh> chiTietGhs)
+        {
+            float totalAmount = 0;
+            foreach (var chiTietGh in chiTietGhs)
+            {
+                // Thực hiện tính toán tổng tiền cho mỗi món trong chi tiết giỏ hàng
+                totalAmount += chiTietGh.ThanhTien;
+            }
+            return totalAmount;
         }
 
         [HttpPost]
@@ -95,26 +105,80 @@ namespace ThanhThoaiRestaurant.Controllers
                         ThanhTien = (float)(monAn.GiaBan * soLuongMM),
                         SoLuong = monAn.SoLuong,
                         MaMonNavigation = monAn
+
                     });
                 }
+
+
+                var tenDangNhap = HttpContext.Session.GetString("TenDangNhap");
+           /*     if (!string.IsNullOrEmpty(tenDangNhap))
+                {
+                    var hanhViND = new HanhViND
+                    {
+                        Id = GenerateRandomId(),
+                        TenDangNhap = tenDangNhap,
+                        MaMon = monAn.MaMon,
+                        ThoiGian = DateTime.Now,
+                        HanhDong = 2 // Ví dụ: 2  đại diện cho hành động "Thêm vào giỏ hàng"
+                    };
+
+                    _context.HanhViNDs.Add(hanhViND);
+                    _context.SaveChanges();
+                } */
 
                 // Lưu giỏ hàng vào Session
                 HttpContext.Session.SetString("GioHang", JsonSerializer.Serialize(chiTietGhs));
 
-                return RedirectToAction("Index", "GioHang");
+                return RedirectToAction("Index", "Product");
             }
         }
 
-       
+        [HttpPost]
+        public IActionResult Remove_1_FromGioHang(int maSanPham)
+        {
+            var gioHangJson = HttpContext.Session.GetString("GioHang");
 
+            List<ChiTietGh> chiTietGhs;
 
+            if (gioHangJson != null)
+            {
+                // Nếu giỏ hàng đã tồn tại trong Session, lấy nó từ Session
+                chiTietGhs = JsonSerializer.Deserialize<List<ChiTietGh>>(gioHangJson);
+            }
+            else
+            {
+                // Nếu giỏ hàng chưa tồn tại trong Session, khởi tạo nó
+                chiTietGhs = new List<ChiTietGh>();
+            }
+            // Tìm kiếm sản phẩm trong giỏ hàng
+            var existingItem = chiTietGhs.FirstOrDefault(item => item.MaMon == maSanPham);
+
+            if (existingItem != null)
+            {
+                // If the item exists in the cart, update the quantity
+                existingItem.SoLuongMM -= 1;
+
+                // If the quantity is zero, remove the item from the cart
+                if (existingItem.SoLuongMM <= 0)
+                {
+                    chiTietGhs.Remove(existingItem);
+                }
+
+                existingItem.ThanhTien = (float)(existingItem.SoLuongMM * existingItem.GiaBan);
+            }
+
+            // Save the updated cart back to the session
+            HttpContext.Session.SetString("GioHang", JsonSerializer.Serialize(chiTietGhs));
+
+            return RedirectToAction("Index", "GioHang");
+        }
 
         [HttpPost]
         public IActionResult XoaMonAn(int maMon)
         {
             // Lấy giỏ hàng từ Session
             var gioHangJson = HttpContext.Session.GetString("GioHang");
-            List<ChiTietGh> chiTietGhs;
+            List<ChiTietGh> chiTietGhs = new List<ChiTietGh>();
 
             if (!string.IsNullOrEmpty(gioHangJson))
             {
@@ -180,9 +244,16 @@ namespace ThanhThoaiRestaurant.Controllers
             return Json(new { success = false });
         }
 
-
-
-
+        private int GenerateRandomId()
+        {
+            Random random = new Random();
+            int randomNumber;
+            do
+            {
+                randomNumber = random.Next(1, 1000000); // Tạo số ngẫu nhiên có 4 chữ số
+            } while (_context.HanhViNDs.Any(dg => dg.Id == randomNumber)); // Kiểm tra xem số này đã tồn tại trong CSDL chưa
+            return randomNumber;
+        }
 
     }
 }

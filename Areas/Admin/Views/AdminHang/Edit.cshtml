@@ -1,0 +1,142 @@
+﻿@model ThanhThoaiRestaurant.Models.NhomMonAn
+
+@{
+    ViewBag.Title = "Chi tiết";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+
+}
+
+
+<style>
+    label {
+        display: inline-block;
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    .centered-image {
+        display: block;
+        margin: 0 300px 40px 349px;
+        height: 250px;
+    }
+
+</style>
+
+<main id="main" class="main">
+    <div class="row">
+        <div class="pagetitle">
+            <h1>Hãng sản phẩm</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/Admin/AdminHang">Quản lý hãng sản phẩm</a></li>
+                    <li class="breadcrumb-item active">Sửa thông tin</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+        <div class="col-xl-6 col-md-12">
+            <div class="ms-panel ms-panel-fh">
+                <div class="ms-panel-header">
+                    <h4 style="font-weight: bold; color: #df1d1b; font-weight: bold;">
+                        Sửa thông tin
+                    </h4>
+                  
+                </div>
+
+
+
+
+
+                <div class="ms-panel-body">
+
+
+                    <form asp-controller="AdminHang" asp-action="Edit" asp-route-id="@Model.MaNhom" method="post" enctype="multipart/form-data">
+                        <div class="form-row" style="display:flex; justify-content: space-between;">
+                            <div class="col-md-8" style="margin-left: 100px;">
+                               
+
+                                <div class=" mb-3">
+                                    <label for="validationCustom25">Mã hãng sản phẩm</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="validationCustom25" name="MaNhom" placeholder="Mã hãng" required pattern="[0-9]{1,6}" value="@Model.MaNhom" disabled>
+                                        <div class="invalid-feedback">
+                                            Mã món chỉ là số và độ dài không quá 6.
+                                        </div>
+                                    </div>
+                                </div>
+                             
+                                
+                            </div>
+                            <div class="col-md-8" style="margin-left: 200px;">
+
+                                <div class="mb-3">
+                                    <label for="validationCustom18">Tên hãng sản phẩm</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="validationCustom18" name="TenNhom" placeholder="Tên hãng sản phẩm" required maxlength="50" value="@Model.TenNhom">
+                                        <span id="TenNhomError" class="text-danger" style="display: none;">Tên hãng sản phẩm không được để trống và không được quá 50 ký tự.</span>
+                                    </div>
+                                </div>
+
+
+                                <script>
+                                    var tenNhomInput = document.getElementById("validationCustom18");
+                                    var tenNhomError = document.getElementById("TenNhomError");
+
+                                    tenNhomInput.addEventListener("input", function () {
+                                        var tenNhomValue = tenNhomInput.value;
+
+                                        if (tenNhomValue.trim() === "" || tenNhomValue.length > 50) {
+                                            tenNhomError.style.display = "inline";
+                                        } else {
+                                            tenNhomError.style.display = "none";
+                                        }
+                                    });
+                                </script>
+
+
+                            </div>
+                        </div>
+                        <div class="text-right mt-3" style="display:flex;">
+                            <button id="saveButton" type="submit" class="btn btn-primary">Lưu</button>
+                            <script>
+                                saveButton.addEventListener("click", function (event) {
+                                    // Kiểm tra xem có lỗi nào hiển thị không
+                                    if (tenNhomError.style.display === "inline") {
+                                        // Nếu có lỗi, ngăn chặn hành động mặc định của nút "Lưu" (không submit form)
+                                        event.preventDefault();
+                                        // Thông báo cho người dùng biết về lỗi
+                                        alert("Vui lòng sửa các lỗi trước khi lưu.");
+                                    }
+                                });
+                            </script>
+                            <a href="@Url.Action("Index")" class="btn btn-secondary" style="background-color: #FF5733; color: white; margin-left: 20px;">Trở về</a>
+                            <form asp-controller="AdminHang" asp-action="Delete" asp-route-id="@Model.MaNhom" method="post">
+                                <button type="button" class="btn btn-secondary ml-2" onclick="confirmDelete()" style="margin-left: 20px;">Xoá</button>
+                                <input type="submit" id="deleteButton" style="display: none;" />
+                            </form>
+                        </div>
+                    </form>
+
+
+
+
+                    <script>
+                        function confirmDelete() {
+                            if (confirm("Bạn có chắc chắn muốn xóa món ăn này?")) {
+                                document.getElementById("deleteButton").click();
+                            }
+                        }
+                    </script>
+
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</main>
+

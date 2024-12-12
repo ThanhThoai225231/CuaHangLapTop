@@ -9,11 +9,11 @@ namespace ThanhThoaiRestaurant.Models
         {
             MonAns = new HashSet<MonAn>();
         }
-
-        public int MaNhom { get; set; } 
-        public string TenNhom { get; set; }
-
         public virtual ICollection<MonAn> MonAns { get; set; }
+        public int? MaNhom { get; set; } 
+        public string TenNhom { get; set; } = null!;
+
+
 
     }
 }

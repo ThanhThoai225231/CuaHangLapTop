@@ -1,5 +1,4 @@
-﻿@using Microsoft.AspNetCore.Mvc.ViewFeatures;
-@model ThanhThoaiRestaurant.Models.NguoiDung
+﻿@model ThanhThoaiRestaurant.Models.NguoiDung
 
 @{
     ViewBag.Title = "Login";
@@ -26,6 +25,52 @@
 
 <style>
 
+    .google-login-container {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .google-login-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #dd4b39; /* Màu đỏ của Google */
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+        .google-login-btn:hover {
+            background-color: #eb968c; /* Màu đỏ tối của Google */
+        }
+
+    .fa-google {
+        margin-right: 5px;
+    }
+
+    .facebook-login-container {
+        text-align: center;
+        margin: 20px 40px;
+    }
+
+    .facebook-login-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #3940dd; /* Màu đỏ của Google */
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+        .facebook-login-btn:hover {
+            background-color: #7377ce; /* Màu đỏ tối của Google */
+        }
+
+    .fa-google {
+        margin-right: 5px;
+    }
+
     /* CSS cho nút "Login" */
     .login-btn {
         background-color: #d09d0a;
@@ -43,9 +88,49 @@
             color: #fff;
         }
 
+    .login-register-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 70vh; /* Đảm bảo nó căn giữa theo chiều cao */
+        text-align: center; /* Đảm bảo nội dung căn giữa theo chiều rộng */
+    }
+
+    .login-register-tab-list nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        height: 100%; /* Đảm bảo chiều cao của tab lấp đầy toàn bộ */
+    }
+
+    .form-control {
+
+        display: block;
+        width: 350px;
+        margin-left: 100px;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    }
+    
+
 </style>
- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css" />
 <script src="~/sweetalert2-main/sweetalert2-main/src/sweetalert2.js"></script>
+
 
 <!-- main-content-wrap start -->
 <div class="main-content-wrap section-ptb lagin-and-register-page">
@@ -53,63 +138,92 @@
         <div class="row">
             <div class="col-lg-7 col-md-12 m-auto">
                 <div class="login-register-wrapper">
-                    <!-- login-register-tab-list start -->
-                    <div class="login-register-tab-list nav" style="margin: 20px 0 40px 500px; text-align: center;">
-                        <a class="active" data-bs-toggle="tab" href="#lg1">
-                            <h4> Đăng nhập </h4>
-                        </a>
-
-                    </div>
-                    <!-- login-register-tab-list end -->
                     <div class="tab-content">
                         <div id="lg1" class="tab-pane active">
                             <div class="login-form-container">
                                 <div class="login-register-form">
+                                    <h4 class="text-center" style="margin-bottom: 50px;">Đăng nhập</h4>
                                     <form asp-action="Login">
-                                        <div class="login-input-box" style="margin: 20px 0 40px 300px;">                                           
-                                            <div class="form-group">
-                                                <input asp-for="TenDangNhap" class="form-control" style="margin: 20px 0 40px 120px;" placeholder="Tên đăng nhập" />
-                                                <span asp-validation-for="TenDangNhap" class="text-danger" style="margin: 20px 0 40px 120px;"></span>
+                                        <div style="display: flex;">
+                                            <div class="login-input-box">
+                                                <div class="form-group">
+                                                    <input asp-for="TenDangNhap" id="tenDangNhapInput" class="form-control" placeholder="Tên đăng nhập" oninput="validateTenDangNhap()" />
+                                                    <span asp-validation-for="TenDangNhap" id="tenDangNhapError" class="text-danger"></span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input asp-for="MatKhau" type="password" id="matKhauInput" class="form-control" placeholder="Mật khẩu" oninput="validateMatKhau()" />
+                                                    <span asp-validation-for="MatKhau" id="matKhauError" class="text-danger"></span>
+                                                </div>
                                             </div>
-                                            <div class="form-group">
-                                                <input asp-for="MatKhau" class="form-control" style="margin: 20px 0 0 120px;" placeholder="Mật khẩu" />
-                                                <span asp-validation-for="MatKhau" class="text-danger" style="margin: 20px 0 0 120px;"></span>
-                                            </div>
+                                           
                                         </div>
                                         <div class="button-box">
-                                            <div class="login-toggle-btn" style="margin:0 0 40px 200px;">
-                                                <div class="remember-me" style="margin: 0 0 20px 220px;">
-
+                                            <div class="login-toggle-btn" >
+                                                <div class="remember-me">
                                                     <a href="Register">Tạo tài khoản mới?</a>
                                                 </div>
-                                                <div class="forgot-password" style="margin: 20px 0 20px 220px;">
-                                                    <a href="#">Quên mật khẩu?</a>
+                                                <div class="forgot-password">
+                                                    <a href="ForgotPassword">Quên mật khẩu?</a>
                                                 </div>
+                                                
+                                                
+                                                <div class="google-login-container">
+                                                    <p><a asp-area="" asp-controller="Account" asp-action="Login1" class="google-login-btn">Đăng nhập với  <i class="fa fa-google">oogle</i></a></p>
+                                                </div>
+                                               
+                                               
                                             </div>
-
                                             <div class="button-box">
                                                 <button id="btnDangNhap" class="login-btn btn" type="submit"><span> Đăng nhập</span></button>
                                             </div>
                                         </div>
-                                    </form>    
-                                    <!-- Mã JavaScript trong tệp Razor View -->
+                                    </form>
+
+
+                                    
                                    
+
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- main-content-wrap end -->
 
+<script>
+   
 
+    function validateTenDangNhap() {
+        var tenDangNhapInput = document.getElementById("tenDangNhapInput");
+        var tenDangNhapError = document.getElementById("tenDangNhapError");
 
+        var tenDangNhapValue = tenDangNhapInput.value.trim();
 
+        if (tenDangNhapValue.length > 100 || tenDangNhapValue === "") {
+            tenDangNhapError.innerText = "Tên đăng nhập không được quá 100 ký tự và không được để trống!";
+            tenDangNhapError.style.display = "inline";
+        } else {
+            tenDangNhapError.style.display = "none";
+        }
+    }
 
+    function validateMatKhau() {
+        var matKhauInput = document.getElementById("matKhauInput");
+        var matKhauError = document.getElementById("matKhauError");
 
+        var matKhauValue = matKhauInput.value.trim();
 
+        if (matKhauValue.length > 20 || matKhauValue === "") {
+            matKhauError.innerText = "Mật khẩu không được quá 20 ký tự và không được để trống!";
+            matKhauError.style.display = "inline";
+        } else {
+            matKhauError.style.display = "none";
+        }
+    }
 
+    // Function to capture and upload image from webcam
+  
+</script>

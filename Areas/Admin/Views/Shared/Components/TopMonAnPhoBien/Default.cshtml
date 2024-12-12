@@ -1,0 +1,35 @@
+﻿@model List<DonHang>
+
+
+
+
+    <div class="white_card_body QA_section">
+        <div class="QA_table">
+            <table class="table lms_table_active2 p-0">
+                <thead>
+                    <tr>                      
+                    <th style="color: black; font-weight: bold; font-size: 17px;text-align:center;" scope="col"> Mã đơn hàng</th>
+                    <th style="color: black; font-weight: bold; font-size: 17px;text-align:center;" scope="col">Ngày đặt hàng</th>
+                    <th style="color: black; font-weight: bold; font-size: 17px;text-align:center;" scope="col">Người nhận</th>
+                    <th style="color: black; font-weight: bold; font-size: 17px;text-align:center;" scope="col">Địa chỉ nhận</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var food in Model)
+                    {
+                        <tr>
+
+                        <td style="color: #4154f1; text-align:center;" class="f_s_14 f_w_400 ">#@food.MaDonHang</td>
+                        <td style="color: #4154f1; text-align:center;" class="f_s_14 f_w_400 ">@food.NgayDatHang</td>
+                        <td style="color: #4154f1; text-align:center;" class="f_s_14 f_w_400 ">@food.NguoiNhan</td>
+                        <td style="color: #4154f1; text-align:center;" class="f_s_14 f_w_400 ">@food.DiaChiNhan</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
